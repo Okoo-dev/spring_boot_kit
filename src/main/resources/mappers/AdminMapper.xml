@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bit.kit.mapper.AdminMapper">
+
+	<resultMap id="userList" type="edu.bit.kit.vo.UserVO">
+		<result column="user_id" property="userId" />
+		<result column="co_number" property="userNumber" />
+		<result column="co_password" property="userpassword" />
+		<result column="co_name" property="userName" />
+		<result column="co_phone" property="userPhone" />
+		<result column="co_birth" property="userBirth" />
+		<result column="co_email" property="userEmail" />
+		<result column="co_gender" property="userGender" />
+		<result column="co_enabled" property="userEnabled" />
+		<result column="co_joindate" property="userJoinDate" />
+		<result column="co_logintime" property="userLoginTime" />
+		<result column="co_address" property="userAddress" />
+		<result column="co_account" property="userAccount" />
+	</resultMap>
+
+
+	<resultMap id="orderList" type="edu.bit.kit.vo.OrderVO">
+		<result column="order_number" property="ordNumber" />
+		<result column="user_id" property="userId" />
+		<result column="co_date" property="ordDate" />
+	</resultMap>
+	
+	<resultMap id="OrderDe" type="edu.bit.kit.vo.OrderDetailVO">
+		<result column="order_number" property="ordNumber" />
+		<result column="product_number" property="prodNumber" />
+		<result column="co_name" property="prodName" />
+		<result column="co_date" property="ordDate" />
+		<result column="co_amount" property="ordAmount" />
+		<result column="co_recipient" property="ordRecipient" />
+		<result column="co_location" property="ordLocation" />
+		<result column="sumprice" property="sumPrice" />
+	</resultMap>
+	
+	<resultMap id="prodList" type="edu.bit.kit.vo.ProductVO">
+		<result column="product_number" property="prodNumber" />
+		<result column="co_name" property="prodName" />
+		<result column="co_recievingdate" property="prodRecievingDate" />
+		<result column="co_stock" property="prodStock" />
+		<result column="co_category" property="prodCategory" />
+		<result column="co_price" property="prodPrice" />
+		<result column="co_servings" property="prodServings" />
+		<result column="co_cookingtime" property="prodCookingTime" />
+		<result column="co_prepare_time" property="prodPrepareTime" />
+		<result column="co_comment" property="prodComment" />
+	</resultMap>
+
+	
+
+	<select id="getList" resultMap="userList">
+		SELECT
+		user_id,co_number,co_name,co_phone,co_email,co_gender,co_joindate,co_address,co_account
+		FROM HK_USER
+	</select>
+
+	<select id="getUser" resultMap="userList">
+		SELECT
+		user_id,co_number,co_name,co_phone,co_email,co_gender,co_joindate,co_address,co_account
+		FROM HK_USER
+		WHERE user_id = #{userId}
+	</select>
+
+	<update id="update">
+		UPDATE HK_USER
+		SET co_name = #{userName},
+		 	co_phone = #{userPhone}, 
+		 	co_email = #{userEmail},
+		 	co_gender = #{userGender},
+			co_address = #{userAddress}, 
+			co_account = #{userAccount}
+		WHERE user_id
+		= #{userId}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM HK_USER
+		WHERE user_id = #{userId}
+	</delete>
+
+	<select id="getOrderList" resultMap="orderList">
+		SELECT
+		*
+		FROM HK_ORD
+	</select>
+	
+	<select id="getOrder" resultMap="OrderDe">
+		SELECT o.order_number , o.product_number , h.co_name, o.co_amount , o.co_recipient ,o.co_location,(h.co_price * o.co_amount) as sumprice
+		FROM ORD_DET O, HK_PROD H 
+		WHERE O.PRODUCT_NUMBER = H.PRODUCT_NUMBER 
+		AND o.order_number = #{ordNumber}
+	</select>
+	
+	<select id="getProdList" resultMap="prodList">
+		SELECT
+			*
+		FROM HK_PROD
+	</select>
+	
+	<select id="getProd" resultMap="prodList">
+		SELECT
+			*
+		FROM HK_PROD
+		WHERE product_number = #{prodNumber}
+	</select>
+		
+	<insert id="insertProd">
+     INSERT INTO hk_prod
+     VALUES (hk_prod_seq.nextval, #{prodName},sysdate,
+     		#{prodStock},#{prodCategory},#{prodPrice},
+     		#{prodServings},#{prodCookingTime},
+     		#{prodPrepareTime},#{prodComment})
+	</insert>
+	
+	
+	<update id="prodUpdate">
+		UPDATE hk_prod
+			SET co_name = #{prodName},
+			co_stock = #{prodStock}, 
+			co_category = #{prodCategory}, 
+			co_price = #{prodPrice},
+			co_servings = #{prodServings}, 
+			co_cookingtime = #{prodCookingTime},
+			co_prepare_time = #{prodPrepareTime},
+			co_comment = #{prodComment}
+		WHERE product_number = #{prodNumber}
+	</update>
+
+	<delete id="prodDelete">
+		DELETE FROM HK_PROD
+		WHERE product_number = #{prodNumber}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
