@@ -14,7 +14,8 @@
 <title>Kit.admin-page</title>
 
 <!-- 파비콘 -->
-<link rel="shortcut icon" type="image⁄x-icon" href="/admin/Dashio/img/favicon.ico">
+<link rel="shortcut icon" type="image⁄x-icon"
+	href="/admin/Dashio/img/favicon.ico">
 
 <!-- Bootstrap core CSS -->
 <link href="/admin/Dashio/lib/bootstrap/css/bootstrap.min.css"
@@ -70,8 +71,8 @@
 				<!-- sidebar menu start-->
 				<ul class="sidebar-menu" id="nav-accordion">
 					<p class="centered">
-						<a href="#"><img src="/admin/Dashio/img/Kit2_size.png" class="img-circle"
-							width="80"></a>
+						<a href="#"><img src="/admin/Dashio/img/Kit2_size.png"
+							class="img-circle" width="80"></a>
 					</p>
 					<h5 class="centered">관리자님</h5>
 
@@ -86,24 +87,22 @@
 							class="fa fa-cogs"></i> <span>주문/배송관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="admin/orderlist">주문 리스트</a></li>
+							<li><a href="/admin/orderlist">주문 리스트</a></li>
 							<li><a href="#">배송 현황</a></li>
 							<li><a href="#">주문 취소/반품</a></li>
 						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
+					<li class="sub-menu"><a href="/admin/prodList"> <i
 							class="fa fa-book"></i> <span>상품관리</span>
-					</a>
-						<ul class="sub">
-							<li><a href="/admin/prodList">상품 등록</a></li>
-						</ul></li>
+					</a></li>
 
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-tasks"></i> <span>게시판 관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="#">리뷰 관리</a></li>
-							<li><a href="#">이벤트 관리</a></li>
-							<li><a href="form_validation.html">1:1 문의 관리</a></li>
+							<li><a href="/admin/noticeList">공지사항</a></li>
+							<li><a href="/admin/questionList">1:1 문의</a></li>
+							<li><a href="/admin/eventList">이벤트</a></li>
+							<li><a href="/admin/reviewList">리뷰</a></li>
 						</ul></li>
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-th"></i> <span>통계 관리</span>
@@ -625,6 +624,8 @@
 	</section>
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="/admin/Dashio/lib/jquery/jquery.min.js"></script>
+	<script type="text/javascript" language="javascript"
+		src="lib/advanced-datatable/js/jquery.js"></script>
 	<script src="/admin/Dashio/lib/jquery/scroll.js"></script>
 	<script src="/admin/Dashio/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script class="include" type="text/javascript"
@@ -658,40 +659,36 @@
 			return sOut;
 		}
 
-		$(document)
-				.ready(
-						function() {
-							/*
-							 * Insert a 'details' column to the table
-							 */
-							var nCloneTh = document.createElement('th');
-							var nCloneTd = document.createElement('td');
-							nCloneTd.className = "center";
+		$(document).ready(
+				function() {
+					/*
+					 * Insert a 'details' column to the table
+					 */
+					var nCloneTh = document.createElement('th');
+					var nCloneTd = document.createElement('td');
+					nCloneTd.className = "center";
 
-							$('#hidden-table-info thead tr').each(
-									function() {
-										this.insertBefore(nCloneTh,
-												this.childNodes[0]);
-									});
+					$('#hidden-table-info thead tr').each(function() {
+						this.insertBefore(nCloneTh, this.childNodes[0]);
+					});
 
-							$('#hidden-table-info tbody tr').each(
-									function() {
-										this.insertBefore(nCloneTd
-												.cloneNode(true),
-												this.childNodes[0]);
-									});
-
-							/*
-							 * Initialse DataTables, with no sorting on the 'details' column
-							 */
-							var oTable = $('#hidden-table-info').dataTable({
-								"aoColumnDefs" : [ {
-									"bSortable" : false,
-									"aTargets" : [ 0 ]
-								} ],
-								"aaSorting" : [ [ 1, 'asc' ] ]
+					$('#hidden-table-info tbody tr').each(
+							function() {
+								this.insertBefore(nCloneTd.cloneNode(true),
+										this.childNodes[0]);
 							});
-						});
+
+					/*
+					 * Initialse DataTables, with no sorting on the 'details' column
+					 */
+					var oTable = $('#hidden-table-info').dataTable({
+						"aoColumnDefs" : [ {
+							"bSortable" : false,
+							"aTargets" : [ 0 ]
+						} ],
+						"aaSorting" : [ [ 1, 'asc' ] ]
+					});
+				});
 	</script>
 
 

@@ -18,28 +18,26 @@
 <link rel="shortcut icon" type="image⁄x-icon"
 	href="/admin/Dashio/img/favicon.ico">
 
+
+
 <!-- Bootstrap core CSS -->
 <link href="/admin/Dashio/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
+
 <!--external css-->
 <link href="/admin/Dashio/lib/font-awesome/css/font-awesome.css"
 	rel="stylesheet" />
-<link rel="stylesheet" type="text/css"
-	href="/admin/Dashio/css/zabuto_calendar.css">
-<link rel="stylesheet" type="text/css"
-	href="/admin/Dashio/lib/gritter/css/jquery.gritter.css" />
 
-<!-- 이건 진짜 모르겠음 -->
-<!-- <link href="/admin/Dashio/lib/advanced-datatable/css/demo_page.css"
-	rel="stylesheet" /> -->
-	
-<!-- 게시판에 필요한 거임 -->
 <link rel="stylesheet"
 	href="/admin/Dashio/lib/advanced-datatable/css/DT_bootstrap.css" />
 
 <!-- Custom styles for this template -->
 <link href="/admin/Dashio/css/style.css" rel="stylesheet">
+
+<!-- 사이드바 css -->
 <link href="/admin/Dashio/css/style-responsive.css" rel="stylesheet">
+
+
 
 <!-- =======================================================
     Template Name: Dashio
@@ -100,20 +98,18 @@
 							<li><a href="#">배송 현황</a></li>
 							<li><a href="#">주문 취소/반품</a></li>
 						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
+					<li class="sub-menu"><a href="/admin/prodList"> <i
 							class="fa fa-book"></i> <span>상품관리</span>
-					</a>
-						<ul class="sub">
-							<li><a href="/admin/prodList">상품 리스트</a></li>
-						</ul></li>
+					</a></li>
 
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-tasks"></i> <span>게시판 관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="#">리뷰 관리</a></li>
-							<li><a href="#">이벤트 관리</a></li>
-							<li><a href="form_validation.html">1:1 문의 관리</a></li>
+							<li><a href="/admin/noticeList">공지사항</a></li>
+							<li><a href="/admin/questionList">1:1 문의</a></li>
+							<li><a href="/admin/eventList">이벤트</a></li>
+							<li><a href="/admin/reviewList">리뷰</a></li>
 						</ul></li>
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-th"></i> <span>통계 관리</span>
@@ -139,7 +135,7 @@
 		<!-- **********************************************************************************************************************************************************
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
-		<!--main content start-->
+		<!--메인 콘텐츠-->
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
@@ -214,13 +210,16 @@
 	</section>
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="/admin/Dashio/lib/jquery/jquery.min.js"></script>
-	<script src="/admin/Dashio/lib/jquery/scroll.js"></script>
 	<script type="text/javascript" language="javascript"
-		src="admin/Dashio/lib/advanced-datatable/js/jquery.js"></script>
+		src="/admin/Dashio/lib/advanced-datatable/js/jquery.js"></script>
+	
+	<script src="/admin/Dashio/lib/jquery/scroll.js"></script>
 
 	<script src="/admin/Dashio/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script class="include" type="text/javascript"
 		src="/admin/Dashio/lib/jquery.dcjqaccordion.2.7.js"></script>
+
+	<!-- 사이드바 드롭다운 -->
 	<script src="/admin/Dashio/lib/jquery.scrollTo.min.js"></script>
 	<script src="/admin/Dashio/lib/jquery.nicescroll.js"
 		type="text/javascript"></script>
@@ -229,15 +228,13 @@
 		src="/admin/Dashio/lib/advanced-datatable/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="/admin/Dashio/lib/advanced-datatable/js/DT_bootstrap.js"></script>
+	
+		
 	<!--common script for all pages-->
 	<script src="/admin/Dashio/lib/common-scripts.js"></script>
-	<script type="text/javascript"
-		src="/admin/Dashio/lib/gritter/js/jquery.gritter.js"></script>
-	<script type="text/javascript" src="/admin/Dashio/lib/gritter-conf.js"></script>
 	<!--script for this page-->
 	<script type="text/javascript">
 		/* Formating function for row details */
-		/* 페이징,검색,필터기능*/
 		function fnFormatDetails(oTable, nTr) {
 			var aData = oTable.fnGetData(nTr);
 			var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
@@ -253,26 +250,7 @@
 		$(document)
 				.ready(
 						function() {
-							/*
-							 * Insert a 'details' column to the table
-							 */
-							var nCloneTh = document.createElement('th');
-							var nCloneTd = document.createElement('td');
-							nCloneTd.className = "center";
-
-							$('#hidden-table-info thead tr').each(
-									function() {
-										this.insertBefore(nCloneTh,
-												this.childNodes[0]);
-									});
-
-							$('#hidden-table-info tbody tr').each(
-									function() {
-										this.insertBefore(nCloneTd
-												.cloneNode(true),
-												this.childNodes[0]);
-									});
-
+						
 							/*
 							 * Initialse DataTables, with no sorting on the 'details' column
 							 */
@@ -284,6 +262,31 @@
 								"aaSorting" : [ [ 1, 'asc' ] ]
 							});
 
+							/* Add event listener for opening and closing details
+							 * Note that the indicator for showing which row is open is not controlled by DataTables,
+							 * rather it is done here
+							 */
+							$('#hidden-table-info tbody td img')
+									.live(
+											'click',
+											function() {
+												var nTr = $(this).parents('tr')[0];
+												if (oTable.fnIsOpen(nTr)) {
+													/* This row is already open - close it */
+													this.src = "lib/advanced-datatable/media/images/details_open.png";
+													oTable.fnClose(nTr);
+												} else {
+													/* Open this row */
+													this.src = "lib/advanced-datatable/images/details_close.png";
+													oTable
+															.fnOpen(
+																	nTr,
+																	fnFormatDetails(
+																			oTable,
+																			nTr),
+																	'details');
+												}
+											});
 						});
 	</script>
 

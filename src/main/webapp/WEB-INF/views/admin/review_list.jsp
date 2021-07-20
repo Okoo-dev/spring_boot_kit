@@ -93,7 +93,7 @@
 							class="fa fa-cogs"></i> <span>주문/배송관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="#">주문 리스트</a></li>
+							<li><a href="/admin/orderlist">주문 리스트</a></li>
 							<li><a href="#">배송 현황</a></li>
 							<li><a href="#">주문 취소/반품</a></li>
 						</ul></li>
@@ -138,9 +138,10 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 주문 리스트
+					<i class="fa fa-angle-right"></i> 리뷰
 				</h3>
 				<div class="row">
+
 					<!-- page start-->
 					<div class="content-panel">
 						<div class="adv-table">
@@ -148,20 +149,37 @@
 								class="display table table-bordered" id="hidden-table-info">
 								<thead>
 									<tr>
-										<td>주문 번호</td>
-										<td>회원 번호</td>
-										<td>주문 날짜</td>
+										<td><input id="allCheck" type="checkbox" name="allCheck" /></td>
+										<td>글 번호</td>
+										<td>글 카테고리</td>
+										<td>글 제목</td>
+										<td>작성 날짜</td>
+										<td>조회수</td>
+										<td>작성자</td>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="vo" items="${orderview}">
+									<c:forEach var="list" items="${reviewList}">
 										<tr>
-											<td><a href="/admin/orderview?ordNumber=${vo.ordNumber}">${vo.ordNumber}</a></td>
-											<td>${vo.userId}</td>
-											<td>${vo.ordDate}</td>
+											<td><input name="RowCheck" type="checkbox"
+												value="${list.brdId}"></td>
+											<td>${list.brdId}</td>
+											<td>${list.brdName}</td>
+											<td><a href="/admin/noticeList?brdId=${list.brdId}">${list.brdTitle}</a></td>
+											<td>${list.brdDate}</td>
+											<td>${list.brdHit}</td>
+											<td>${list.brdUserid}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
+							</table>
+							<table>
+								<tr>
+									<td colspan="2"><input type="button" value="선택 삭제"
+										class="btn btn-default" onclick="deleteValue();">
+										&nbsp;&nbsp;<a href="#"><button type="button"
+												class="btn btn-default">공지사항 등록 하기</button></a></td>
+								</tr>
 							</table>
 						</div>
 					</div>
@@ -276,6 +294,91 @@
 											});
 						});
 	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			var chkObj = document.getElementsByName("RowCheck");
+			var rowCnt = chkObj.length;
+
+			$("input[name='allCheck']").click(function() {
+				var chk_listArr = $("input[name='RowCheck']");
+				for (var i = 0; i < chk_listArr.length; i++) {
+					chk_listArr[i].checked = this.checked;
+				}
+			});
+
+			$("input[name='RowCheck']").click(function() {
+				if ($("input[name='RowCheck']:checked").length == rowCnt) {
+					$("input[name='allCheck']")[0].checked = true;
+				} else {
+					$("input[name='allCheck']")[0].checked = false;
+				}
+			});
+		});
+
+		function deleteValue() {
+			var url = "prodDelete";
+			var valueArr = new Array();
+			var list = $("input[name='RowCheck']");
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].checked) {
+					valueArr.push(list[i].value);
+				}
+			}
+			if (valueArr.length == 0) {
+				alert("선택된 상품이 없습니다.")
+			} else {
+				var chk = confirm("정말 삭제하시겠습니까?");
+				$.ajax({
+					url : url, // 전송 url
+					type : 'POST',
+					traditional : true,
+					data : {
+						valueArr : valueArr
+					// 보내고자 하는 date 변수 
+					},
+					success : function(data) {
+						if (data = 1) {
+							alert("삭제 되었습니다.");
+							location.replace("prodList") // 상품 리스트페이지 새로고침
+						} else {
+							alert("삭제 실패")
+						}
+					}
+				})
+			}
+
+		}
+	</script>
+
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

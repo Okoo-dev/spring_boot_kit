@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.ProductVO;
@@ -44,7 +45,27 @@ public interface AdminMapper {
     
     // 상품 삭제
     void prodDelete(String prodNumber);
-
+    
+    // 공지 사항
+    List<BoardVO> getNoticeList();
+    
+    // 1:1 문의
+    List<BoardVO> getQuestionList();
+    
+    // 이벤트
+    List<BoardVO> getEventList();
+    
+    // 리뷰
+    List<BoardVO> getReviewList();
+    
+    // 조회수 증가
+    void updateHit(int brdId);
+     
+    // 공지 사항 등록
+    void insertNotice(BoardVO boardVO);
+    
+    // 이벤트 등록
+    void insertEvent(BoardVO boardVO);
 
     
 }

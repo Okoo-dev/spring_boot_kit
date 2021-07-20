@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.bit.kit.mapper.AdminMapper;
+import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.ProductVO;
@@ -79,7 +80,7 @@ public class AdminServiceImpl implements AdminService {
     // 상품 등록
     @Override
     public void prodUpload(ProductVO productVO) {
-        log.info("getOrder...");
+        log.info("prodUpload");
         adminMapper.insertProd(productVO);
     }
     
@@ -96,6 +97,50 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void prodRemove(String prodNumber) {
         adminMapper.prodDelete(prodNumber);
+    }
+    
+    // 공지 사항
+    @Override
+    public List<BoardVO> getNoticeList() {
+        return adminMapper.getNoticeList();
+    }
+    
+    // 1:1문의
+    @Override
+    public List<BoardVO> getQuestionList() {
+        return adminMapper.getQuestionList();
+    }
+    
+    // 이벤트
+    @Override
+    public List<BoardVO> getEventList() {
+        return adminMapper.getEventList();
+    }
+    
+    // 리뷰
+    @Override
+    public List<BoardVO> getReviewList() {
+        return adminMapper.getReviewList();
+    }
+    
+    // 조회수
+    @Override
+    public void upHit(int brdId) {
+        adminMapper.updateHit(brdId);
+    }
+    
+    // 공지 사항 등록
+    @Override
+    public void noticeUpload(BoardVO boardVO) {
+        log.info("prodUpload");
+        adminMapper.insertNotice(boardVO);
+    }
+    
+    // 이벤트 등록
+    @Override
+    public void eventUpload(BoardVO boardVO) {
+        log.info("prodUpload");
+        adminMapper.insertEvent(boardVO);
     }
 
    

@@ -1,4 +1,3 @@
-<!-- 테이블 템플릿 쓴거임 Css랑 js 파일 찾아서 다없애기 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -18,25 +17,19 @@
 <link rel="shortcut icon" type="image⁄x-icon"
 	href="/admin/Dashio/img/favicon.ico">
 
-
-
 <!-- Bootstrap core CSS -->
 <link href="/admin/Dashio/lib/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-
 <!--external css-->
 <link href="/admin/Dashio/lib/font-awesome/css/font-awesome.css"
 	rel="stylesheet" />
-
-<link rel="stylesheet"
-	href="/admin/Dashio/lib/advanced-datatable/css/DT_bootstrap.css" />
-
+<link rel="stylesheet" type="text/css"
+	href="/admin/Dashio/lib/bootstrap-datepicker/css/datepicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="/admin/Dashio/lib/bootstrap-daterangepicker/daterangepicker.css" />
 <!-- Custom styles for this template -->
 <link href="/admin/Dashio/css/style.css" rel="stylesheet">
-
-<!-- 사이드바 css -->
 <link href="/admin/Dashio/css/style-responsive.css" rel="stylesheet">
-
 
 <!-- =======================================================
     Template Name: Dashio
@@ -86,14 +79,14 @@
 							class="fa fa-desktop"></i> <span>회원 관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="/admin/userlist">회원 관리</a></li>
+							<li><a href="/admin/usertable">회원 관리</a></li>
 							<li><a href="/admin/mail">이메일/sms발송</a></li>
 						</ul></li>
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-cogs"></i> <span>주문/배송관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="#">주문 리스트</a></li>
+							<li><a href="/admin/orderlist">주문 리스트</a></li>
 							<li><a href="#">배송 현황</a></li>
 							<li><a href="#">주문 취소/반품</a></li>
 						</ul></li>
@@ -138,43 +131,60 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 주문 리스트
+					<i class="fa fa-angle-right"></i> 공지 사항 등록
 				</h3>
-				<div class="row">
-					<!-- page start-->
-					<div class="content-panel">
-						<div class="adv-table">
-							<table cellpadding="0" cellspacing="0" border="0"
-								class="display table table-bordered" id="hidden-table-info">
-								<thead>
+				<!-- BASIC FORM ELELEMNTS -->
+				<div class="row mt">
+					<div class="col-lg-12">
+						<div class="form-panel">
+							<i class="fa fa-angle-right"></i>
+							<form class="form-horizontal style-form" action="noticeUpload"
+								method="post">
+
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">글 제목</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" name="brdTitle">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">글 내용</label>
+									<div class="col-sm-10">
+										<textarea type="text" class="form-control" rows="10" name="brdContent"></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
+									<div class="col-sm-10">
+										<div class="custom-file" id="inputFile">
+											<input name="file" type="file" class="custom-file-input"
+												id="customFile"> <label class="custom-file-label"
+												for="customFile">파일을 선택해 주세요.</label>
+										</div>
+									</div>
+								</div>
+								<table>
 									<tr>
-										<td>주문 번호</td>
-										<td>회원 번호</td>
-										<td>주문 날짜</td>
+										<td colspan="2"><input type="submit" value="등록"
+											class="btn btn-round btn-success"> &nbsp;&nbsp; <a
+											href="/admin/noticeList"><button type="button"
+													class="btn btn-round btn-info">목록보기</button></a></td>
 									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="vo" items="${orderview}">
-										<tr>
-											<td><a href="/admin/orderview?ordNumber=${vo.ordNumber}">${vo.ordNumber}</a></td>
-											<td>${vo.userId}</td>
-											<td>${vo.ordDate}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+								</table>
+							</form>
+
 						</div>
 					</div>
-					<!-- page end-->
 				</div>
-			</section>
-		</section>
-		<!-- top 스르르르르륵 올라가는거임 -->
-		<a href="#" class="top">
-			<button type="button" class="btn btn-dark">top</button>
-		</a>
-		<!--main content end-->
 
+				<!-- /row -->
+			</section>
+			<!-- /wrapper -->
+		</section>
+		<!-- /MAIN CONTENT -->
+		<!--main content end-->
 		<!--footer start-->
 		<footer class="site-footer">
 			<div class="text-center">
@@ -193,89 +203,40 @@
 				</p>
 			</div>
 		</footer>
-		<!-- footer end -->
+		<!--footer end-->
 	</section>
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="/admin/Dashio/lib/jquery/jquery.min.js"></script>
-	<script type="text/javascript" language="javascript"
-		src="/admin/Dashio/lib/advanced-datatable/js/jquery.js"></script>
-
 	<script src="/admin/Dashio/lib/jquery/scroll.js"></script>
-
 	<script src="/admin/Dashio/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script class="include" type="text/javascript"
 		src="/admin/Dashio/lib/jquery.dcjqaccordion.2.7.js"></script>
 
-	<!-- 사이드바 드롭다운 -->
+	<!-- 사이드바 관련 js 파일 -->
 	<script src="/admin/Dashio/lib/jquery.scrollTo.min.js"></script>
-	<script src="/admin/Dashio/lib/jquery.nicescroll.js"
-		type="text/javascript"></script>
 
-	<script type="text/javascript" language="javascript"
-		src="/admin/Dashio/lib/advanced-datatable/js/jquery.dataTables.js"></script>
-	<script type="text/javascript"
-		src="/admin/Dashio/lib/advanced-datatable/js/DT_bootstrap.js"></script>
-
-
+	<!-- 정체를 모르겠음 -->
+	<!-- <script src="/admin/Dashio/lib/jquery.nicescroll.js"
+		type="text/javascript"></script> -->
 	<!--common script for all pages-->
 	<script src="/admin/Dashio/lib/common-scripts.js"></script>
 	<!--script for this page-->
-	<script type="text/javascript">
-		/* Formating function for row details */
-		function fnFormatDetails(oTable, nTr) {
-			var aData = oTable.fnGetData(nTr);
-			var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-			sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' '
-					+ aData[4] + '</td></tr>';
-			sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
-			sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
-			sOut += '</table>';
+	<script src="/admin/Dashio/lib/jquery-ui-1.9.2.custom.min.js"></script>
+	<!--custom switch-->
+	<script src="/admin/Dashio/lib/bootstrap-switch.js"></script>
+	<!--custom tagsinput-->
+	<script src="/admin/Dashio/lib/jquery.tagsinput.js"></script>
+	<!--custom checkbox & radio-->
+	<script type="text/javascript"
+		src="/admin/Dashio/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript"
+		src="/admin/Dashio/lib/bootstrap-daterangepicker/date.js"></script>
+	<script type="text/javascript"
+		src="/admin/Dashio/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script type="text/javascript"
+		src="/admin/Dashio/lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+	<script src="/admin/Dashio/lib/form-component.js"></script>
 
-			return sOut;
-		}
-
-		$(document)
-				.ready(
-						function() {
-
-							/*
-							 * Initialse DataTables, with no sorting on the 'details' column
-							 */
-							var oTable = $('#hidden-table-info').dataTable({
-								"aoColumnDefs" : [ {
-									"bSortable" : false,
-									"aTargets" : [ 0 ]
-								} ],
-								"aaSorting" : [ [ 1, 'asc' ] ]
-							});
-
-							/* Add event listener for opening and closing details
-							 * Note that the indicator for showing which row is open is not controlled by DataTables,
-							 * rather it is done here
-							 */
-							$('#hidden-table-info tbody td img')
-									.live(
-											'click',
-											function() {
-												var nTr = $(this).parents('tr')[0];
-												if (oTable.fnIsOpen(nTr)) {
-													/* This row is already open - close it */
-													this.src = "lib/advanced-datatable/media/images/details_open.png";
-													oTable.fnClose(nTr);
-												} else {
-													/* Open this row */
-													this.src = "lib/advanced-datatable/images/details_close.png";
-													oTable
-															.fnOpen(
-																	nTr,
-																	fnFormatDetails(
-																			oTable,
-																			nTr),
-																	'details');
-												}
-											});
-						});
-	</script>
 </body>
 
 </html>

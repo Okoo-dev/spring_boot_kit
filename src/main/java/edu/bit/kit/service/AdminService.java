@@ -2,6 +2,7 @@ package edu.bit.kit.service;
 
 import java.util.List;
 
+import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.ProductVO;
@@ -41,6 +42,33 @@ public interface AdminService {
     
     // 상품 삭제 메서드
     public void prodRemove(String prodNumber);
+    
+    // 공지 사항
+    public List<BoardVO> getNoticeList();
+    
+    // 공지 사항 등록
+    public void noticeUpload(BoardVO boardVO);
+    
+    // 1:1 문의
+    public List<BoardVO> getQuestionList();
+    
+    // 이벤트
+    public List<BoardVO> getEventList();
+    
+    // 이벤트 등록
+    public void eventUpload(BoardVO boardVO);
+    
+    // 리뷰
+    public List<BoardVO> getReviewList();
+    
+    // 조회수
+    void upHit(int brdId);
+
+    
+
+   
+
+
 
     
 }

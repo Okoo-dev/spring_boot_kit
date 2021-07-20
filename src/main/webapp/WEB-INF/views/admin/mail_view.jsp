@@ -90,20 +90,18 @@
 							<li><a href="#">배송 현황</a></li>
 							<li><a href="#">주문 취소/반품</a></li>
 						</ul></li>
-					<li class="sub-menu"><a href="javascript:;"> <i
+					<li class="sub-menu"><a href="/admin/prodList"> <i
 							class="fa fa-book"></i> <span>상품관리</span>
-					</a>
-						<ul class="sub">
-							<li><a href="/admin/prodList">상품 리스트</a></li>
-						</ul></li>
+					</a></li>
 
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-tasks"></i> <span>게시판 관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="#">리뷰 관리</a></li>
-							<li><a href="#">이벤트 관리</a></li>
-							<li><a href="form_validation.html">1:1 문의 관리</a></li>
+							<li><a href="/admin/noticeList">공지사항</a></li>
+							<li><a href="/admin/questionList">1:1 문의</a></li>
+							<li><a href="/admin/eventList">이벤트</a></li>
+							<li><a href="/admin/reviewList">리뷰</a></li>
 						</ul></li>
 					<li class="sub-menu"><a href="javascript:;"> <i
 							class="fa fa-th"></i> <span>통계 관리</span>

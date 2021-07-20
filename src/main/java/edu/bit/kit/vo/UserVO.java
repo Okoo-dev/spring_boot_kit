@@ -32,7 +32,7 @@ public class UserVO {
 
 	private String userId;
 	private int userNumber;
-	private String userpassword;
+	private String userPassword;
 	private String userName;
 	private String userPhone;
 	private String userEmail;
@@ -43,6 +43,6 @@ public class UserVO {
 	private Date userLoginTime;
 	private String userAddress;
 	private String userAccount;
-	
+	private String roleName;
 
 }
