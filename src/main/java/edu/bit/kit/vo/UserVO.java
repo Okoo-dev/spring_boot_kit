@@ -15,7 +15,13 @@ package edu.bit.kit.vo;
 환불계좌	co_account	N/A	VARCHAR2(100)	NULL
 
 */
-import java.sql.Timestamp;
+
+
+
+
+
+
+import java.util.Date;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -24,11 +30,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class UserVO {
 
 	private String userId;
@@ -37,13 +45,21 @@ public class UserVO {
 	private String userName;
 	private String userPhone;
 	private String userEmail;
-	private Timestamp userBirth;
+	private Date userBirth;
 	private String userGender;
 	private int userEnabled;
-	private Timestamp userJoinDate;
-	private Timestamp userLoginTime;
+	private Date userJoinDate;
+	private Date userLoginTime;
 	private String userAddress;
 	private String userAccount;
+	@Override
+	public String toString() {
+		return "UserVO [userId=" + userId + ", userNumber=" + userNumber + ", userpassword=" + userpassword
+				+ ", userName=" + userName + ", userPhone=" + userPhone + ", userEmail=" + userEmail + ", userBirth="
+				+ userBirth + ", userGender=" + userGender + ", userEnabled=" + userEnabled + ", userJoinDate="
+				+ userJoinDate + ", userLoginTime=" + userLoginTime + ", userAddress=" + userAddress + ", userAccount="
+				+ userAccount + "]";
+	}
 	
 
 }

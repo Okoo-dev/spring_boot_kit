@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bit.kit.mapper.ProductMapper">
+
+
+	<select id="getList" resultType="edu.bit.kit.vo.ProductVO">
+<![CDATA[
+select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRICE, CO_SERVINGS,CO_COOKINGTIME, CO_PREPARE_TIME, CO_COMMENT from HK_PROD order by PRODUCT_NUMBER desc
+]]>
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+   <![CDATA[
+   		select count(*) from HK_PROD  		
+   ]]>
+	</select>
+
+	<select id="getListWithPaging"
+		resultType="edu.bit.kit.vo.ProductVO">
+   <![CDATA[
+   		  SELECT * FROM (
+              SELECT ROWNUM AS RNUM, A.* FROM (
+                       SELECT
+                             *
+                         FROM
+                             HK_PROD 
+                         order by PRODUCT_NUMBER desc   
+             ) A WHERE ROWNUM <= #{pageNum} * #{amount}
+         ) WHERE RNUM > (#{pageNum}-1) * #{amount}		
+   ]]>
+	</select>
+
+	<!-- 장바구니 -->
+	<resultMap type="edu.bit.kit.vo.CartVO" id="addCart">
+
+		<result column="CART_ID" property="cartId" />
+		<result column="USER_ID" property="cartUserid" />
+		<result column="PRODUCT_NUMBER" property="cartProductNumber" />
+		<result column="CART_NUMBER" property="cartNumber" />
+		<result column="CO_AMOUNT" property="cartAmount" />
+	</resultMap>
+
+	<resultMap type="edu.bit.kit.vo.CartCateVO" id="cartCategory">
+
+
+		<result column="CART_NUMBER" property="cartCateNumber" />
+		<result column="CO_NAME" property="cartCateName" />
+	</resultMap>
+
+	<insert id="addCart">
+		<!-- Insert into HK_CART
+		(CART_ID,USER_ID,PRODUCT_NUMBER,CART_NUMBER,CO_AMOUNT)
+		values
+		(CART_ID_seq.nextval, #{cartUserid}, #{cartProductNumber},
+		#{cartNumber}, #{cartAmount}) -->
+		
+		Insert into HK_CART
+		(CART_ID,USER_ID,PRODUCT_NUMBER,CART_NUMBER,CO_AMOUNT)
+		values
+		(CART_ID_seq.nextval, 'SUN', 5,
+		2, 3)
+	</insert>
+
+</mapper>
