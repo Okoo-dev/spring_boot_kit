@@ -15,6 +15,7 @@
   <logger name="jdbc" level="OFF"/>
   
   <logger name="jdbc.sqlonly" level="OFF"/>
+
   <logger name="jdbc.sqltiming" level="off"/>
   <logger name="jdbc.audit" level="OFF"/>
   <logger name="jdbc.resultset" level="OFF"/>

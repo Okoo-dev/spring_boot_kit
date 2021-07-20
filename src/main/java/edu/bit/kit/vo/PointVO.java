@@ -14,6 +14,6 @@ import lombok.ToString;
 public class PointVO {
     private int orderNumber;
     private String userId;
-    private int Point;
+    private int point;
     
 }
