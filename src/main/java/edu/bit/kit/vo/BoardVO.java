@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-
 public class BoardVO {
 
 	private int brdId;
