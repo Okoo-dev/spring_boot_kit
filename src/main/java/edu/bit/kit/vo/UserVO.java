@@ -1,4 +1,5 @@
 package edu.bit.kit.vo;
+import java.util.Collection;
 /*
 유저아이디(PK)	user_id(PK)	N/A	VARCHAR2(100)	NOT NULL
 유저번호	co_number	N/A	NUMBER(38)	NULL
@@ -17,6 +18,9 @@ package edu.bit.kit.vo;
 */
 import java.util.Date;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,21 +32,57 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserVO {
+public class UserVO implements UserDetails{
 
-	private String userId;
+    
+    private String userId;
 	private int userNumber;
 	private String userPassword;
-	private String userName;
+	private String name;
 	private String userPhone;
 	private String userEmail;
-	private Date userBirth;
+	private String userBirth;
 	private String userGender;
 	private int userEnabled;
 	private Date userJoinDate;
 	private Date userLoginTime;
 	private String userAddress;
 	private String userAccount;
-	private String roleName;
+	private String authName;
+   
+	// userdetails에 필요한 필드를 임의로 만들어줌
+	private boolean isAccountNonExpired = true;
+	private boolean isAccountNonLocked = true;
+	private boolean isCredentialsNonExpired = true;
+	private Collection<? extends GrantedAuthority> Authority;
+	
+	@Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Authority;
+    }
+    @Override
+    public String getPassword() {
+        return userPassword;
+    }
+    @Override
+    public String getUsername() {
+        return userId;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+    @Override
+    public boolean isEnabled() {
+        return userEnabled == 1 ?true:false;
+    }
 
 }
