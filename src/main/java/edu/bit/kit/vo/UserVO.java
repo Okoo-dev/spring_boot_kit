@@ -14,7 +14,7 @@ package edu.bit.kit.vo;
 배송지	co_address	N/A	VARCHAR2(100)	NULL
 환불계좌	co_account	N/A	VARCHAR2(100)	NULL
 
-*/
+
 
 
 
@@ -27,6 +27,9 @@ import java.util.List;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+import java.util.Date;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +46,7 @@ public class UserVO {
 
 	private String userId;
 	private int userNumber;
-	private String userpassword;
+	private String userPassword;
 	private String userName;
 	private String userPhone;
 	private String userEmail;
@@ -54,6 +57,10 @@ public class UserVO {
 	private Date userLoginTime;
 	private String userAddress;
 	private String userAccount;
+
+
+	private String roleName;
+
 
 	private ArrayList<AuthVO> authList;
 }
