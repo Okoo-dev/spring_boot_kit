@@ -1,8 +1,13 @@
 package edu.bit.kit.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sun.tools.javac.util.List;
+
 import edu.bit.kit.page.Criteria;
 import edu.bit.kit.page.PageVO;
+import edu.bit.kit.security.SecurityService;
+import edu.bit.kit.security.UserPrincipalVO;
 import edu.bit.kit.service.ProductService;
+import edu.bit.kit.vo.AuthVO;
 import edu.bit.kit.vo.CartVO;
 import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -48,13 +58,13 @@ public class UserController{
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("/test")
-	public String getUser(Model model) {
-		UserVO user = new UserVO("jinwoo9875",1, "9875","송진우", "2134@naver.com", null, null, null, 0, null, null, null, null);
-		model.addAttribute("user", user);
-		return "test";
-				
-	}
+	/*
+	 * @GetMapping("/test") public String getUser(Model model) { UserVO user = new
+	 * UserVO("jinwoo9875",1, "9875","송진우", "2134@naver.com", null, null, null, 0,
+	 * null, null, null, null); model.addAttribute("user", user); return "test";
+	 * 
+	 * }
+	 */
 	
 	@GetMapping("/menu")
 	public String menu(Criteria cri, Model model) {
@@ -63,14 +73,22 @@ public class UserController{
 		
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
-		return "Menu";
+		/*
+		 * Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 * UserPrincipalVO userPrincipalVO = (UserPrincipalVO) auth.getPrincipal();
+		 * 
+		 * model.addAttribute("name",userPrincipalVO.getUsername());
+		 * model.addAttribute("auth",userPrincipalVO.getAuthorities());
+		 */
+		
+		return "thymeleaf/Menu";
 	}
 	
 	@GetMapping("/order")
 	public String order(Model model) {
 		model.addAttribute("list", productService.getList());
 		log.info("/order");
-		return "OrderPage";
+		return "thymeleaf/OrderPage";
 	}
 	
 	// 장바구니
@@ -80,17 +98,54 @@ public class UserController{
 		/*
 		 * UserVO member = (UserVO)session.getAttribute("member");
 		 * cart.setCartUserid(member.getUserId());
-		 */		
+		 */
+		
 		/*
 		 * String id = "jinwoo"; int pn = 2; int amount = 3; cart.setCartUserid(id);
 		 * cart.setCartAmount(amount); cart.setCartProductNumber(pn);
 		 */
 		log.info("CartVO:" + cart);
-		
-		
+			
 		productService.plusCart(cart);
 		
 	}
 	
+	// 회원 가입 Get 이동
+	@RequestMapping(value= "/signup", method=RequestMethod.GET)
+	public void getSignup() throws Exception {
+		log.info("get signup");
+	}
+	// 회원 가입 Post 이동
+	
+	
+	
+	
+	@Autowired
+	SecurityService service;
+	
+	@GetMapping("/adduser")
+	public void addUser() {
+		log.info("adduser..");
+		
+		
+		UserVO user = new UserVO();
+		user.setUserId("jinwoo9875");
+		user.setUserpassword("1111");
+		user.setUserName("송진우");
+		
+		ArrayList<AuthVO> authList  = new ArrayList<AuthVO>();
+		
+		AuthVO auth = new AuthVO();
+		auth.setAuthAuthority("ROLE_MEMBER");
+		auth.setUserId(user.getUserId());
+		auth.setAuthEabled("1");
+		authList.add(auth);
+		
+		user.setAuthList(authList);
+		
+		service.addUser(user);	
+		
+		
+	}
 	
 }

@@ -21,7 +21,9 @@ package edu.bit.kit.vo;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -36,7 +38,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString
 public class UserVO {
 
 	private String userId;
@@ -52,14 +54,6 @@ public class UserVO {
 	private Date userLoginTime;
 	private String userAddress;
 	private String userAccount;
-	@Override
-	public String toString() {
-		return "UserVO [userId=" + userId + ", userNumber=" + userNumber + ", userpassword=" + userpassword
-				+ ", userName=" + userName + ", userPhone=" + userPhone + ", userEmail=" + userEmail + ", userBirth="
-				+ userBirth + ", userGender=" + userGender + ", userEnabled=" + userEnabled + ", userJoinDate="
-				+ userJoinDate + ", userLoginTime=" + userLoginTime + ", userAddress=" + userAddress + ", userAccount="
-				+ userAccount + "]";
-	}
-	
 
+	private ArrayList<AuthVO> authList;
 }

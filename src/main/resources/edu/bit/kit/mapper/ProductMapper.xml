@@ -63,4 +63,92 @@ select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRIC
 		2, 3)
 	</insert>
 
+	<!-- 시큐리티 -->
+	<resultMap type="edu.bit.kit.vo.UserVO" id="userMap">		
+		<result column="USER_ID" property="userId" />
+		<result column="CO_NUMBER" property="userNumber" />
+		<result column="CO_PASSWORD" property="userpassword" />
+		<result column="CO_NAME" property="userName" />
+		<result column="CO_PHONE" property="userPhone" />
+		<result column="CO_EMAIL" property="userEmail" />
+		<result column="CO_BIRTH" property="userBirth" />
+		<result column="CO_GENDER" property="userGender" />
+		<result column="CO_ENABLED" property="userEnabled" />
+		<result column="CO_JOINDATE" property="userJoinDate" />
+		<result column="CO_LOGINTIME" property="userLoginTime" />
+		<result column="CO_ADDRESS" property="userAddress" />
+		<result column="CO_ACCOUNT" property="userAccount" />
+		
+ 		<collection resultMap="authMap" property="authList">
+		</collection> 
+	</resultMap>
+
+	<resultMap type="edu.bit.kit.vo.AuthVO" id="authMap">
+	
+		<result column="AUTHORITIES_ID" property="authId" />
+		<result column="CO_AUTHORITY" property="authAuthority" />
+		<result column="CO_ENABLED" property="authEabled" />
+		<result column="USER_ID" property="userId" />
+	</resultMap>
+	
+	<select id="getUser" resultMap="userMap">
+		select * from HK_USER , HK_AUTH 
+		where HK_USER.USER_ID = HK_AUTH.USER_ID and HK_USER.USER_ID = #{userId}
+	</select>
+	
+	<select id="findByUserId" resultMap="userMap">	
+	
+	<![CDATA[
+SELECT mem.USER_ID, CO_NUMBER, CO_PASSWORD, CO_NAME, CO_PHONE, CO_EMAIL, CO_BIRTH, CO_GENDER, mem.CO_ENABLED, CO_JOINDATE, CO_LOGINTIME,
+CO_ADDRESS, CO_ACCOUNT, CO_AUTHORITY, AUTHORITIES_ID
+ FROM HK_USER mem LEFT OUTER JOIN HK_AUTH auth on mem.USER_ID = auth.USER_ID
+ WHERE mem.USER_ID = #{userId}
+]]>
+	</select>
+	
+	<insert id="userSave" >
+	    INSERT INTO HK_USER
+        (
+            USER_ID,
+            CO_PASSWORD,
+            CO_NAME
+        )
+        VALUES
+        (
+            #{userId},
+            #{userpassword},
+            #{userName}
+        )
+	</insert>
+	
+	<insert id="userRoleSave">
+		INSERT INTO HK_AUTH
+        (
+        	AUTHORITIES_ID,
+            USER_ID,
+            CO_AUTHORITY,
+            CO_ENABLED
+        )
+        VALUES
+        (
+        	HK_AUTH_SEQ.nextval,
+            #{authVO.userId},
+            #{authVO.authAuthority},
+            #{authVO.authEabled}
+        )
+	</insert>
+	
+	<select id="findUserNo" resultType="Integer">
+		SELECT 
+			USER_ID
+		FROM HK_USER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="findRoleNo" resultType="Integer">
+		SELECT 
+			AUTHORITIES_ID
+		FROM HK_AUTH
+		WHERE AUTHORITIES_ID = #{authId}
+	</select>
 </mapper>

@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<taglib prefix="sec" uri="http://www.springframework.org/security/tags">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -22,48 +24,48 @@
 <script th:src=@{js/bootstrap.min.js}></script>
 
 <!-- 카트 담기 -->
- <script>
-  $(document).ready(function(){
-	 /* 1. 상품카드쪽에 상품번호를 input hidden 주기
+<script>
+	$(document).ready(function() {
+		/* 1. 상품카드쪽에 상품번호를 input hidden 주기
 		2. 인풋히든 id값을 아래 .addTocart에 명시
 		3. $("#cartProductNumber") 쪽을 아이디 명시
 		4. data쪽에 cartProductNumber : cartProductNumber 이런식으로 적기
 		5. mapper.xml쪽에 아이디 제외한 나머지 부분 원래 변수로 작성하기
-	 
-	 */
-  $(".addToCart").click(function(e){
-	  e.preventDefault();
-   var cartProductNumber = $("#cartProductNumber").val();
-   var cartAmount = $("#cartAmount").val();
-   var cartUserid = $("#cartUserid").val();
-   
-   var data = {
-		cartProductNumber : cartProductNumber,
-     	cartAmount : 1,
-     	cartUserid : "jinwoo"
-     };
-   
-   var url = '/menu'
+		
+		 */
+		$(".addToCart").click(function(e) {
+			e.preventDefault();
+			var cartProductNumber = $("#cartProductNumber").val();
+			var cartAmount = $("#cartAmount").val();
+			var cartUserid = $("#cartUserid").val();
 
-   console.log(url);
-   
-   $.ajax({
-    url : url,
-    cache : false,
-    type : "POST",
-    data : data,
-    success : function(result){
-     alert("카트 담기 성공");
-     
-    },
-    error : function(){
-     alert("카트 담기 실패");	
-    }
-   });
-  });
-  
- }) 
- </script>
+			var data = {
+				cartProductNumber : cartProductNumber,
+				cartAmount : 1,
+				cartUserid : "jinwoo"
+			};
+
+			var url = '/menu'
+
+			console.log(url);
+
+			$.ajax({
+				url : url,
+				cache : false,
+				type : "POST",
+				data : data,
+				success : function(result) {
+					alert("카트 담기 성공");
+
+				},
+				error : function() {
+					alert("카트 담기 실패");
+				}
+			});
+		});
+
+	})
+</script>
 
 
 
@@ -100,8 +102,20 @@ p {
 		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name">사용자</a></li>
+				<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+				<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
+				<!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->				
+					<a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:href="@{/login}">Login</a>
+				</li>
+				<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
+				<li class="nav-item"><a class="nav-link" href="signup">회원가입</a></li>
 			</ul>
 		</div>
 	</div>
@@ -146,52 +160,54 @@ p {
 
 	<!-- 상품메뉴 : 카드형식 -->
 	<section class="container">
-			<div class="bg-white py-3"></div>
-			
-			<div class="card-group">
-					<tr th:each="ProductVO : ${list}">
-					<div class ="col-sm-3">
-				<div class="card mx-3">			
-					<!-- <tr th:each="ProductVO : ${list}"> -->
-					<a href="#"> <img src="img/2.jpg" class="card-img-top"
-						alt="..."> <!-- <div class="card-body"> -->
-						<p class="card-text">
-							<small><td th:text="${ProductVO.CO_SERVINGS}"></td> | <td th:text="${ProductVO.CO_COOKINGTIME}"></td></small>
-						</p>
-						<p class="card-tit">
-							<td th:text="${ProductVO.CO_NAME}"></td>
-						</p>
-						<p>
-							<td th:text="${ProductVO.CO_PRICE}"></td>
-						</p>
+		<div class="bg-white py-3"></div>
 
-						<p class="card-text">
-							<small>!!!별점 평균 및 리뷰총개수 표현 부분!!! </small>
-						</p></a>
-				
-				<div class="card-footer">
-					<div class="icon">
-						<a class="icon-group" href="#"><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></a>
-						
-						<a class="addToCart" href="/cartList"><i class="fa fa-shopping-cart fa-2x  col-md-3" aria-hidden="true"></i></a>
-						
+		<div class="card-group">
+			<tr th:each="ProductVO : ${list}">
+				<div class="col-sm-3">
+					<div class="card mx-3">
+						<!-- <tr th:each="ProductVO : ${list}"> -->
+						<a href="#"> <img src="img/2.jpg" class="card-img-top"
+							alt="..."> <!-- <div class="card-body"> -->
+							<p class="card-text">
+								<small><td th:text="${ProductVO.CO_SERVINGS}"></td> |
+									<td th:text="${ProductVO.CO_COOKINGTIME}"></td></small>
+							</p>
+							<p class="card-tit">
+								<td th:text="${ProductVO.CO_NAME}"></td>
+							</p>
+							<p>
+								<td th:text="${ProductVO.CO_PRICE}"></td>
+							</p>
 
+							<p class="card-text">
+								<small>!!!별점 평균 및 리뷰총개수 표현 부분!!! </small>
+							</p></a>
+
+						<div class="card-footer">
+							<div class="icon">
+								<a class="icon-group" href="#"><i
+									class="fa fa-heart-o fa-2x" aria-hidden="true"></i></a> <a
+									class="addToCart" href="/cartList"><i
+									class="fa fa-shopping-cart fa-2x  col-md-3" aria-hidden="true"></i></a>
+
+
+							</div>
+						</div>
+						<div class="bg-white py-3"></div>
 					</div>
 				</div>
-				<div class="bg-white py-3"></div>
-				</div>
-				</div>
-				
-				</tr>
-				
-				</div>
-				
-			
-		
+
+			</tr>
+
+		</div>
+
+
+
 
 	</section>
-	
-<!-- <nav aria-label="...">
+
+	<!-- <nav aria-label="...">
   <ul class="pagination">
     <li class="page-item disabled">
       <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
@@ -207,20 +223,25 @@ p {
   </ul>
 </nav> -->
 	<nav>
-	 <ul class="pagination">
-      <li th:if="${pageMaker.prev}">
-						<a th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.startPage - 1)}|" th:href="@{${menu}}" th:text=${&laquo;}>&laquo;</a></li>
-									
-						<li th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-      <a th:with="menu=|/menu${pageMaker.makeQuery(idx)}|" th:href="@{${menu}}" th:text=${idx}> </a></li>
-      
-						 <li th:if="${pageMaker.next && pageMaker.endPage > 0}">
-						<a th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.endPage +1)}|" th:href="@{${menu}}">Next</a></li>
-					
-					</ul>
+		<ul class="pagination">
+			<li th:if="${pageMaker.prev}"><a
+				th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.startPage - 1)}|"
+				th:href="@{${menu}}" th:text=${&laquo;}>&laquo;</a></li>
+
+			<li
+				th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+				<a th:with="menu=|/menu${pageMaker.makeQuery(idx)}|"
+				th:href="@{${menu}}" th:text=${idx}> </a>
+			</li>
+
+			<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
+				th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.endPage +1)}|"
+				th:href="@{${menu}}">Next</a></li>
+
+		</ul>
 	</nav>
-	
-<!-- 
+
+	<!-- 
  <ul class="pagination pagination justify-content-center">
             <li class="page-item" th:classappend="${!pageMaker.isPrev} ? disabled">
                 <a class="page-link" href="#" th:href="${pageMaker.isPrev ? '/?page=' + (pageMaker?.list[0] - 1) : ''}">&laquo;</a>
@@ -245,8 +266,8 @@ p {
 			<li class="page-item"><a class="page-link" href="#">Next</a></li>
 		</ul>
 	</nav>					
-		-->		
-		<!--  
+		-->
+	<!--  
 		  <ul class="pagination">
       <th:if test="${pageMaker.prev}">
 						<li class="page-item"><a class="page-link" href="@{/menu${pageMaker.makeQuery(pageMaker.startPage - 1)}"}>Previous</a></li>
@@ -259,7 +280,7 @@ p {
 					</th:if> 
 					</ul>
 		-->
-		<!--  
+	<!--  
 		 <nav>	
 	 <ul class="pagination">
               
@@ -278,7 +299,7 @@ p {
               </ul>
 	</nav>	
 	-->
-	
+
 
 
 	<div class="bg-white py-5"></div>
