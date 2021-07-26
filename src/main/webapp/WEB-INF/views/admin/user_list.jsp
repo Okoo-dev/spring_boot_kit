@@ -161,7 +161,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="vo" items="${usertable}">
+									<c:forEach var="vo" items="${userList}">
 										<tr>
 											<td><a href="/admin/userview?userId=${vo.userId}">${vo.userId}</a></td>
 											<td>${vo.userNumber}</td>

@@ -32,13 +32,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserVO implements UserDetails{
+public class UserVO{
 
     
     private String userId;
 	private int userNumber;
 	private String userPassword;
-	private String name;
+	private String userName;
 	private String userPhone;
 	private String userEmail;
 	private String userBirth;
@@ -49,40 +49,5 @@ public class UserVO implements UserDetails{
 	private String userAddress;
 	private String userAccount;
 	private String authName;
-   
-	// userdetails에 필요한 필드를 임의로 만들어줌
-	private boolean isAccountNonExpired = true;
-	private boolean isAccountNonLocked = true;
-	private boolean isCredentialsNonExpired = true;
-	private Collection<? extends GrantedAuthority> Authority;
-	
-	@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Authority;
-    }
-    @Override
-    public String getPassword() {
-        return userPassword;
-    }
-    @Override
-    public String getUsername() {
-        return userId;
-    }
-    @Override
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
-    }
-    @Override
-    public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
-    }
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
-    }
-    @Override
-    public boolean isEnabled() {
-        return userEnabled == 1 ?true:false;
-    }
 
 }

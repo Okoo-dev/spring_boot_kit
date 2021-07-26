@@ -17,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AdminController {
-
+public class AdminController {    
+    
     @Autowired
     private AdminService adminService;
 
     // admin 페이지 호출 메서드
-    @GetMapping("/admin")
+    @GetMapping("/")
     public String adminMain() {
 
         log.info("adminMain..");
@@ -35,7 +35,7 @@ public class AdminController {
     @GetMapping("/admin/userlist")
     public String userList(Model model) {
 
-        log.info("userList..");
+        log.info("userList..", model);
         model.addAttribute("userList", adminService.getUserList());
 
         return "admin/user_list";
