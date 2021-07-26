@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<taglib prefix="sec" uri="http://www.springframework.org/security/tags">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href=@{css/bootstrap.min.css}>
+<link rel="stylesheet" th:href=@{css/style.css}>
+<link rel="stylesheet"
+	th:href=@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src=@{js/jquery-3.2.1.slim.min.js}></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script th:src=@{popper/popper.min.js}></script>
+<script th:src=@{js/bootstrap.min.js}></script>
+
+<!-- 카트 담기 -->
+<script>
+	$(document).ready(function() {
+		/* 1. 상품카드쪽에 상품번호를 input hidden 주기
+		2. 인풋히든 id값을 아래 .addTocart에 명시
+		3. $("#cartProductNumber") 쪽을 아이디 명시
+		4. data쪽에 cartProductNumber : cartProductNumber 이런식으로 적기
+		5. mapper.xml쪽에 아이디 제외한 나머지 부분 원래 변수로 작성하기
+		
+		 */
+		$(".addToCart").click(function(e) {
+			e.preventDefault();
+			var cartProductNumber = $("#cartProductNumber").val();
+			var cartAmount = $("#cartAmount").val();
+			var cartUserid = $("#cartUserid").val();
+
+			var data = {
+				cartProductNumber : cartProductNumber,
+				cartAmount : 1,
+				cartUserid : "jinwoo"
+			};
+
+			var url = '/menu'
+
+			console.log(url);
+
+			$.ajax({
+				url : url,
+				cache : false,
+				type : "POST",
+				data : data,
+				success : function(result) {
+					alert("카트 담기 성공");
+
+				},
+				error : function() {
+					alert("카트 담기 실패");
+				}
+			});
+		});
+
+	})
+</script>
+
+
+
+<title>Kit.</title>
+
+<style type="text/css">
+.underline {
+	text-decoration: none;
+	border-bottom: 2px solid black;
+}
+
+.card-text {
+	margin: 0;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+p {
+	color: black;
+}
+</style>
+
+</head>
+<body>
+
+
+
+	<div class="myline"></div>
+
+	<div
+		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		<div class="navbar-nav" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name">사용자</a></li>
+				<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+				<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
+				<!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->				
+					<a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:href="@{/login}">Login</a>
+				</li>
+				<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
+				<li class="nav-item"><a class="nav-link" href="signup">회원가입</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!-- 상단 로고 메뉴 바 -->
+	<!-- Navigation -->
+
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
+		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
+			class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- 메뉴 : 대제목, 정렬 -->
+	<div class="bg-white py-3"></div>
+	<div class="container">
+		<h1 class="text-left fw-bolder">메뉴</h1>
+		<hr class="underline">
+		<ul class="nav justify-content-end">
+			<li class="mx-2"><a href="">신메뉴순</a></li>
+			<li class="mx-2"><a href="">인기메뉴순</a></li>
+			<li class="mx-2"><a href="">높은가격</a></li>
+			<li class="mx-2"><a href="">낮은가격</a></li>
+		</ul>
+	</div>
+
+
+	<!-- 상품메뉴 : 카드형식 -->
+	<section class="container">
+		<div class="bg-white py-3"></div>
+
+		<div class="card-group">
+			<tr th:each="ProductVO : ${list}">
+				<div class="col-sm-3">
+					<div class="card mx-3">
+						<!-- <tr th:each="ProductVO : ${list}"> -->
+						<a href="#"> <img src="img/2.jpg" class="card-img-top"
+							alt="..."> <!-- <div class="card-body"> -->
+							<p class="card-text">
+								<small><td th:text="${ProductVO.CO_SERVINGS}"></td> |
+									<td th:text="${ProductVO.CO_COOKINGTIME}"></td></small>
+							</p>
+							<p class="card-tit">
+								<td th:text="${ProductVO.CO_NAME}"></td>
+							</p>
+							<p>
+								<td th:text="${ProductVO.CO_PRICE}"></td>
+							</p>
+
+							<p class="card-text">
+								<small>!!!별점 평균 및 리뷰총개수 표현 부분!!! </small>
+							</p></a>
+
+						<div class="card-footer">
+							<div class="icon">
+								<a class="icon-group" href="#"><i
+									class="fa fa-heart-o fa-2x" aria-hidden="true"></i></a> <a
+									class="addToCart" href="/cartList"><i
+									class="fa fa-shopping-cart fa-2x  col-md-3" aria-hidden="true"></i></a>
+
+
+							</div>
+						</div>
+						<div class="bg-white py-3"></div>
+					</div>
+				</div>
+
+			</tr>
+
+		</div>
+
+
+
+
+	</section>
+
+	<!-- <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav> -->
+	<nav>
+		<ul class="pagination">
+			<li th:if="${pageMaker.prev}"><a
+				th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.startPage - 1)}|"
+				th:href="@{${menu}}" th:text=${&laquo;}>&laquo;</a></li>
+
+			<li
+				th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+				<a th:with="menu=|/menu${pageMaker.makeQuery(idx)}|"
+				th:href="@{${menu}}" th:text=${idx}> </a>
+			</li>
+
+			<li th:if="${pageMaker.next && pageMaker.endPage > 0}"><a
+				th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.endPage +1)}|"
+				th:href="@{${menu}}">Next</a></li>
+
+		</ul>
+	</nav>
+
+	<!-- 
+ <ul class="pagination pagination justify-content-center">
+            <li class="page-item" th:classappend="${!pageMaker.isPrev} ? disabled">
+                <a class="page-link" href="#" th:href="${pageMaker.isPrev ? '/?page=' + (pageMaker?.list[0] - 1) : ''}">&laquo;</a>
+            </li>
+            <li th:each="PageVO: $pageMaker.make}" class="page-item" th:classappend="${pageMaker.pageNum eq num} ? active">
+                <a class="page-link" href="#" th:href="${'/?page=' + num}" th:text="${num}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!pageMaker.isNext} ? disabled">
+                <a class="page-link" href="#" th:href="${pageMaker.isNext ? '/?page=' + (pageMaker?.list[0] + 5) : ''}">&raquo;</a>
+            </li>
+        </ul>
+ -->
+	<!-- pagination 부분 -->
+	<!--  <nav aria-label="...">
+		<ul class="pagination justify-content-center">
+			<li class="page-item disabled"><span class="page-link">Previous</span>
+			</li>
+			<li class="page-item"><a class="page-link" href="#">1</a></li>
+			<li class="page-item active" aria-current="page"><span
+				class="page-link">2</span></li>
+			<li class="page-item"><a class="page-link" href="#">3</a></li>
+			<li class="page-item"><a class="page-link" href="#">Next</a></li>
+		</ul>
+	</nav>					
+		-->
+	<!--  
+		  <ul class="pagination">
+      <th:if test="${pageMaker.prev}">
+						<li class="page-item"><a class="page-link" href="@{/menu${pageMaker.makeQuery(pageMaker.startPage - 1)}"}>Previous</a></li>
+						</th:if>
+	<th:Each var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" >
+						<li class="page-item"><a class="page-link" href="@{/menu${pageMaker.makeQuery(idx)}"}>${idx}</a></li>
+						</th:Each>
+	<th:if test="${pageMaker.next && pageMaker.endPage > 0}">
+						<li class="page-item"><a class="page-link" href="@{/menu${pageMaker.makeQuery(pageMaker.endPage +1) }"}>Next</a></li>
+					</th:if> 
+					</ul>
+		-->
+	<!--  
+		 <nav>	
+	 <ul class="pagination">
+              
+              <li th:if="${pageMaker.prev} == true">
+              	<a th:href="@{/menu(page=${pageMaker.startPage}-1,perPageNum=${pageMaker.cri.pageNum})}">&laquo;</a>
+              </li>
+              
+              <li th:each="idx,iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}"  th:classappend="${pageMaker.cri.page} == ${idx} ? active : null">
+                <a th:href="@{/menu(page=${idx},pageNum=${pageMaker.cri.pageNum})}" th:text="${idx}"></a>
+              </li>
+                
+              <li th:if="${pageMaker.next} == true and ${pageMaker.endPage > 0}">
+              	<a th:href="@{/menu(page=${pageMaker.endPage}+1,pageNum=${pageMaker.cri.pageNum})}">&raquo;</a>
+              </li>
+              
+              </ul>
+	</nav>	
+	-->
+
+
+
+	<div class="bg-white py-5"></div>
+
+	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
+	<footer>
+		<div class="jumbotron text-center jumbotron-fluid bg-secondary ">
+			<div class="foo_div"></div>
+			<img src="img/Kit2_size.png" />
+			<div class="foo_div1">
+				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
+					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
+				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
+				<p>Kit.</p>
+				<img src="img/kakaotalk.png"> <img src="img/google+.png">
+				<img src="img/naver.png">
+			</div>
+		</div>
+	</footer>
+
+
+</body>
+</html>

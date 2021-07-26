@@ -1,0 +1,391 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href=@{css/bootstrap.min.css}>
+<link rel="stylesheet" th:href=@{css/style.css}>
+<link rel="stylesheet"
+	th:href=@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+<link type="text/css" rel="stylesheet" th:href=@{css/addlinkSampel.css}>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src=@{js/jquery-3.2.1.slim.min.js}></script>
+<script th:src=@{popper/popper.min.js}></script>
+<script th:src=@{js/bootstrap.min.js}></script>
+
+<!-- 주소api -->
+<script>
+	var pop;
+
+	function goPopup() {
+		// window.name = "부모창 이름"; 
+		window.name = "parentForm";
+
+		//pop = window.open("/resources/kit/jusoPopup2.html", "pop","width=570, height=420, scrollbars=yes");
+		pop = window.open("/jusoPopup.html", "pop", "width=570, height=420, scrollbars=yes");
+
+	}
+
+	function jusoCallBack(entX, entY) {
+		var form = $('<form></form>');
+		form.attr('action', '/map');
+		form.attr('method', 'post');
+		form.appendTo('body');
+		form.append($('<input type="hidden" value="' + entX + '" name=entX>'));
+		form.append($('<input type="hidden" value="' + entY + '" name=entY>'));
+		form.submit();
+
+		pop.close();
+	}
+</script>
+
+<title>Kit.</title>
+
+<style type="text/css">
+/*
+.address-info {
+display: none;
+
+}
+*/
+.delivery-info {
+	/* text-align: center; */
+	margin: auto;
+}
+
+.bd-siderbar {
+	position: sticky;
+}
+/* 위에 고정 안먹음, 확인필요 
+.delivery {
+	border: 1px solid gray;
+	height: 200px;
+}
+*/
+.underline {
+	color: black;
+}
+
+.pay-info {
+	font-weight: bold;
+	text-align: right;
+}
+
+.pay-discout-detail {
+	font-weight: normal;
+	font-size: small;
+}
+
+.pay-discount {
+	text-align: right;
+	font-weight: normal;
+	font-size: small;
+}
+
+.pay-total {
+	text-align: right;
+	font-weight: bold;
+	font-size: large;
+	color: red;
+}
+
+.modal {
+	text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.modal-backdrop {
+	position: static;
+}
+</style>
+
+
+
+</head>
+<body>
+	<div class="myline"></div>
+
+	<div
+		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		<div class="navbar-nav" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!-- 상단 로고 메뉴 바 -->
+	<!-- Navigation -->
+
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
+		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
+			class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- 메뉴 : 대제목, 정렬  -->
+	<div class="bg-white py-3"></div>
+	<div class="container">
+		<h1 class="text-left fw-bolder">주문하기</h1>
+		<hr class="underline">
+		<div class="bg-white py-3"></div>
+		<!-- <ul class="nav justify-content-end">
+			<li class="mx-2"><a href="">신메뉴순</a></li>
+			<li class="mx-2"><a href="">인기메뉴순</a></li>
+			<li class="mx-2"><a href="">높은가격</a></li>
+			<li class="mx-2"><a href="">낮은가격</a></li>
+		</ul>
+		-->
+	</div>
+
+	<!-- 주문자 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-7">
+				<h4 class="text-left fw-bolder">주문자</h4>
+				<hr class="underline"></hr>
+				<div class="row">
+					<div class="col">
+						<label for="exampleInputName1" class="form-label mt-4">*이름</label>
+						<input type="email" class="form-control" id="exampleInputName1"
+							aria-describedby="nameHelp" placeholder="이름">
+					</div>
+					<div class="col">
+						<label for="exampleInputTel1" class="form-label mt-4">*휴대폰</label>
+						<input type="tel" class="form-control" id="exampleInputTel1"
+							placeholder="-없이 입력하세요">
+					</div>
+				</div>
+
+	<!-- 배송정보 -->
+				<div class="bg-white py-3"></div>
+				<h4 class="text-left fw-bolder">배송정보</h4>
+				<hr class="underline"></hr>
+				<div class="row delivery">
+					<div class="col-4 delivery-info">
+						<h6 class=" align-middle">배송지</h6>
+					</div>
+					<div class="col-8 delivery delivery-info">
+
+
+
+						<button onclick="goPopup();" type="button"
+							class="btn btn-primary delivery-info">배송지등록</button>
+
+
+					</div>
+				</div>
+
+				<!--	
+				<div class="address-info">
+		<div class="bg-white py-3"></div>
+		
+		우편번호 : <input type="text" id="1"><br>			
+		   주소 : <input type="text" id="2"><br>	
+		상세주소 : <input type="text" id="3"><br>	
+		</div>	
+		  -->
+				<div class="bg-white py-2"></div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">우편번호</span>
+					</div>
+					<input type="text" id="1" class="form-control" placeholder=""
+						aria-label="Username" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">주소</span>
+					</div>
+					<input type="text" id="2" class="form-control" placeholder=""
+						aria-label="Username" aria-describedby="basic-addon1">
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">상세주소</span>
+					</div>
+					<input type="text" id="3" class="form-control" placeholder=""
+						aria-label="Username" aria-describedby="basic-addon1">
+				</div>
+				
+				
+		<!-- 주문상품 출력 -->
+				<div class="bg-white py-3"></div>
+				<div class="card mb-3" style="max-width: 540px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="img/2.jpg" class="img-fluid" alt="...">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">비건식 건강밀키트</h5>
+								<p class="card-text">35,000원</p>
+								<p class="card-text">
+									<small class="text-muted">수량 1개</small>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- 할인적용	 -->
+				<div class="bg-white py-3"></div>
+				<h4 class="text-left fw-bolder">할인적용</h4>
+				<hr class="underline"></hr>
+				<div class="row">
+					<div class="col-4">쿠폰 사용</div>
+					<div class="col">
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#exampleModal">
+							쿠폰조회 및 적용</button>
+					</div>
+				</div>
+				<div class="bg-white py-2"></div>
+				<div class="row">
+					<div class="col-4">적립금 사용</div>
+					<div class="col">2 of 3</div>
+				</div>
+
+				<!-- 결제수단 -->
+				<div class="bg-white py-3"></div>
+				<h4 class="text-left fw-bolder">결제수단</h4>
+				<hr class="underline"></hr>
+
+				<div class="btn-group" role="group" aria-label="Basic example">
+					<button type="button" class="btn btn-secondary">무통장입금</button>
+					<button type="button" class="btn btn-secondary">신용카드</button>
+					<button type="button" class="btn btn-secondary">카카오페이</button>
+				</div>
+			</div>
+
+
+
+
+
+
+			<!-- 총결제 받아오는 부분 - 각 금액부분 기능구현 필요 -->
+			<div class="col-4 offset-1 bd-siderbar">
+				<h4 class="text-left fw-bolder">결제정보</h4>
+				<hr class="underline"></hr>
+				<div class="price mx-3">
+					<dl class="row">
+						<dt class="col-6">총 상품금액</dt>
+						<dd class="col-4 offset-2 pay-info">22,000원</dd>
+					</dl>
+					<hr class="underline"></hr>
+					<dl class="row">
+						<dt class="col-6">총 배송비</dt>
+						<dd class="col-4 offset-2 pay-info">0원</dd>
+					</dl>
+					<hr class="underline"></hr>
+					<dl class="row">
+						<dt class="col-6">할인금액</dt>
+						<dd class="col-6"></dd>
+						<dt class="col-6 pay-discout-detail">상품 할인</dt>
+						<dd class="col-4 offset-2 pay-discount">0원</dd>
+						<dt class="col-6 pay-detail pay-discout-detail">쿠폰 할인</dt>
+						<dd class="col-4 offset-2 pay-discount">0원</dd>
+						<dt class="col-6 pay-detail pay-discout-detail">적립금 할인</dt>
+						<dd class="col-4 offset-2 pay-discount">0원</dd>
+					</dl>
+					<hr class="underline"></hr>
+					<!-- 총결제 받아오는 부분 - 기능구현 필요-->
+					<dl class="row">
+						<dt class="col-6">총 결제금액</dt>
+						<dd class="col-6 pay-total">35,000원</dd>
+					</dl>
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary col"
+						data-toggle="modal" data-target="#exampleModal">결제하기</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Kit 최종결제</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">최종결제를 진행하시겠습니까?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-primary">결제</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div class="bg-white py-5"></div>
+
+	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
+	<footer>
+		<div class="jumbotron text-center jumbotron-fluid bg-secondary ">
+			<div class="foo_div"></div>
+			<img src="img/Kit2_size.png" />
+			<div class="foo_div1">
+				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
+					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
+				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
+				<p>Kit.</p>
+				<img src="img/kakaotalk.png"> <img src="img/google+.png">
+				<img src="img/naver.png">
+			</div>
+		</div>
+	</footer>
+
+
+</body>
+</html>

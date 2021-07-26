@@ -17,6 +17,9 @@
 	<description>HelloWorld</description>
 	<properties>
 		<java.version>1.8</java.version>
+
+		<org.security-version>5.0.6.RELEASE</org.security-version>
+
 	</properties>
 	<!-- Oracle JDBC Repository -->
 	<repositories>
@@ -92,6 +95,28 @@
 			<version>1.16</version>
 		</dependency>
 
+
+		<!-- thymeleaf dependencies -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
+		<!-- 타임리프 시큐리티에 대한 태그 사용 가능 의존성 -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			<version>3.0.4.RELEASE</version>
+		</dependency>
+		<!-- Security -->
+		
+    <!-- Spring Security -->
+
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -110,10 +135,24 @@
 		</dependency>
 
 		<!--Security -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${org.security-version}</version>
+		</dependency>
+
 
 	</dependencies>
 
