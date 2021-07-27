@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sun.tools.javac.util.List;
 
 import edu.bit.kit.page.Criteria;
 import edu.bit.kit.page.PageVO;
@@ -130,7 +128,7 @@ public class UserController{
 		
 		UserVO user = new UserVO();
 		user.setUserId("jinwoo9875");
-		user.setUserpassword("1111");
+		user.setUserPassword("1111");
 		user.setUserName("송진우");
 		
 		ArrayList<AuthVO> authList  = new ArrayList<AuthVO>();
