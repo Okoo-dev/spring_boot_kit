@@ -76,7 +76,7 @@ public class SecurityService implements UserDetailsService {
 	
 	public String addUser(UserVO userVO) {
 
-		userVO.setUserpassword(bCryptPasswordEncoder.encode(userVO.getUserpassword()));
+		userVO.setUserPassword(bCryptPasswordEncoder.encode(userVO.getUserPassword()));
 		int flag = securityMapper.userSave(userVO);
 
 		if (flag > 0) {

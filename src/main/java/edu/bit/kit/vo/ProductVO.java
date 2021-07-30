@@ -15,6 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ProductVO {
+
     private int PRODUCT_NUMBER;
     private String CO_NAME;
     private Date CO_RECIEVINGDATE;
@@ -24,6 +25,17 @@ public class ProductVO {
     private String CO_SERVINGS;
     private String CO_COOKINGTIME;
     private String CO_PREPARE_TIME;
-    private String CO_COMMENT;
+
+    private String prodNumber;
+    private String prodName;
+    private Date prodRecievingDate;
+    private int prodStock;
+    private String prodCategory;
+    private int prodPrice;
+    private String prodServings;
+    private String prodCookingTime;
+    private String prodPrepareTime;
+    private String prodComment;
+
     
 }

@@ -52,7 +52,7 @@ public class UserPrincipalVO implements UserDetails{
 	@Override
 	public String getPassword() { //유저 비밀번호
 
-		return userVO.get(0).getUserpassword();
+		return userVO.get(0).getUserPassword();
 	}
 
 	@Override

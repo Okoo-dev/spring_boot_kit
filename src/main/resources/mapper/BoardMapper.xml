@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bit.kit.mapper.BoardMapper">
+ 
+
+ 
+<resultMap id="boardList" type="edu.bit.kit.vo.BoardVO">
+      <result column="BOARD_ID" property="brdId" />
+      <result column="BOARD_NUMBER" property="brdNumber" />
+      <result column="CO_CONTENT" property="brdContent" />
+      <result column="CO_DATE" property="brdDate" />
+      <result column="CO_HIT" property="brdHit" />
+      <result column="CO_TITLE" property="brdTitle" />
+      <result column="USER_ID" property="brdUserid" /> 
+   </resultMap>
+
+   <resultMap id="userList" type="edu.bit.kit.vo.UserVO">
+      <result column="user_id" property="userId" />
+      <result column="co_number" property="userNumber" />
+      <result column="co_password" property="userpassword" />
+      <result column="co_name" property="userName" />
+      <result column="co_phone" property="userPhone" />
+      <result column="co_birth" property="userBirth" />
+      <result column="co_email" property="userEmail" />
+      <result column="co_gender" property="userGender" />
+      <result column="co_enabled" property="userEnabled" />
+      <result column="co_joindate" property="userJoinDate" />
+      <result column="co_logintime" property="userLoginTime" />
+      <result column="co_address" property="userAddress" />
+      <result column="co_account" property="userAccount" />
+   </resultMap>
+   
+   <resultMap id="pointList" type="edu.bit.kit.vo.PointVO">
+      <result column="USER_ID" property="userId" />
+      <result column="ORDER_NUMBER" property="orderNumber" />
+      <result column="CO_POINT" property="point" />
+   </resultMap>
+   
+   <resultMap id="couponList" type="edu.bit.kit.vo.CouponVO">
+      <result column="USER_ID" property="userId" />
+      <result column="COUPON_ID" property="cpnId" />
+      <result column="CO_NAME" property="cpnName" />
+      <result column="CO_EXPIRY_DATE" property="cpnExpiryDate" />
+      <result column="CO_DATE" property="cpnDate" />
+      <result column="CO_RATE" property="cpnRate" />
+      <result column="CO_PRICE" property="cpnPrice" />
+   </resultMap>
+
+
+   <select id="getEventList" resultMap="boardList">
+      SELECT * FROM HK_BRD WHERE BOARD_NUMBER = 2
+   </select>  
+   
+   <select id="getUser" resultMap="userList">
+      SELECT * FROM HK_USER WHERE USER_ID = 'SUN'
+   </select>  
+   
+   <select id="getPoint" resultMap="pointList">
+      SELECT * FROM HK_POINT WHERE USER_ID='SUN' 
+   </select>  
+   
+   
+   <select id="getCouponCount" resultType="int">
+   SELECT COUNT(COUPON_ID) FROM HK_CPN WHERE USER_ID = 'SUN'
+   </select>
+   
+   
+   
+</mapper>
