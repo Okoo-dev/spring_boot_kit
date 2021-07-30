@@ -58,7 +58,7 @@ public class UserPrincipalVO implements UserDetails{
 	@Override
 	public String getUsername() {// 유저 이름 혹은 아이디
 
-		return userVO.get(0).getUserName();
+		return userVO.get(0).getUserId();
 	}
 
 	@Override

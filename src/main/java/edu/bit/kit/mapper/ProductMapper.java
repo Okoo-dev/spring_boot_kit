@@ -22,8 +22,24 @@ public interface ProductMapper {
 	// 페이징
 	 int getTotalCount(Criteria cri);
 	 List<ProductVO> getListWithPaging(Criteria criteria);
+	 
 	// 장바구니 담기
 	 void addCart(CartVO cart);
+	// 장바구니 리스트 불러오기
+	List<CartVO> getListCart(String userId);					
+	// 장바구니 총합
+	//int getCartTotalMoney(String userId);	
+	// 장바구니 삭제
+	int deleteCart(int cartId);
+	// 장바구니 기존 상품 조회
+	int countCart(int cartProductNumber, String userId);
+	// 장바구니 업데이트
+	void updateCart(CartVO cart);
+	// 장바구니 총합
+	int sumCartMoney(String userId);
+	
+	
+	
 	
 	// 시큐리티
 		
@@ -42,5 +58,12 @@ public interface ProductMapper {
 
 			//권한 FK번호 알아내기
 			int findRoleNo(@Param("authId") int authId);
+			
+			
+			
+		
+			
+			
+			
 	
 }

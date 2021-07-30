@@ -1,5 +1,6 @@
 package edu.bit.kit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,6 +84,7 @@ public class UserController{
 		 * model.addAttribute("auth",userPrincipalVO.getAuthorities());
 		 */
 		
+		
 		return "thymeleaf/Menu";
 	}
 	
@@ -91,24 +95,7 @@ public class UserController{
 		return "thymeleaf/OrderPage";
 	}
 	
-	// 장바구니
-	@ResponseBody
-	@RequestMapping(value = "/menu", method = RequestMethod.POST)
-	public void addCart(CartVO cart, HttpSession session) throws Exception {
-		/*
-		 * UserVO member = (UserVO)session.getAttribute("member");
-		 * cart.setCartUserid(member.getUserId());
-		 */
-		
-		/*
-		 * String id = "jinwoo"; int pn = 2; int amount = 3; cart.setCartUserid(id);
-		 * cart.setCartAmount(amount); cart.setCartProductNumber(pn);
-		 */
-		log.info("CartVO:" + cart);
-			
-		productService.plusCart(cart);
-		
-	}
+	
 	
 	// 회원 가입 Get 이동
 	@RequestMapping(value= "/signup", method=RequestMethod.GET)
