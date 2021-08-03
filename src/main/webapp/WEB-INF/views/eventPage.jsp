@@ -2,6 +2,10 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!-- security 사용한 tag 참조 위한 부분  -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
 
 <!-- 
   이벤트 페이지 과제 : 이벤트 게시글 이미지 첨부파일 어떻게 가져올지, 이벤트 기간 DB 어떻게 할지.
@@ -18,9 +22,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/kit/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/kit/css/style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/kit/css/eventstyle.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/eventstyle.css">
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -37,8 +41,15 @@
 		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+				<sec:authorize access="isAnonymous()">
+				<!-- 로그인 하지 않은 사용자에게 보이도록  -->
+					<li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+				</sec:authorize>
+				<!-- 로그인한 사용자에게 보이도록  -->
+				<sec:authorize access="isAuthenticated()">
+    				<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+				</sec:authorize>
 			</ul>
 		</div>
 	</div>
@@ -48,7 +59,7 @@
 	<!-- Navigation -->
 	<nav
 		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
-		<a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/resource/kit/img/Kit2_size.png"
+		<a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png"
 			class="d-inline-block align-top" alt=""></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -94,7 +105,7 @@
  
  	<div class="col-sm-4 my-4" OnClick="location.href ='#'" style="cursor:pointer;">
 		<div class="card border-0">
-  			<img src = "${pageContext.request.contextPath}/resource/kit/img/event1.jpg" class="card-img-top"  alt= "이벤트 사진">
+  			<img src = "${pageContext.request.contextPath}/resources/kit/img/event1.jpg" class="card-img-top"  alt= "이벤트 사진">
     			<div class="card-body px-0">
     	 			 <p class="card-text"><kbd>EVENT</kbd> <kbd class="red">D-3</kbd>   2021.07.01~2021.09.30</p>
     	 			 <h6 class="card-text font-weight-bold">${vo.brdTitle }</h6>
@@ -128,15 +139,15 @@
 	<footer>
 		<div class="jumbotron text-center jumbotron-fluid bg-secondary mt-5">
 			<div class="foo_div"></div>
-			<img src="img/Kit2_size.png" />
+			<img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png" />
 			<div class="foo_div1">
 				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
 					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
 				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
 				<p>Kit.</p>
-				<img src="img/kakaotalk.png">
-				<img src="img/google+.png">
-				<img src="img/naver.png">
+				<img src="${pageContext.request.contextPath}/resources/kit/img/kakaotalk.png">
+				<img src="${pageContext.request.contextPath}/resources/kit/img/google+.png">
+				<img src="${pageContext.request.contextPath}/resources/kit/img/naver.png">
 			</div>
 		</div>
 	</footer>
