@@ -165,7 +165,7 @@
 												value="${list.brdId}"></td>
 											<td>${list.brdId}</td>
 											<td>${list.brdName}</td>
-											<td><a href="/admin/noticeList?brdId=${list.brdId}">${list.brdTitle}</a></td>
+											<td><a href="/admin/noticeView?brdId=${list.brdId}">${list.brdTitle}</a></td>
 											<td>${list.brdDate}</td>
 											<td>${list.brdHit}</td>
 											<td>${list.brdUserid}</td>

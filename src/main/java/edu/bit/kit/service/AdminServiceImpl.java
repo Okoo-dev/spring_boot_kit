@@ -10,6 +10,7 @@ import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.ProductVO;
+import edu.bit.kit.vo.ReplyVO;
 import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
     public ProductVO getProd(String prodNumber) {
        
         return adminMapper.getProd(prodNumber);
-    };
+    }
     
     // 상품 등록
     @Override
@@ -135,6 +136,17 @@ public class AdminServiceImpl implements AdminService {
         log.info("prodUpload");
         adminMapper.insertNotice(boardVO);
     }
+    // 게시판 수정
+    @Override
+    public void boardModify(BoardVO boardVO) {
+        adminMapper.boardUpdate(boardVO);
+    }
+    
+    // 게시판 삭제
+    @Override
+    public void boardRemove(int brdId) {
+        adminMapper.boardDelete(brdId);
+    }
     
     // 이벤트 등록
     @Override
@@ -142,6 +154,30 @@ public class AdminServiceImpl implements AdminService {
         log.info("prodUpload");
         adminMapper.insertEvent(boardVO);
     }
+    
+    // 게시판 글 확인
+    @Override
+    public BoardVO getBoard(int brdId) {
+        upHit(brdId);
+        return adminMapper.getBoard(brdId);
+    }
+    
+    
+    // 게층형 답글을 구현하기위한 메서드
+    // 먼저 updateShape를 통해 db의 group값과 해당 글의 group값이 같고 
+    // db의 step값이 해당 데이터의 step값보다 크면 db의 있는 데이터의 step값을 1증가하여 리턴해주고
+    // replyUpload는 글작성 메소드와 비슷하나 group의 value값을 현재값 즉 currval로
+    // 넣어주는게아니라 해당 group값을 원본의 글인 댓글이기 때문에 id값으로 해당글의 bgroup값을 넣어주는것이고
+    // 계층형구조를 위해 step과 indent를 + 1씩 해준다.
+    @Override
+    public void replyUpload(ReplyVO replyVO) {
+        adminMapper.updateShape(replyVO);
+        adminMapper.replyUpload(replyVO);
+        
+    }
+
+
+   
 
    
 }

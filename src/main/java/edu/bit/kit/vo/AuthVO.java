@@ -1,9 +1,5 @@
 package edu.bit.kit.vo;
 
-import java.sql.Timestamp;
-
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
