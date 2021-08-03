@@ -1,0 +1,16 @@
+/* Google Web Font */
+@import
+	url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+* {
+	padding: 0;
+	box-sizing: border-box;
+}
+
+section {
+	justify-content: center;
+}
+
+.p{
+	margin-left:80px;
+}

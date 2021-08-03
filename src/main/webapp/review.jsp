@@ -1,5 +1,7 @@
-<!doctype html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<meta charset="utf-8">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -25,9 +27,9 @@
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link"
-					onclick="location.href='login.html'">로그인</a></li>
+					onclick="location.href='login.jsp'">로그인</a></li>
 				<li class="nav-item"><a class="nav-link"
-					onclick="location.href='signup.html'">회원가입</a></li>
+					onclick="location.href='signup.jsp'">회원가입</a></li>
 			</ul>
 		</div>
 	</div>
@@ -62,40 +64,46 @@
 
 	<table class="col-sm-8" style="margin-left: 450px;">
 		<tr>
-			<td><a href="review2"> <img alt="리뷰1" src="img/7.PNG" /></a>
-				</td>
-			<td><a href="review2"> <img alt="리뷰2" src="img/8.PNG" /></a>
-				</td>
+			<td><a href="review2.jsp" target="_blank"> <img alt="리뷰1" src="img/7.PNG" /></a></td>
+			<td><a href="review3.jsp" target="_blank"> <img alt="리뷰2" src="img/8.PNG" /></a></td>
 		<tr>
 	</table>
 	<h4
 		style="margin-top: 50px; margin-left: 50px; margin-bottom: 10px; font-weight: bolder;">리뷰
 		3,378건</h4>
 	<hr align="center" style="border: solid 2px #e0e0e0; width: 95%;">
-	
+
 	<h5 align="right" style="margin-right: 50px;">2021.7.19</h5>
 	<h4 style="margin-left: 50px; font-weight: bolder;">비건식 영양 밀키트</h4>
-	<img style="margin-left: 50px;" src="img/3.PNG" /><a>&nbsp;jinwo***</a>
-	<a href="review2"> <img style="margin-left: 50px;" src="img/9.PNG" /></a>
-	
+	<img style="margin-left: 50px;" src="img/3.PNG" />
+	<a>&nbsp;jinwo***</a>
+	<a href="review2.jsp" target="_blank"> <img
+		style="margin-left: 50px;" src="img/9.PNG" /></a>
+
 	<hr align="center" style="border: solid 1px #e0e0e0; width: 95%;">
 	<h5 align="right" style="margin-right: 50px;">2021.7.19</h5>
 	<h4 style="margin-left: 50px; font-weight: bolder;">육즙팡팡 고기밀키트</h4>
-	<img style="margin-left: 50px;" src="img/4.PNG" /><a>&nbsp;sun***</a>
-	<a href="review2"> <img style="margin-left: 50px;" src="img/10.PNG" /></a>
-	
+	<img style="margin-left: 50px;" src="img/4.PNG" />
+	<a>&nbsp;sun***</a>
+	<a href="review3.jsp" target="_blank"> <img
+		style="margin-left: 50px;" src="img/10.PNG" /></a>
+
 	<hr align="center" style="border: solid 1px #e0e0e0; width: 95%;">
 	<h5 align="right" style="margin-right: 50px;">2021.7.19</h5>
 	<h4 style="margin-left: 50px; font-weight: bolder;">비건식 영양 밀키트</h4>
-	<img style="margin-left: 50px;" src="img/3.PNG" /><a>&nbsp;hong***</a>
-	<a href="review2"> <img style="margin-left: 50px;" src="img/9.PNG" /></a>
-	
+	<img style="margin-left: 50px;" src="img/3.PNG" />
+	<a>&nbsp;hong***</a>
+	<a href="review2.jsp" target="_blank"> <img
+		style="margin-left: 50px;" src="img/9.PNG" /></a>
+
 	<hr align="center" style="border: solid 1px #e0e0e0; width: 95%;">
 	<h5 align="right" style="margin-right: 50px;">2021.7.19</h5>
 	<h4 style="margin-left: 50px; font-weight: bolder;">육즙팡팡 고기밀키트</h4>
-	<img style="margin-left: 50px;" src="img/4.PNG" /><a>&nbsp;hyeong***</a>
-	<a href="review2"> <img style="margin-left: 50px;" src="img/10.PNG" /></a>
-	
+	<img style="margin-left: 50px;" src="img/4.PNG" />
+	<a>&nbsp;hyeong***</a>
+	<a href="review3.jsp" target="_blank"> <img
+		style="margin-left: 50px;" src="img/10.PNG" /></a>
+
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
 	<footer>
 		<div class="jumbotron text-center jumbotron-fluid bg-secondary ">

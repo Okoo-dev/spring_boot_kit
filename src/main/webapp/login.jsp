@@ -1,5 +1,7 @@
-<!doctype html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<meta charset="utf-8">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -27,8 +29,8 @@
 		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" onclick="location.href='login.html'">로그인</a></li>
-				<li class="nav-item"><a class="nav-link" onclick="location.href='signup.html'">회원가입</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="location.href='login.jsp'">로그인</a></li>
+				<li class="nav-item"><a class="nav-link" onclick="location.href='signup.jsp'">회원가입</a></li>
 			</ul>
 		</div>
 	</div>
@@ -88,7 +90,7 @@
 			</p>
 			<div class="div1">
 				Kit. 회원이 아니신가요?
-				<button type="signup" onclick="location.href='signup.html'">신규 가입하기 ></button>
+				<button type="signup" onclick="location.href='signup.jsp'">신규 가입하기 ></button>
 			</div>
 		</form>
 
