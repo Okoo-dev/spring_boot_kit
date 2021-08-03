@@ -8,7 +8,7 @@
 	<resultMap id="userList" type="edu.bit.kit.vo.UserVO">
 		<result column="user_id" property="userId" />
 		<result column="co_number" property="userNumber" />
-		<result column="co_password" property="userpassword" />
+		<result column="co_password" property="userPassword" />
 		<result column="co_name" property="userName" />
 		<result column="co_phone" property="userPhone" />
 		<result column="co_birth" property="userBirth" />

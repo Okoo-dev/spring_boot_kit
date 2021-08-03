@@ -16,7 +16,7 @@ public class EventBoardController {
     private BoardService boardService;
     
     
-    @GetMapping("/board/event")
+    @GetMapping("/event")
     public String eventList(Model model) {
         
         

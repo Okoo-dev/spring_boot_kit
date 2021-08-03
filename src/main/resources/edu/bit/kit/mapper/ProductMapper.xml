@@ -67,7 +67,7 @@ select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRIC
 	<resultMap type="edu.bit.kit.vo.UserVO" id="userMap">		
 		<result column="USER_ID" property="userId" />
 		<result column="CO_NUMBER" property="userNumber" />
-		<result column="CO_PASSWORD" property="userpassword" />
+		<result column="CO_PASSWORD" property="userPassword" />
 		<result column="CO_NAME" property="userName" />
 		<result column="CO_PHONE" property="userPhone" />
 		<result column="CO_EMAIL" property="userEmail" />
@@ -116,7 +116,7 @@ CO_ADDRESS, CO_ACCOUNT, CO_AUTHORITY, AUTHORITIES_ID
         VALUES
         (
             #{userId},
-            #{userpassword},
+            #{userPassword},
             #{userName}
         )
 	</insert>
