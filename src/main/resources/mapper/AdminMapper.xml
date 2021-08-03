@@ -154,7 +154,7 @@
 	
 	<delete id="prodDelete">
 		DELETE FROM HK_PROD
-		WHERE prod_number = #{prodNumber}
+		WHERE product_number = #{prodNumber}
 	</delete>
 
 	<select id="getNoticeList" resultMap="boardList">
@@ -165,6 +165,14 @@
 		WHERE b.board_number=c.board_number and
 		b.board_number = 1
 	</select>
+	
+	<select id="getBoard" resultMap="boardList">
+		SELECT
+		*
+		FROM HK_BRD
+		WHERE
+		board_id = #{brdId}
+	</select>
 
 	<select id="getQuestionList" resultMap="boardList">
 		SELECT
@@ -174,7 +182,27 @@
 		WHERE b.board_number=c.board_number and
 		b.board_number = 3
 	</select>
+	
+	
+	<update id="updateShape">
+	 UPDATE HK_REPLY 
+	 SET bStep = bStep + 1 
+	 WHERE bGroup = #{bgroup} AND bStep > #{bstep} 
+	</update>
 
+	<insert id="insertReply">
+	 INSERT INTO HK_REPLY(bId,bName,bTitle,bContent,bGroup,bStep,bIndent)
+	 VALUES (mvc_board_seq.nextval,#{bname},#{btitle},#{bcontent},#{bgroup},#{bstep}+1,#{bindent}+1)
+	</insert>
+	
+	
+	<insert id="insertNotice">
+		INSERT INTO hk_brd
+		VALUES (hk_brd_seq.nextval, 'HONG'
+		,1,
+		#{brdTitle},#{brdContent},sysdate,0)
+	</insert>
+	
 
 	<select id="getEventList" resultMap="boardList">
 		SELECT
@@ -200,13 +228,18 @@
 		WHERE board_id =
 		#{brdId}
 	</update>
-
-	<insert id="insertNotice">
-		INSERT INTO hk_brd
-		VALUES (hk_brd_seq.nextval, 'HONG'
-		,1,
-		#{brdTitle},#{brdContent},sysdate,0)
-	</insert>
+	
+	<update id="boardUpdate">
+		UPDATE hk_brd
+		SET co_title = #{brdTitle}, co_content = #{brdContent}
+		WHERE
+		board_id = #{brdId}
+	</update>
+	
+	<delete id="boardDelete">
+		DELETE FROM HK_BRD
+		WHERE board_id = #{brdId}
+	</delete>
 
 	<insert id="insertEvent">
 		INSERT INTO hk_brd

@@ -8,6 +8,7 @@ import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.ProductVO;
+import edu.bit.kit.vo.ReplyVO;
 import edu.bit.kit.vo.UserVO;
 
 @Mapper
@@ -66,6 +67,23 @@ public interface AdminMapper {
     
     // 이벤트 등록
     void insertEvent(BoardVO boardVO);
+    
+    // 게시판 글 확인 메서드 
+    BoardVO getBoard(int brdId);
+    
+    // 1:1 문의 답글
+    void updateShape(ReplyVO replyVO);
+    void replyUpload(ReplyVO replyVO);
+
+    // 1:1 문의 내용
+    BoardVO getQuestion(int brdId);
+    
+    // 게시판 수정 메서드
+    void boardUpdate(BoardVO boardVO);
+    
+    // 게시판 삭제 메서드
+    void boardDelete(int brdId);
+
 
     
 }
