@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.anyRequest().authenticated()
 				
 	.and()
-		.csrf().ignoringAntMatchers("/user/save")
+		.csrf().ignoringAntMatchers("/user/save", "/menu/cart")
 	.and()
 		.formLogin()
 		.defaultSuccessUrl("/menu")

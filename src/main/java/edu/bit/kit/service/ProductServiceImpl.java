@@ -42,6 +42,44 @@ public class ProductServiceImpl implements ProductService {
 		productMapper.addCart(cart);	
 	}
 
+	@Override
+	public List<CartVO> listCart(String userId) {
+		
+		
+ 		
+		return productMapper.getListCart(userId);
+	}
+
+	/*
+	 * @Override public int cartTotalMoney(String userId) {
+	 * 
+	 * return productMapper.getCartTotalMoney(userId); }
+	 */
+
+	@Override
+	public int remove(int cartId) {
+		
+		return productMapper.deleteCart(cartId);
+	}
+
+	@Override
+	public int countCart(int cartProductNumber, String userId) {
+		
+		return productMapper.countCart(cartProductNumber, userId);
+	}
+
+	@Override
+	public void updateCart(CartVO cart) {
+		productMapper.updateCart(cart);
+		
+	}
+
+	@Override
+	public int sumCartMoney(String userId) {
+		
+		return productMapper.sumCartMoney(userId);
+	}
+
 
 
 

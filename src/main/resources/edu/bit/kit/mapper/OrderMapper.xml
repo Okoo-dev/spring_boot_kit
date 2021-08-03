@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bit.kit.mapper.OrderMapper">
+
+	
+	<!-- 쿠폰 -->
+	<!-- 보유 쿠폰 조회 -->
+	
+	<resultMap type="edu.bit.kit.vo.CouponVO" id="coupon">
+		<result column="COUPON_ID" property="cpnId" />
+		<result column="USER_ID" property="userId" />
+		<result column="CO_NAME" property="cpnName" />
+		<result column="CO_EXPIRY_DATE" property="cpnExpiryDate" />
+		<result column="CO_DATE" property="cpnDate" />
+		<result column="CO_RATE" property="cpnRate" />
+		<result column="CO_PRICE" property="cpnPrice" />
+	
+	</resultMap>
+	
+	<select id="getListCoupon" resultMap="coupon">
+<![CDATA[
+select COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,CO_RATE,CO_PRICE from HK_CPN p where p.USER_ID = #{userId}
+]]>
+	</select>
+	
+	
+	
+</mapper>
