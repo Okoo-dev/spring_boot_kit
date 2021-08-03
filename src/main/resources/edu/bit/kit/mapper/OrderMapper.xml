@@ -16,13 +16,22 @@
 		<result column="CO_DATE" property="cpnDate" />
 		<result column="CO_RATE" property="cpnRate" />
 		<result column="CO_PRICE" property="cpnPrice" />
-	
+		<result column="cpn" property="cpn" />
 	</resultMap>
 	
 	<select id="getListCoupon" resultMap="coupon">
-<![CDATA[
+<!-- <![CDATA[
 select COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,CO_RATE,CO_PRICE from HK_CPN p where p.USER_ID = #{userId}
+]]> -->
+<![CDATA[
+SELECT COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,
+ CASE 
+  WHEN CO_RATE != '0' THEN CO_RATE
+  WHEN CO_PRICE != '0' THEN CO_PRICE
+  END as cpn
+  FROM HK_CPN WHERE USER_ID = #{userId}
 ]]>
+
 	</select>
 	
 	

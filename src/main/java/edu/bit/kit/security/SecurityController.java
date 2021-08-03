@@ -155,6 +155,20 @@ public class SecurityController {
 		return "thymeleaf/OrderPage";
 	}
 	
+	// 쿠폰 선택
+	@RequestMapping(value="/test6_1", method = RequestMethod.POST)
+	public String couponChoice(Principal principal, Model model, List<CartVO> orderCouponList, int couponChoice) throws Exception {
+		log.info("couponChoice");
+		String userId = principal.getName();
+		
+		
+		
+		
+		
+		
+		return "thymeleaf/OrderPage";
+	}
+	
 }
 /*
  * 

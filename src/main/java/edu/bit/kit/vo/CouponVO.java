@@ -28,5 +28,5 @@ public class CouponVO {
    private Date cpnDate;
    private int cpnRate;
    private int cpnPrice;
-    
+   private int cpn;
 }
