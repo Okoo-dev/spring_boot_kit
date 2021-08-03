@@ -52,8 +52,6 @@ public class UserVO{
 	private String userAddress;
 	private String userAccount;
 
-	private String roleName;
-	private String authName;
 
 	private ArrayList<AuthVO> authList;
 }
