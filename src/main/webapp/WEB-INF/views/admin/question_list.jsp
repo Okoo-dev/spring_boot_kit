@@ -165,7 +165,7 @@
 												value="${list.brdId}"></td>
 											<td>${list.brdId}</td>
 											<td>${list.brdName}</td>
-											<td><a href="/admin/noticeList?brdId=${list.brdId}">${list.brdTitle}</a></td>
+											<td><a href="/admin/questionList?brdId=${list.brdId}">${list.brdTitle}</a></td>
 											<td>${list.brdDate}</td>
 											<td>${list.brdHit}</td>
 											<td>${list.brdUserid}</td>
@@ -177,8 +177,7 @@
 								<tr>
 									<td colspan="2"><input type="button" value="선택 삭제"
 										class="btn btn-default" onclick="deleteValue();">
-										&nbsp;&nbsp;<a href="#"><button type="button"
-												class="btn btn-default">공지사항 등록 하기</button></a></td>
+										&nbsp;&nbsp;</td>
 								</tr>
 							</table>
 						</div>

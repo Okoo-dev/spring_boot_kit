@@ -12,18 +12,19 @@ import edu.bit.kit.service.AdminService;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.ProductVO;
+import edu.bit.kit.vo.ReplyVO;
 import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AdminController {
-
+public class AdminController {    
+    
     @Autowired
     private AdminService adminService;
 
     // admin 페이지 호출 메서드
-    @GetMapping("/admin")
+    @GetMapping("admin")
     public String adminMain() {
 
         log.info("adminMain..");
@@ -35,7 +36,7 @@ public class AdminController {
     @GetMapping("/admin/userlist")
     public String userList(Model model) {
 
-        log.info("userList..");
+        log.info("userList..", model);
         model.addAttribute("userList", adminService.getUserList());
 
         return "admin/user_list";
@@ -187,7 +188,39 @@ public class AdminController {
 
         return "redirect:noticeList";
     }
+    
+    // 공지사항 수정 삭제 뷰
+    @GetMapping("/admin/noticeView")
+    public String noticeView(BoardVO boardVO, Model model) {
+        log.info("notice_view..");
+        log.info("boardVO" + boardVO);
+        model.addAttribute("notice_view", adminService.getBoard(boardVO.getBrdId()));
 
+        return "admin/notice_view";
+    }
+    
+    // 공지사항 수정 메서드
+    @PostMapping("/admin/boardModify")
+    public String boardModify(BoardVO boardVO) {
+        log.info("boardModify()..");
+        log.info("boardVO" + boardVO);
+
+        adminService.boardModify(boardVO);
+
+        return "redirect:noticeList";
+    }
+
+    // 공지사항 삭제 메서드
+    @GetMapping("/admin/boardDelete")
+    public String boardDelete(BoardVO boardVO) {
+        log.info("boardDelete()..");
+        log.info("boardVO" + boardVO);
+
+        adminService.boardRemove(boardVO.getBrdId());
+
+        return "redirect:noticeList";
+    }
+    
     // 1:1 문의 게시판
     @GetMapping("/admin/questionList")
     public String questionList(Model model) {
@@ -197,7 +230,32 @@ public class AdminController {
 
         return "admin/question_list";
     }
+    
+    // 1:1 문의 확인 메서드
+    @GetMapping("/admin/questionView")
+    public String questionView(BoardVO boardVO, Model model) {
+        log.info("question_view..");
+        log.info("boardVO" + boardVO);
+        model.addAttribute("question_view", adminService.getBoard(boardVO.getBrdId()));
 
+        return "admin/question_view";
+    }
+    
+    // 1:1 문의 답글 등록 화면
+    @GetMapping("/admin/questionReply")
+    public String questionReply() {
+        return "admin/qurstion_Reply";
+    }
+    
+    // 1:1 문의 답글 등록 화면 
+    @PostMapping("/admin/replyUpload")
+    public String replyUpload(ReplyVO replyVO) {
+        log.info("replyUpload()..");
+        adminService.replyUpload(replyVO);
+
+        return "redirect:quetionList";
+    }
+    
     // 이벤트 게시판
     @GetMapping("/admin/eventList")
     public String eventList(Model model) {

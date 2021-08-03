@@ -6,6 +6,7 @@ import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.ProductVO;
+import edu.bit.kit.vo.ReplyVO;
 import edu.bit.kit.vo.UserVO;
 
 public interface AdminService {
@@ -49,6 +50,12 @@ public interface AdminService {
     // 공지 사항 등록
     public void noticeUpload(BoardVO boardVO);
     
+    // 공지 사항 수정
+    public void boardModify(BoardVO boardVO);
+    
+    // 공지 사항 삭제
+    public void boardRemove(int brdId);
+    
     // 1:1 문의
     public List<BoardVO> getQuestionList();
     
@@ -63,6 +70,16 @@ public interface AdminService {
     
     // 조회수
     void upHit(int brdId);
+    
+    // 게시판 글확인 메서드
+    public BoardVO getBoard(int brdId);
+    
+    // 1:1문의 답글 
+    public void replyUpload(ReplyVO replyVO);
+
+
+
+    
 
     
 
