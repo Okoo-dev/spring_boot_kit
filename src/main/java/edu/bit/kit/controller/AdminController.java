@@ -24,7 +24,7 @@ public class AdminController {
     private AdminService adminService;
 
     // admin 페이지 호출 메서드
-    @GetMapping("admin")
+    @GetMapping("/admin")
     public String adminMain() {
 
         log.info("adminMain..");
