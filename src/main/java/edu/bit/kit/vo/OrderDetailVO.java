@@ -15,6 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class OrderDetailVO {
+
     private int ordNumber;
     private int prodNumber;
     private String prodName;
@@ -23,4 +24,12 @@ public class OrderDetailVO {
     private String ordRecipient;
     private String ordLocation;
     private String sumPrice;
+
+
+	//private int ordDetailNumber;
+	//private int ordNumber;
+	//private int cartAmount;
+	//private int cartProductNumber;
+	
+
 }

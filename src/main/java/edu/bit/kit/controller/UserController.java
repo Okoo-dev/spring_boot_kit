@@ -86,12 +86,11 @@ public class UserController{
 		return "thymeleaf/Menu";
 	}
 	
-	@GetMapping("/order")
-	public String order(Model model) {
-		model.addAttribute("list", productService.getList());
-		log.info("/order");
-		return "thymeleaf/OrderPage";
-	}
+	/*
+	 * @GetMapping("/order") public String order(Model model) {
+	 * model.addAttribute("list", productService.getList()); log.info("/order");
+	 * return "thymeleaf/OrderPage"; }
+	 */
 	
 	
 	
