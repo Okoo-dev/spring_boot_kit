@@ -49,7 +49,9 @@ public class UserVO{
 	private int userEnabled;
 	private Date userJoinDate;
 	private Date userLoginTime;
-	private String userAddress;
+	private String userAddress1;
+	private String userAddress2;
+	private String userAddress3;
 	private String userAccount;
 
 

@@ -158,7 +158,7 @@
     
     
 <div class="container">
-   <form th:action="@{updateAccount}" method="POST" id="updateAccount">
+   <form th:action="@{updateAccount}" method="POST" id="updateAccount"  onSubmit="return Checkform()" name="frm">
    <div class="container">
      		<div class="row">
      			 <div class="col">
@@ -270,8 +270,35 @@
 		 }
 
 	
- 
- 
+		 
+		 function Checkform() {
+		    if( frm.bankName.value == "" ) {
+		    	frm.bankName.focus();
+		    	alert("은행을 선택해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.accountNumber.value == "" ) {
+		    	frm.accountNumber.focus();
+		    	alert("계좌번호를 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.accountHolder.value == "" ) {
+		    	frm.accountHolder.focus();
+		    	alert("예금주명을 입력해 주십시오.");
+		    	 return false;
+		    }
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		 }
+		    	
+		    	
  </script>
     
     
