@@ -50,11 +50,11 @@ public interface AdminService {
     // 공지 사항 등록
     public void noticeUpload(BoardVO boardVO);
     
-    // 공지 사항 수정
+    // 게시판 수정
     public void boardModify(BoardVO boardVO);
     
-    // 공지 사항 삭제
-    public void boardRemove(int brdId);
+    // 게시판 삭제
+    public void boardRemove(String brdId);
     
     // 1:1 문의
     public List<BoardVO> getQuestionList();
@@ -69,13 +69,26 @@ public interface AdminService {
     public List<BoardVO> getReviewList();
     
     // 조회수
-    void upHit(int brdId);
+    void upHit(String brdId);
     
     // 게시판 글확인 메서드
-    public BoardVO getBoard(int brdId);
+    public BoardVO getBoard(String brdId);
     
-    // 1:1문의 답글 
-    public void replyUpload(ReplyVO replyVO);
+    /*
+     * // 1:1문의 답글 public void replyUpload(ReplyVO replyVO);
+     */
+
+    // 1:1문의 답글 리스트
+    public List<ReplyVO> replyList();
+    
+    // 1:1문의 답글 등록
+    public int replyInsert(String replyContent);
+    
+    // 1:1문의 답글 수정
+    public int replyUpdate(String replyContent);
+    
+    // 1:1문의 답글 삭제
+    public int replyDelete(int replyId);
 
 
 

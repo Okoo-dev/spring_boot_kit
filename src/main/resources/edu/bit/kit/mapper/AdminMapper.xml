@@ -62,6 +62,17 @@
 		<result column="co_hit" property="brdHit" />
 		<result column="user_id" property="brdUserid" />
 	</resultMap>
+	
+	<resultMap id="reply" type="edu.bit.kit.vo.ReplyVO">
+		<result column="REPLY_ID" property="replyId" />
+		<result column="USER_ID" property="userId" />
+		<result column="BOARD_ID" property="boardId" />
+		<result column="CO_CONTENT" property="replyContent" />
+		<result column="CO_DATE" property="replyDate" />
+		<result column="CO_GROUP" property="replyGroup" />
+		<result column="CO_STEP" property="replyStep" />
+		<result column="CO_INDENT" property="replyIndent" />
+	</resultMap>
 
 
 	<select id="getList" resultMap="userList">
@@ -184,18 +195,6 @@
 	</select>
 	
 	
-	<update id="updateShape">
-	 UPDATE HK_REPLY 
-	 SET bStep = bStep + 1 
-	 WHERE bGroup = #{bgroup} AND bStep > #{bstep} 
-	</update>
-
-	<insert id="insertReply">
-	 INSERT INTO HK_REPLY(bId,bName,bTitle,bContent,bGroup,bStep,bIndent)
-	 VALUES (mvc_board_seq.nextval,#{bname},#{btitle},#{bcontent},#{bgroup},#{bstep}+1,#{bindent}+1)
-	</insert>
-	
-	
 	<insert id="insertNotice">
 		INSERT INTO hk_brd
 		VALUES (hk_brd_seq.nextval, 'HONG'
@@ -247,6 +246,39 @@
 		,2,
 		#{brdTitle},#{brdContent},sysdate,0)
 	</insert>
+	
+	
+	<select id="replyCount" resultMap="replyList">
+        SELECT
+            COUNT(*)
+        FROM HK_REPLY
+    </select>
+    
+    <select id="replyList" resultMap="replyList">
+        SELECT
+            *
+        FROM HK_REPLY
+    </select>
+    
+    
+    <insert id="replyInsert">
+        INSERT INTO
+        HK_REPLY (REPLY_ID, BOARD_ID, CO_CONTENT, USER_ID, CO_DATE)
+        VALUES(REPLY_ID_SEQ.NEXTVAL,#{boardId},#{replyContent},#{userId},sysdate) 
+    </insert>
+    
+    <update id="replyUpdate">
+        UPDATE HK_REPLY
+            SET
+            CO_CONTENT = #{replyContent}
+        WHERE REPLY_ID = #{replyId}
+    </update>
+    
+    <delete id="replyDelete">
+        DELETE FROM REPLY_ID WHERE REPLY_ID = #{replyId}
+    </delete>
+
+
 
 </mapper>
 

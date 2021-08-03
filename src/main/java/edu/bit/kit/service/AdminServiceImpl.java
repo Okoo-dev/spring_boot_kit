@@ -126,7 +126,7 @@ public class AdminServiceImpl implements AdminService {
     
     // 조회수
     @Override
-    public void upHit(int brdId) {
+    public void upHit(String brdId) {
         adminMapper.updateHit(brdId);
     }
     
@@ -144,7 +144,7 @@ public class AdminServiceImpl implements AdminService {
     
     // 게시판 삭제
     @Override
-    public void boardRemove(int brdId) {
+    public void boardRemove(String brdId) {
         adminMapper.boardDelete(brdId);
     }
     
@@ -157,24 +157,45 @@ public class AdminServiceImpl implements AdminService {
     
     // 게시판 글 확인
     @Override
-    public BoardVO getBoard(int brdId) {
+    public BoardVO getBoard(String brdId) {
         upHit(brdId);
         return adminMapper.getBoard(brdId);
     }
     
     
-    // 게층형 답글을 구현하기위한 메서드
-    // 먼저 updateShape를 통해 db의 group값과 해당 글의 group값이 같고 
-    // db의 step값이 해당 데이터의 step값보다 크면 db의 있는 데이터의 step값을 1증가하여 리턴해주고
-    // replyUpload는 글작성 메소드와 비슷하나 group의 value값을 현재값 즉 currval로
-    // 넣어주는게아니라 해당 group값을 원본의 글인 댓글이기 때문에 id값으로 해당글의 bgroup값을 넣어주는것이고
-    // 계층형구조를 위해 step과 indent를 + 1씩 해준다.
+    /*
+     * // 게층형 답글을 구현하기위한 메서드 // 먼저 updateShape를 통해 db의 group값과 해당 글의 group값이 같고 //
+     * db의 step값이 해당 데이터의 step값보다 크면 db의 있는 데이터의 step값을 1증가하여 리턴해주고 // replyUpload는
+     * 글작성 메소드와 비슷하나 group의 value값을 현재값 즉 currval로 // 넣어주는게아니라 해당 group값을 원본의 글인
+     * 댓글이기 때문에 id값으로 해당글의 bgroup값을 넣어주는것이고 // 계층형구조를 위해 step과 indent를 + 1씩 해준다.
+     * 
+     * @Override public void replyUpload(ReplyVO replyVO) {
+     * adminMapper.updateShape(replyVO); adminMapper.replyUpload(replyVO);
+     * 
+     * }
+     */
+    
+    //
     @Override
-    public void replyUpload(ReplyVO replyVO) {
-        adminMapper.updateShape(replyVO);
-        adminMapper.replyUpload(replyVO);
-        
+    public List<ReplyVO> replyList() {
+        return adminMapper.replyList();
     }
+
+    @Override
+    public int replyInsert(String replyContent) {
+        return adminMapper.replyInsert(replyContent);
+    }
+
+    @Override
+    public int replyUpdate(String replyContent) {
+        return adminMapper.replyUpdate(replyContent);
+    }
+
+    @Override
+    public int replyDelete(int replyId) {
+        return adminMapper.replyDelete(replyId);
+    }
+
 
 
    

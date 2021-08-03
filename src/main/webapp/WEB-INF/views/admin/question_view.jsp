@@ -131,51 +131,33 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 공지사항 수정/삭제
+					<i class="fa fa-angle-right"></i> 1:1문의
 				</h3>
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
-							<form class="form-horizontal style-form" action="noticeModify"
-								method="post">
+							<form class="form-horizontal style-form">
 								<input type="hidden" name="brdId" value="${question_view.brdId}">
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">글 제목</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="brdTitle">
-									</div>
+									<label class="col-sm-2 col-sm-2 control-label">글 제목</label> <label
+										class="col-sm-2 col-sm-2 control-label">${question_view.brdTitle}</label>
 								</div>
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">글 내용</label>
-									<div class="col-sm-10">
-										<textarea type="text" class="form-control" rows="10"
-											name="brdContent"></textarea>
-									</div>
+									<label class="col-sm-2 col-sm-2 control-label">글 내용</label> <label
+										class="col-sm-2 col-sm-2 control-label">${question_view.brdContent}</label>
 								</div>
 
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
-									<div class="col-sm-10">
-										<div class="custom-file" id="inputFile">
-											<input name="file" type="file" class="custom-file-input"
-												id="customFile"> <label class="custom-file-label"
-												for="customFile">파일을 선택해 주세요.</label>
-										</div>
-									</div>
-								</div>
 								<table>
 									<tr>
-										<td colspan="2"><input type="submit" value="수정"
-											class="btn btn-round btn-success"> &nbsp;&nbsp;<a
-											href="/admin/questionList"><button type="button"
-													class="btn btn-round btn-info">목록보기</button></a> &nbsp;&nbsp; <a
-											id="a-delete"
-											href="${pageContext.request.contextPath}questionReply?boardId=${question_view.brdId}">
-												<button type="button" class="btn btn-round btn-warning">답글</button>
+										<td colspan="2"><a href="/admin/questionList"><button
+													type="button" class="btn btn-round btn-info">목록보기</button></a>
+											&nbsp;&nbsp;<a id="a-delete"
+											href="${pageContext.request.contextPath}questionDelete?brdId=${question_view.brdId}">
+												<button type="button" class="btn btn-round btn-warning">삭제</button>
 										</a></td>
 									</tr>
 								</table>
@@ -242,6 +224,120 @@
 	<script type="text/javascript"
 		src="/admin/Dashio/lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 	<script src="/admin/Dashio/lib/form-component.js"></script>
+
+
+	<script>
+		var bno = '${detail.bno}'; //게시글 번호
+
+		$('[name=commentInsertBtn]').click(function() { //댓글 등록 버튼 클릭시 
+			var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+			commentInsert(insertData); //Insert 함수호출(아래)
+		});
+
+		//댓글 목록 
+		function commentList() {
+			$
+					.ajax({
+						url : '/comment/list',
+						type : 'get',
+						data : {
+							'bno' : bno
+						},
+						success : function(data) {
+							var a = '';
+							$
+									.each(
+											data,
+											function(key, value) {
+												a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+												a += '<div class="commentInfo'+value.cno+'">'
+														+ '댓글번호 : '
+														+ value.cno
+														+ ' / 작성자 : '
+														+ value.writer;
+												a += '<a onclick="commentUpdate('
+														+ value.cno
+														+ ',\''
+														+ value.content
+														+ '\');"> 수정 </a>';
+												a += '<a onclick="commentDelete('
+														+ value.cno
+														+ ');"> 삭제 </a> </div>';
+												a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '
+														+ value.content
+														+ '</p>';
+												a += '</div></div>';
+											});
+
+							$(".commentList").html(a);
+						}
+					});
+		}
+
+		//댓글 등록
+		function commentInsert(insertData) {
+			$.ajax({
+				url : '/comment/insert',
+				type : 'post',
+				data : insertData,
+				success : function(data) {
+					if (data == 1) {
+						commentList(); //댓글 작성 후 댓글 목록 reload
+						$('[name=content]').val('');
+					}
+				}
+			});
+		}
+
+		//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+		function commentUpdate(cno, content) {
+			var a = '';
+
+			a += '<div class="input-group">';
+			a += '<input type="text" class="form-control" name="content_'+cno+'" value="'+content+'"/>';
+			a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('
+					+ cno + ');">수정</button> </span>';
+			a += '</div>';
+
+			$('.commentContent' + cno).html(a);
+
+		}
+
+		//댓글 수정
+		function commentUpdateProc(cno) {
+			var updateContent = $('[name=content_' + cno + ']').val();
+
+			$.ajax({
+				url : '/comment/update',
+				type : 'post',
+				data : {
+					'content' : updateContent,
+					'cno' : cno
+				},
+				success : function(data) {
+					if (data == 1)
+						commentList(bno); //댓글 수정후 목록 출력 
+				}
+			});
+		}
+
+		//댓글 삭제 
+		function commentDelete(cno) {
+			$.ajax({
+				url : '/comment/delete/' + cno,
+				type : 'post',
+				success : function(data) {
+					if (data == 1)
+						commentList(bno); //댓글 삭제후 목록 출력 
+				}
+			});
+		}
+
+		$(document).ready(function() {
+			commentList(); //페이지 로딩시 댓글 목록 출력 
+		});
+	</script>
+
 
 </body>
 

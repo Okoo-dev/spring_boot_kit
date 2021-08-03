@@ -60,7 +60,7 @@ public interface AdminMapper {
     List<BoardVO> getReviewList();
     
     // 조회수 증가
-    void updateHit(int brdId);
+    void updateHit(String brdId);
      
     // 공지 사항 등록
     void insertNotice(BoardVO boardVO);
@@ -69,20 +69,31 @@ public interface AdminMapper {
     void insertEvent(BoardVO boardVO);
     
     // 게시판 글 확인 메서드 
-    BoardVO getBoard(int brdId);
+    BoardVO getBoard(String brdId);
     
-    // 1:1 문의 답글
-    void updateShape(ReplyVO replyVO);
-    void replyUpload(ReplyVO replyVO);
-
+    /*
+     * // 1:1 문의 답글 void updateShape(ReplyVO replyVO); void replyUpload(ReplyVO
+     * replyVO);
+     */
+    
     // 1:1 문의 내용
-    BoardVO getQuestion(int brdId);
+    BoardVO getQuestion(String brdId);
     
     // 게시판 수정 메서드
     void boardUpdate(BoardVO boardVO);
     
     // 게시판 삭제 메서드
-    void boardDelete(int brdId);
+    void boardDelete(String brdId);
+    
+    int replyCount();
+    
+    List<ReplyVO> replyList();
+
+    int replyInsert(String replyContent);
+
+    int replyUpdate(String replyContent);
+
+    int replyDelete(int replyId);
 
 
     

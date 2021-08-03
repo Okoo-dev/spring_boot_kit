@@ -1,12 +1,18 @@
 package edu.bit.kit.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.bit.kit.service.AdminService;
 import edu.bit.kit.vo.BoardVO;
@@ -18,13 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AdminController {    
-    
+public class AdminController {
+
     @Autowired
     private AdminService adminService;
 
     // admin 페이지 호출 메서드
-    @GetMapping("/admin")
+    @GetMapping("/admin/index")
     public String adminMain() {
 
         log.info("adminMain..");
@@ -188,7 +194,17 @@ public class AdminController {
 
         return "redirect:noticeList";
     }
-    
+
+    // 공지사항 뷰
+    @GetMapping("/admin/notice")
+    public String notice(BoardVO boardVO, Model model) {
+        log.info("notice..");
+        log.info("boardVO" + boardVO);
+        model.addAttribute("notice", adminService.getBoard(boardVO.getBrdId()));
+
+        return "admin/notice";
+    }
+
     // 공지사항 수정 삭제 뷰
     @GetMapping("/admin/noticeView")
     public String noticeView(BoardVO boardVO, Model model) {
@@ -198,11 +214,11 @@ public class AdminController {
 
         return "admin/notice_view";
     }
-    
+
     // 공지사항 수정 메서드
-    @PostMapping("/admin/boardModify")
-    public String boardModify(BoardVO boardVO) {
-        log.info("boardModify()..");
+    @PostMapping("/admin/noticeModify")
+    public String noticeModify(BoardVO boardVO) {
+        log.info("noticeModify()..");
         log.info("boardVO" + boardVO);
 
         adminService.boardModify(boardVO);
@@ -211,16 +227,29 @@ public class AdminController {
     }
 
     // 공지사항 삭제 메서드
-    @GetMapping("/admin/boardDelete")
-    public String boardDelete(BoardVO boardVO) {
-        log.info("boardDelete()..");
+    @GetMapping("/admin/noticeDelete")
+    public String noticeDelete(BoardVO boardVO) {
+        log.info("noticeDelete()..");
         log.info("boardVO" + boardVO);
 
         adminService.boardRemove(boardVO.getBrdId());
 
         return "redirect:noticeList";
     }
-    
+
+    // 공지사항 선택삭제
+    @PostMapping("/admin/boardDelete")
+    public String ajaxBoardDelete(HttpServletRequest request) {
+
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for (int i = 0; i < size; i++) {
+            adminService.boardRemove(ajaxMsg[i]);
+        }
+
+        return "redirect:noticeList";
+    }
+
     // 1:1 문의 게시판
     @GetMapping("/admin/questionList")
     public String questionList(Model model) {
@@ -230,7 +259,7 @@ public class AdminController {
 
         return "admin/question_list";
     }
-    
+
     // 1:1 문의 확인 메서드
     @GetMapping("/admin/questionView")
     public String questionView(BoardVO boardVO, Model model) {
@@ -240,22 +269,81 @@ public class AdminController {
 
         return "admin/question_view";
     }
-    
-    // 1:1 문의 답글 등록 화면
-    @GetMapping("/admin/questionReply")
-    public String questionReply() {
-        return "admin/qurstion_Reply";
-    }
-    
-    // 1:1 문의 답글 등록 화면 
-    @PostMapping("/admin/replyUpload")
-    public String replyUpload(ReplyVO replyVO) {
-        log.info("replyUpload()..");
-        adminService.replyUpload(replyVO);
 
-        return "redirect:quetionList";
+    // 1:1 삭제 메서드
+    @GetMapping("/admin/questionDelete")
+    public String questionDelete(BoardVO boardVO) {
+        log.info("questionDelete()..");
+        log.info("boardVO" + boardVO);
+
+        adminService.boardRemove(boardVO.getBrdId());
+
+        return "redirect:questionList";
     }
-    
+
+    // 1:1 선택삭제
+    @PostMapping("/admin/questionDelete")
+    public String ajaxQuestionDelete(HttpServletRequest request) {
+
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for (int i = 0; i < size; i++) {
+            adminService.boardRemove(ajaxMsg[i]);
+        }
+
+        return "redirect:questionList";
+    }
+    /*
+     * // 1:1 문의 답글 등록 화면
+     * 
+     * @GetMapping("/admin/questionReply") public String questionReply() { return
+     * "admin/question_reply"; }
+     * 
+     * // 1:1 문의 답글 등록
+     * 
+     * @PostMapping("/admin/replyUpload") public String replyUpload(ReplyVO replyVO)
+     * { log.info("replyUpload().."); adminService.replyUpload(replyVO);
+     * 
+     * return "redirect:quetionList"; }
+     */
+
+    @RequestMapping("/list") // 댓글 리스트
+    @ResponseBody
+    private List<ReplyVO> replyList(Model model) {
+
+        return adminService.replyList();
+    }
+
+    @RequestMapping("/insert") // 댓글 작성
+    @ResponseBody
+    private int replyInsert(@RequestParam int brdId, @RequestParam String replyContent, @RequestParam String userId) {
+
+        ReplyVO replyVO = new ReplyVO();
+        replyVO.setBoardId(brdId);
+        replyVO.setReplyContent(replyContent);
+        replyVO.setUserId(userId);
+
+        return adminService.replyInsert(replyContent);
+    }
+
+    @RequestMapping("/update") // 댓글 수정
+    @ResponseBody
+    private int replyUpdate(@RequestParam int replyId, @RequestParam String replyContent) {
+
+        ReplyVO replyVO = new ReplyVO();
+        replyVO.setReplyId(replyId);
+        replyVO.setReplyContent(replyContent);
+
+        return adminService.replyUpdate(replyContent);
+    }
+
+    @RequestMapping("/delete/{cno}") // 댓글 삭제
+    @ResponseBody
+    private int replyDelete(@PathVariable int replyId) {
+
+        return adminService.replyDelete(replyId);
+    }
+
     // 이벤트 게시판
     @GetMapping("/admin/eventList")
     public String eventList(Model model) {
@@ -283,6 +371,5 @@ public class AdminController {
 
         return "admin/review_list";
     }
-
 
 }
