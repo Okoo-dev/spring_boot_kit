@@ -28,7 +28,9 @@
       <result column="co_enabled" property="userEnabled" />
       <result column="co_joindate" property="userJoinDate" />
       <result column="co_logintime" property="userLoginTime" />
-      <result column="co_address" property="userAddress" />
+      <result column="ADDRESS_1" property="userAddress1" />
+	  <result column="ADDRESS_2" property="userAddress2" />
+	  <result column="ADDRESS_3" property="userAddress3" />
       <result column="co_account" property="userAccount" />
    </resultMap>
    

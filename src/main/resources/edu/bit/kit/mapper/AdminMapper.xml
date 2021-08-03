@@ -17,7 +17,9 @@
 		<result column="co_enabled" property="userEnabled" />
 		<result column="co_joindate" property="userJoinDate" />
 		<result column="co_logintime" property="userLoginTime" />
-		<result column="co_address" property="userAddress" />
+		<result column="ADDRESS_1" property="userAddress1" />
+	  	<result column="ADDRESS_2" property="userAddress2" />
+	  	<result column="ADDRESS_3" property="userAddress3" />
 		<result column="co_account" property="userAccount" />
 	</resultMap>
 
@@ -72,7 +74,7 @@
 
 	<select id="getUser" resultMap="userList">
 		SELECT
-		user_id,co_number,co_name,co_phone,co_email,co_gender,co_joindate,co_address,co_account
+		user_id,co_number,co_name,co_phone,co_email,co_gender,co_joindate,address_1, address_2, address_3,co_account
 		FROM HK_USER
 		WHERE user_id = #{userId}
 	</select>
@@ -84,7 +86,9 @@
 		#{userPhone},
 		co_email = #{userEmail},
 		co_gender = #{userGender},
-		co_address = #{userAddress},
+		address_1= #{userAddress1},
+		address_2= #{userAddress2},
+		address_3= #{userAddress3},
 		co_account = #{userAccount}
 		WHERE user_id
 		=
