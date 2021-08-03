@@ -1,5 +1,7 @@
-<!doctype html>
-<html lang="ko">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<meta charset="utf-8">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -8,14 +10,11 @@
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/loginstyle.css">
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="js/jquery-3.2.1.slim.min.js"></script>
 <script src="popper/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
 
 <title>Kit.</title>
 
@@ -27,8 +26,10 @@
 		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" onclick="location.href='login.html'">로그인</a></li>
-				<li class="nav-item"><a class="nav-link" onclick="location.href='signup.html'">회원가입</a></li>
+				<li class="nav-item"><a class="nav-link"
+					onclick="location.href='login.html'">로그인</a></li>
+				<li class="nav-item"><a class="nav-link"
+					onclick="location.href='signup.html'">회원가입</a></li>
 			</ul>
 		</div>
 	</div>
@@ -36,6 +37,7 @@
 
 	<!-- 상단 로고 메뉴 바 -->
 	<!-- Navigation -->
+
 	<nav
 		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
 		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
@@ -56,12 +58,7 @@
 		</div>
 	</nav>
 
-
-	<section class="login-form">
- 	<p>기본화면</p>
-	</section>
-
-
+	<p>review3</p>
 
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
 	<footer>
@@ -69,14 +66,15 @@
 			<div class="foo_div"></div>
 			<img src="img/Kit2_size.png" />
 			<div class="foo_div1">
-				<span>(주)Kit.</span> <span> | </span> <span>대표 :
-					선진정형 </span> <span> | </span> <span>사업자 등록 번호
-					: 000-00-0000</span> <span> | </span>
+				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
+					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
 				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
 				<p>Kit.</p>
 			</div>
 		</div>
 	</footer>
+
+
 
 
 </body>
