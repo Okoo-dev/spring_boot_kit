@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ProductVO {
-    private int prodNumber;
+    private String prodNumber;
     private String prodName;
     private Date prodRecievingDate;
     private int prodStock;

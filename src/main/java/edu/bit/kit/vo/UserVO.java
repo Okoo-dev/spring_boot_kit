@@ -15,35 +15,34 @@ package edu.bit.kit.vo;
 환불계좌	co_account	N/A	VARCHAR2(100)	NULL
 
 */
-import java.sql.Timestamp;
-
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserVO {
 
 	private String userId;
 	private int userNumber;
-	private String userpassword;
+	private String userPassword;
 	private String userName;
 	private String userPhone;
 	private String userEmail;
-	private Timestamp userBirth;
+	private Date userBirth;
 	private String userGender;
 	private int userEnabled;
-	private Timestamp userJoinDate;
-	private Timestamp userLoginTime;
+	private Date userJoinDate;
+	private Date userLoginTime;
 	private String userAddress;
 	private String userAccount;
-	
+	private String roleName;
 
 }
