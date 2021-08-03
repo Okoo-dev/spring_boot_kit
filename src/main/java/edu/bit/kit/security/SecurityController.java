@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.bit.kit.service.OrderService;
 import edu.bit.kit.service.ProductService;
 import edu.bit.kit.vo.CartVO;
+import edu.bit.kit.vo.CouponVO;
 import edu.bit.kit.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +33,8 @@ public class SecurityController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private OrderService orderService;
 
 //장바구니 담기
 	@ResponseBody
@@ -91,10 +95,10 @@ public class SecurityController {
 		List<CartVO> cartList = productService.listCart(userId);
 		log.info("List<CartVO> cartList :::::::" + cartList);
 		//log.info("List<CartVO> cartList :::::::" + cartList.get(4));
+		model.addAttribute("cartList", cartList);
 		
 		// 장바구니 총 금액
-		int sumMoney = productService.sumCartMoney(userId);				
-		model.addAttribute("cartList", cartList);
+		int sumMoney = productService.sumCartMoney(userId);						
 		model.addAttribute("sumMoney", sumMoney);
 		return "thymeleaf/cartList";
 	}
@@ -112,6 +116,44 @@ public class SecurityController {
 	
 	// 장바구니 수정
 	//@RequestMapping(value = "/cartModify", method = RequestMethod.POST)
+	
+	// 주문페이지 주문 상품 리스트
+	@RequestMapping(value="/order", method = RequestMethod.GET)
+	public String orderCartList(Principal principal, Model model) throws Exception {
+		log.info("get orderCartList");
+		String userId = principal.getName();
+		
+		List<CartVO> orderCartList = productService.listCart(userId);
+		log.info("List<CartVO> cartList :::::::" + orderCartList);
+		
+		model.addAttribute("orderCartList", orderCartList);
+		
+		// 장바구니 총 금액
+				int sumMoney = productService.sumCartMoney(userId);						
+				model.addAttribute("sumMoney", sumMoney);
+		// 주문페이지 쿠폰 조회		
+				List<CouponVO> orderCouponList = orderService.couponList(userId);
+				log.info("List<CouponVO> orderCouponList::::::" + orderCouponList);				
+				model.addAttribute("orderCouponList", orderCouponList);
+				
+		
+		return "thymeleaf/OrderPage";
+	}
+	
+	// 주문페이지 쿠폰 조회
+	@RequestMapping(value="/order/coupon", method = RequestMethod.GET)
+	public String orderCouponList(Principal principal, Model model) throws Exception {
+		log.info("get orderCouponList");
+		String userId = principal.getName();
+		
+		List<CouponVO> orderCouponList = orderService.couponList(userId);
+		log.info("List<CouponVO> orderCouponList::::::" + orderCouponList);
+		
+		model.addAttribute("orderCouponList", orderCouponList);
+		
+		
+		return "thymeleaf/OrderPage";
+	}
 	
 }
 /*

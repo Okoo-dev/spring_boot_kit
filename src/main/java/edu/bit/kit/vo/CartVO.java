@@ -20,6 +20,7 @@ public class CartVO {
 
 	private int cartId;
 	private int cartNumber;
+	// 카트 수량
 	private int cartAmount;
 	private int cartProductNumber;
 	private String cartUserid;
