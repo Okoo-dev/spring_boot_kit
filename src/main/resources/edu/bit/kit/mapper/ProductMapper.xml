@@ -33,36 +33,81 @@ select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRIC
 	</select>
 
 	<!-- 장바구니 -->
-	<resultMap type="edu.bit.kit.vo.CartVO" id="addCart">
-
+	<!-- <resultMap type="edu.bit.kit.vo.CartVO" id="addCart"> -->
+<resultMap type="edu.bit.kit.vo.CartVO" id="addCart">
 		<result column="CART_ID" property="cartId" />
 		<result column="USER_ID" property="cartUserid" />
 		<result column="PRODUCT_NUMBER" property="cartProductNumber" />
 		<result column="CART_NUMBER" property="cartNumber" />
 		<result column="CO_AMOUNT" property="cartAmount" />
+	
+	<collection resultMap="productList" property="productList">
+		</collection> 
+	
 	</resultMap>
 
 	<resultMap type="edu.bit.kit.vo.CartCateVO" id="cartCategory">
-
-
 		<result column="CART_NUMBER" property="cartCateNumber" />
 		<result column="CO_NAME" property="cartCateName" />
 	</resultMap>
 
+	<resultMap type="edu.bit.kit.vo.ProductVO" id="productList">
+		<result column="CO_NAME" property="CO_NAME" />
+		<result column="CO_PRICE" property="CO_PRICE" />
+		<result column="PRODUCT_NUMBER" property="PRODUCT_NUMBER" />	
+	</resultMap>
+
+
+	<!-- 장바구니 담기 -->
 	<insert id="addCart">
-		<!-- Insert into HK_CART
-		(CART_ID,USER_ID,PRODUCT_NUMBER,CART_NUMBER,CO_AMOUNT)
-		values
-		(CART_ID_seq.nextval, #{cartUserid}, #{cartProductNumber},
-		#{cartNumber}, #{cartAmount}) -->
-		
 		Insert into HK_CART
 		(CART_ID,USER_ID,PRODUCT_NUMBER,CART_NUMBER,CO_AMOUNT)
 		values
+		(CART_ID_seq.nextval, #{cartUserid}, #{cartProductNumber},
+		1, 1)		
+		<!-- Insert into HK_CART
+		(CART_ID,USER_ID,PRODUCT_NUMBER,CART_NUMBER,CO_AMOUNT)
+		values
 		(CART_ID_seq.nextval, 'SUN', 5,
-		2, 3)
+		2, 3) -->
 	</insert>
 
+	<!-- 장바구니 리스트 -->
+		<select id="getListCart" resultMap="addCart">
+	<![CDATA[
+select c.CART_ID, c.USER_ID, c.PRODUCT_NUMBER, c.CART_NUMBER, c.CO_AMOUNT, 
+p.CO_NAME AS CO_NAME, p.CO_PRICE AS CO_PRICE, u.CO_NAME AS userName  
+from HK_CART c, HK_PROD p, HK_USER u where c.USER_ID = #{userId} AND c.USER_ID = u.USER_ID AND c.PRODUCT_NUMBER = p.PRODUCT_NUMBER
+]]>
+	</select>
+<!-- 	<select id="getListCart" resultMap="addCart">
+	<![CDATA[
+select CART_ID, USER_ID, PRODUCT_ NUMBER, CART_NUMBER, CO_AMOUNT  from HK_CART where HK_CART.USER_ID = #{userId}
+]]>
+	</select> -->
+	
+	<!-- 장바구니 총금액 --> <!-- sql 작성새롭게 해야함 -->
+	<select id="sumCartMoney" resultType="int">
+select NVL(SUM(CO_PRICE*CO_AMOUNT), 0) MONEY from HK_CART c, HK_PROD p where c.PRODUCT_NUMBER = p.PRODUCT_NUMBER AND c.USER_ID = #{userId}
+	</select>
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteCart">
+	<![CDATA[
+	delete from HK_CART where HK_CART.CART_ID = #{cartId}
+	]]>
+	</delete>
+	<!-- 장바구니 기존 상품 조회 -->
+	<select id="countCart" resultType="int">
+	select count(*) from HK_CART where HK_CART.USER_ID = #{userId} and HK_CART.PRODUCT_NUMBER = #{cartProductNumber}
+	</select>
+	<!-- 장바구니 기존 상품 존재할 시 수량으로 추가 -->
+	<update id="updateCart">
+	update HK_CART set CO_AMOUNT = CO_AMOUNT + 1 where HK_CART.USER_ID = #{cartUserid} and HK_CART.PRODUCT_NUMBER = #{cartProductNumber}
+	</update>
+	
+
+	
+	
 	<!-- 시큐리티 -->
 	<resultMap type="edu.bit.kit.vo.UserVO" id="userMap">		
 		<result column="USER_ID" property="userId" />

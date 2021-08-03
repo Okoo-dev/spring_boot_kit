@@ -18,5 +18,13 @@ public class OrderVO {
    private int ordNumber;
    private String userId;
    private Date ordDate;
-    
+    //private int ordNumber;
+   // private String userId;
+   // private String userReceiver;
+   // private String ordAdress1;
+   // private String ordAdress2;
+    //private String ordAdress3;
+   // private String ordPhone;
+   // private Date ordDate;
+   // private int ordPrice;
 }

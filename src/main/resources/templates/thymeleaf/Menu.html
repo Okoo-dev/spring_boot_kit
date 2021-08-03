@@ -35,17 +35,19 @@
 		 */
 		$(".addToCart").click(function(e) {
 			e.preventDefault();
-			var cartProductNumber = $("#cartProductNumber").val();
+			var child = $(this).children("#pdnum");
+			var cartProductNumber = child.val();
+			/* var cartProductNumber = $("#cartProductNumber").val(); */
 			var cartAmount = $("#cartAmount").val();
 			var cartUserid = $("#cartUserid").val();
 
 			var data = {
 				cartProductNumber : cartProductNumber,
 				cartAmount : 1,
-				cartUserid : "jinwoo"
+				cartUserid : cartUserid
 			};
 
-			var url = '/menu'
+			var url = '/menu/cart'
 
 			console.log(url);
 
@@ -166,6 +168,7 @@ p {
 
 		<div class="card-group">
 			<tr th:each="ProductVO : ${list}">
+			
 				<div class="col-sm-3">
 					<div class="card mx-3">
 						<!-- <tr th:each="ProductVO : ${list}"> -->
@@ -176,6 +179,7 @@ p {
 									<td th:text="${ProductVO.CO_COOKINGTIME}"></td></small>
 							</p>
 							<p class="card-tit">
+								
 								<td th:text="${ProductVO.CO_NAME}"></td>
 							</p>
 							<p>
@@ -189,10 +193,12 @@ p {
 						<div class="card-footer">
 							<div class="icon">
 								<a class="icon-group" href="#"><i
-									class="fa fa-heart-o fa-2x" aria-hidden="true"></i></a> <a
-									class="addToCart" href="/cartList"><i
+									class="fa fa-heart-o fa-2x" aria-hidden="true"></i></a> 
+									<a class="addToCart" href="/cartList">
+									<input type="hidden" th:value="${ProductVO.PRODUCT_NUMBER}" id="pdnum"/>
+									<i
 									class="fa fa-shopping-cart fa-2x  col-md-3" aria-hidden="true"></i></a>
-
+									
 
 							</div>
 						</div>

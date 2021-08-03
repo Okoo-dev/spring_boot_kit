@@ -51,7 +51,7 @@
 		<result column="co_prepare_time" property="prodPrepareTime" />
 		<result column="co_comment" property="prodComment" />
 	</resultMap>
-	
+
 	<resultMap id="boardList" type="edu.bit.kit.vo.BoardVO">
 		<result column="board_id" property="brdId" />
 		<result column="board_number" property="brdNumber" />
@@ -64,12 +64,11 @@
 	</resultMap>
 
 
-
 	<select id="getList" resultMap="userList">
 		SELECT *
 		FROM hk_user
 	</select>
-	
+
 
 	<select id="getUser" resultMap="userList">
 		SELECT
@@ -81,13 +80,15 @@
 	<update id="update">
 		UPDATE HK_USER
 		SET co_name = #{userName},
-		co_phone = #{userPhone},
+		co_phone =
+		#{userPhone},
 		co_email = #{userEmail},
 		co_gender = #{userGender},
 		co_address = #{userAddress},
 		co_account = #{userAccount}
 		WHERE user_id
-		= #{userId}
+		=
+		#{userId}
 	</update>
 
 	<delete id="delete">
@@ -108,7 +109,8 @@
 		FROM ORD_DET O,
 		HK_PROD H
 		WHERE O.PRODUCT_NUMBER = H.PRODUCT_NUMBER
-		AND o.order_number = #{ordNumber}
+		AND o.order_number =
+		#{ordNumber}
 	</select>
 
 	<select id="getProdList" resultMap="prodList">
@@ -121,12 +123,14 @@
 		SELECT
 		*
 		FROM HK_PROD
-		WHERE product_number = #{prodNumber}
+		WHERE
+		product_number = #{prodNumber}
 	</select>
 
 	<insert id="insertProd">
 		INSERT INTO hk_prod
-		VALUES (hk_prod_seq.nextval, #{prodName},sysdate,
+		VALUES (hk_prod_seq.nextval,
+		#{prodName},sysdate,
 		#{prodStock},#{prodCategory},#{prodPrice},
 		#{prodServings},#{prodCookingTime},
 		#{prodPrepareTime},#{prodComment})
@@ -136,55 +140,111 @@
 	<update id="prodUpdate">
 		UPDATE hk_prod
 		SET co_name = #{prodName},
-		co_stock = #{prodStock},
+		co_stock =
+		#{prodStock},
 		co_category = #{prodCategory},
 		co_price = #{prodPrice},
 		co_servings = #{prodServings},
 		co_cookingtime = #{prodCookingTime},
 		co_prepare_time = #{prodPrepareTime},
 		co_comment = #{prodComment}
-		WHERE product_number = #{prodNumber}
+		WHERE
+		product_number = #{prodNumber}
 	</update>
+	
+	<delete id="prodDelete">
+		DELETE FROM HK_PROD
+		WHERE product_number = #{prodNumber}
+	</delete>
 
 	<select id="getNoticeList" resultMap="boardList">
-		SELECT b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
-		FROM HK_BRD b , BRDCATE c
-		WHERE b.board_number=c.board_number and b.board_number = 1
+		SELECT
+		b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
+		FROM
+		HK_BRD b , BRDCATE c
+		WHERE b.board_number=c.board_number and
+		b.board_number = 1
 	</select>
 	
+	<select id="getBoard" resultMap="boardList">
+		SELECT
+		*
+		FROM HK_BRD
+		WHERE
+		board_id = #{brdId}
+	</select>
+
 	<select id="getQuestionList" resultMap="boardList">
-		SELECT b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
-		FROM HK_BRD b , BRDCATE c
-		WHERE b.board_number=c.board_number and b.board_number = 3
+		SELECT
+		b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
+		FROM
+		HK_BRD b , BRDCATE c
+		WHERE b.board_number=c.board_number and
+		b.board_number = 3
 	</select>
 	
-	<select id="getEventList" resultMap="boardList">
-		SELECT b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
-		FROM HK_BRD b , BRDCATE c
-		WHERE b.board_number=c.board_number and b.board_number = 2
-	</select>
 	
-	<select id="getReviewList" resultMap="boardList">
-		SELECT b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
-		FROM HK_BRD b , BRDCATE c
-		WHERE b.board_number=c.board_number and b.board_number = 4
-	</select>
-	
-	<update id="updateHit">
-	 UPDATE hk_brd
-	 SET co_hit = co_hit + 1 
-	 WHERE board_id = #{brdId}
+	<update id="updateShape">
+	 UPDATE HK_REPLY 
+	 SET bStep = bStep + 1 
+	 WHERE bGroup = #{bgroup} AND bStep > #{bstep} 
 	</update>
 
+	<insert id="insertReply">
+	 INSERT INTO HK_REPLY(bId,bName,bTitle,bContent,bGroup,bStep,bIndent)
+	 VALUES (mvc_board_seq.nextval,#{bname},#{btitle},#{bcontent},#{bgroup},#{bstep}+1,#{bindent}+1)
+	</insert>
+	
+	
 	<insert id="insertNotice">
 		INSERT INTO hk_brd
-		VALUES (hk_brd_seq.nextval, 'HONG' ,1,
+		VALUES (hk_brd_seq.nextval, 'HONG'
+		,1,
 		#{brdTitle},#{brdContent},sysdate,0)
 	</insert>
 	
+
+	<select id="getEventList" resultMap="boardList">
+		SELECT
+		b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
+		FROM
+		HK_BRD b , BRDCATE c
+		WHERE b.board_number=c.board_number and
+		b.board_number = 2
+	</select>
+
+	<select id="getReviewList" resultMap="boardList">
+		SELECT
+		b.board_id,c.co_name,b.co_title,b.co_date,b.co_hit,b.user_id
+		FROM
+		HK_BRD b , BRDCATE c
+		WHERE b.board_number=c.board_number and
+		b.board_number = 4
+	</select>
+
+	<update id="updateHit">
+		UPDATE hk_brd
+		SET co_hit = co_hit + 1
+		WHERE board_id =
+		#{brdId}
+	</update>
+	
+	<update id="boardUpdate">
+		UPDATE hk_brd
+		SET co_title = #{brdTitle}, co_content = #{brdContent}
+		WHERE
+		board_id = #{brdId}
+	</update>
+	
+	<delete id="boardDelete">
+		DELETE FROM HK_BRD
+		WHERE board_id = #{brdId}
+	</delete>
+
 	<insert id="insertEvent">
 		INSERT INTO hk_brd
-		VALUES (hk_brd_seq.nextval, 'HONG' ,2,
+		VALUES (hk_brd_seq.nextval, 'HONG'
+		,2,
 		#{brdTitle},#{brdContent},sysdate,0)
 	</insert>
 
