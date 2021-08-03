@@ -121,7 +121,9 @@ select NVL(SUM(CO_PRICE*CO_AMOUNT), 0) MONEY from HK_CART c, HK_PROD p where c.P
 		<result column="CO_ENABLED" property="userEnabled" />
 		<result column="CO_JOINDATE" property="userJoinDate" />
 		<result column="CO_LOGINTIME" property="userLoginTime" />
-		<result column="CO_ADDRESS" property="userAddress" />
+		<result column="ADDRESS_1" property="userAddress1" />
+		<result column="ADDRESS_2" property="userAddress2" />
+		<result column="ADDRESS_3" property="userAddress3" />
 		<result column="CO_ACCOUNT" property="userAccount" />
 		
  		<collection resultMap="authMap" property="authList">
@@ -145,7 +147,7 @@ select NVL(SUM(CO_PRICE*CO_AMOUNT), 0) MONEY from HK_CART c, HK_PROD p where c.P
 	
 	<![CDATA[
 SELECT mem.USER_ID, CO_NUMBER, CO_PASSWORD, CO_NAME, CO_PHONE, CO_EMAIL, CO_BIRTH, CO_GENDER, mem.CO_ENABLED, CO_JOINDATE, CO_LOGINTIME,
-CO_ADDRESS, CO_ACCOUNT, CO_AUTHORITY, AUTHORITIES_ID
+ADDRESS_1, ADDRESS_2, ADDRESS_3, CO_ACCOUNT, CO_AUTHORITY, AUTHORITIES_ID
  FROM HK_USER mem LEFT OUTER JOIN HK_AUTH auth on mem.USER_ID = auth.USER_ID
  WHERE mem.USER_ID = #{userId}
 ]]>
