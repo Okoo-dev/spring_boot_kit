@@ -95,7 +95,7 @@ public class UserController{
 	
 	
 	// 회원 가입 Get 이동
-	@RequestMapping(value= "/signup", method=RequestMethod.GET)
+	@RequestMapping(value= "/getsignup", method=RequestMethod.GET)
 	public void getSignup() throws Exception {
 		log.info("get signup");
 	}

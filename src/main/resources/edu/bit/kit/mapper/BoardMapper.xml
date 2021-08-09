@@ -37,7 +37,6 @@
     
    <resultMap id="pointList" type="edu.bit.kit.vo.PointVO">
       <result column="USER_ID" property="userId" />
-      <result column="ORDER_NUMBER" property="orderNumber" />
       <result column="CO_POINT" property="point" />
    </resultMap>
    
@@ -59,6 +58,14 @@
       <result column="CO_DELIVERY_NUMBER" property="delvNumber" />
       <result column="CO_STATE" property="delvState" />
    </resultMap>
+   
+   
+   <resultMap  id="authList" type="edu.bit.kit.vo.AuthVO" >
+		<result column="AUTHORITIES_ID" property="authId" />
+		<result column="CO_AUTHORITY" property="authAuthority" />
+		<result column="CO_ENABLED" property="authEabled" />
+		<result column="USER_ID" property="userId" />
+	</resultMap>
 
 
    <select id="getEventList" resultMap="boardList">
@@ -110,6 +117,53 @@
       SELECT * FROM HK_CPN WHERE USER_ID = #{userId}
       ]]>
    </select>
+   
+    <insert id="signUpInsert">
+   <![CDATA[
+	INSERT INTO HK_USER (USER_ID, CO_NUMBER, CO_PASSWORD, CO_NAME, CO_PHONE, CO_EMAIL,
+						 CO_BIRTH, CO_GENDER, CO_ENABLED, CO_JOINDATE, CO_LOGINTIME, ADDRESS_1,
+						ADDRESS_2, ADDRESS_3)
+	VALUES (#{userId}, HK_USER_SEQ.NEXTVAL, #{userPassword}, #{userName}, #{userPhone}, #{userEmail},
+			#{userBirth}, #{userGender}, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{userAddress1},
+		    #{userAddress2}, #{userAddress3})
+   ]]>
+   </insert>  
+   
+   
+     <insert id="signUpAuth">
+   <![CDATA[
+	INSERT INTO hk_auth (AUTHORITIES_ID, CO_AUTHORITY, CO_ENABLED, USER_ID)
+	VALUES (HK_AUTH_SEQ.NEXTVAL, 'ROLE_MEMBER', '1', #{userId})
+   ]]>
+   </insert>  
+   
+   
+     <insert id="signUpPoint">
+   <![CDATA[
+	INSERT INTO HK_POINT (USER_ID, CO_POINT)
+	VALUES (#{userId}, 1000)
+   ]]>
+   </insert>  
+   
+   
+   <select id="idChk" resultType="string">
+	SELECT CASE WHEN EXISTS (SELECT 1 FROM HK_USER WHERE USER_ID=#{userId})
+	THEN 'exist'
+	ELSE 'usable' END AS EXIST FROM DUAL 
+        
+   </select>
+   
+
+    <select id="passChk" resultType="int">
+	SELECT COUNT(*) FROM HK_USER 
+	WHERE USER_ID = #{userId}
+	AND CO_PASSWORD = #{userPassword}
+        
+   </select>
+   
+   
+   
+   
    
    
 </mapper>

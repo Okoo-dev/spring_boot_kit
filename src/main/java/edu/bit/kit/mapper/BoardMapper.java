@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import edu.bit.kit.vo.AuthVO;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.CouponVO;
 import edu.bit.kit.vo.DeliveryVO;
@@ -14,7 +15,6 @@ import edu.bit.kit.vo.UserVO;
 public interface BoardMapper {
 
    public List<BoardVO> getEventList();
-
 
    public UserVO getUser(String userId);
 
@@ -29,5 +29,19 @@ public interface BoardMapper {
    public List<DeliveryVO> getDeliveryList(String userId);
    
    public void updateAccount(String userId, String userAccount);
+   
+   public void signUpInsert(UserVO userVO);
+   
+   public void signUpAuth(UserVO userVO);
+   
+   public void signUpPoint(UserVO userVO);
+
+   public String idChk(UserVO userVO);
+   
+   public int passChk(UserVO userVO);
+   
+   
+   
+   
 
 }

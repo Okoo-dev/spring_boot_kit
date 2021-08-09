@@ -3,6 +3,7 @@ package edu.bit.kit.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.bit.kit.mapper.BoardMapper;
@@ -19,6 +20,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private BoardMapper boardmapper;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Override
     public List<BoardVO> getEventList() {
@@ -75,6 +79,52 @@ public class BoardServiceImpl implements BoardService {
         log.info("getExpCouponCount()..");
         
         return boardmapper.getExpCouponCount(userId);
+    }
+
+    @Override
+    public void signUpInsert(UserVO userVO) {
+        log.info("signUpInsert().." + userVO);
+        
+        userVO.setUserPassword(bCryptPasswordEncoder.encode(userVO.getUserPassword()));
+        
+     
+        
+        
+        
+        boardmapper.signUpInsert(userVO);
+    }
+
+    @Override
+    public String idChk(UserVO userVO) throws Exception{
+        log.info("idCheck()..");
+        String result = boardmapper.idChk(userVO);
+        
+        return result;
+    }
+    
+    
+    @Override
+    public int passChk(UserVO userVO) throws Exception{
+        log.info("passChk()..");
+        int result = boardmapper.passChk(userVO);
+        
+        return result;
+    }
+
+    @Override
+    public void signUpAuth(UserVO userVO) {
+        log.info("signUpAuth()..");
+        
+        boardmapper.signUpAuth(userVO);
+        
+    }
+
+    @Override
+    public void signUpPoint(UserVO userVO) {
+            log.info("signUpPoint()..");
+        
+        boardmapper.signUpPoint(userVO);
+        
     }
     
 }

@@ -28,4 +28,15 @@ public interface BoardService {
     
     public void updateAccount(String userId, String userAccount);
 
+    public void signUpInsert(UserVO userVO);
+    
+    public String idChk(UserVO userVO) throws Exception;
+    
+    public int passChk(UserVO userVO) throws Exception;
+    
+    public void signUpAuth(UserVO userVO);
+    
+    public void signUpPoint(UserVO userVO);
+    
 }
+

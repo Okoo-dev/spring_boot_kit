@@ -4,9 +4,6 @@
 <!-- security 사용한 tag 참조 위한 부분  -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<!-- 
-  이벤트 페이지 과제 : 이벤트 게시글 이미지 첨부파일 어떻게 가져올지, 이벤트 기간 DB 어떻게 할지.
- -->
 <!doctype html>
 <html lang="ko">
 <head>
@@ -148,7 +145,7 @@
       <div class="container my-5">
       	<div class="row" style=" background: linear-gradient(to right, #ccff33, #86b300); line-height: 70px;">
       		<div  class="col-lg-2 text-nowrap border-0 text-left pl-3" ><span class="font-weight-bold" style="font-size:1.2em;"> ${user.userName}</span></div>
-			<div  class="offset-5 col-lg-3 text-nowrap border-0 text-right small "><i class="fas fa-map-marker-alt"></i><span> ${user.userAddress}</span></div>
+			<div  class="offset-3 col-lg-5 text-nowrap border-0 text-right small "><i class="fas fa-map-marker-alt"></i><span> ${user.userAddress1} ${user.userAddress2} ${user.userAddress3}</span></div>
       	</div>
       	<div class="row" style="border:2px solid; border-top: none; border-color: #f2f2f2; background: white; line-height: 70px;">
       		<div  class="text-center col-7 my-3" style="border-right:2px solid;  border-color: #f2f2f2; line-height: 40px;" >
