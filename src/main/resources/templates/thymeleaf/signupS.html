@@ -1,0 +1,560 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{css/style.css}">
+<link rel="stylesheet" th:href="@{css/myOrder.css}">
+<link rel="stylesheet" th:href="@{css/all.css}">
+<link rel="stylesheet" th:href="@{css/bootstrap-select.min.css}">
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src="@{js/jquery-3.2.1.slim.min.js}"></script>
+<script th:src="@{popper/popper.min.js}"></script>
+<script th:src="@{js/bootstrap.min.js}"></script>
+<script th:src="@{js/all.js}"></script>
+<script th:src="@{js/bootstrap-select.min.js}"></script>
+<script th:src="@{js/defaults-ko-KR.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+<title>Kit.</title>
+
+
+<!-- 상단 로그인 회원가입 바 -->
+</head>
+<div
+		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		<div class="navbar-nav" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name">사용자</a></li>
+					<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+				
+				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+					<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
+					<!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->				
+					<a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:href="@{/login}">Login</a>
+				</li>
+					<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
+				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+				 	<a class="nav-link" href="signup">회원가입</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+<!-- 상단 로고 메뉴 바 -->
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center ">
+		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
+			class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			</ul>
+		</div>
+	</nav>
+
+<body>
+	
+
+	
+	<!-- 컨텐츠 넣으면됨 -->
+	<div class="container">
+  <div class="row">
+	
+	<div class="col-md-2"></div> <!-- 왼쪽 공백 -->
+
+<!-- 9단길이 -->
+  <div class="col-md-9">
+  
+       <div class="bg-white py-3 px-0"></div>
+   <div class="container">
+      <h1 class="text-left font-weight-bold">회원가입</h1>
+      <hr class="underline ">
+  </div>
+    
+    
+<div class="container">
+  <div class="col-2"></div>
+   <div class="container col-10">  <!-- 입력 폼  -->
+     <form th:action="@{signUpInsert}" method="POST" id="signUpInsert"  onSubmit="return Checkform()" name="frm">
+     		<div class="row"> <!-- 아이디 입력 -->
+     				<div class="col-5">
+						<label for="userId" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">아이디</label>
+						<input type="text" class="form-control" id="userId" name="userId"
+							aria-describedby="nameHelp" placeholder="아이디 입력(5~11자)" style="font-size:0.9em;">
+					</div>
+									
+					<div class="col-7  pt-5 mt-1 ">
+						<button type="button" class="btn btn-secondary" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
+						<!-- <span> &nbsp; 사용가능한 아이디입니다.</span> -->
+					</div>
+					
+     		</div>
+     		<div class="row"> <!-- 비밀번호 입력 -->
+     				<div class="col-8">
+						<label for="userPassword" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호</label>
+						<input type="password" class="form-control" id="userPassword" name="userPassword"
+							aria-describedby="nameHelp" placeholder="비밀번호(숫자,영문,특수문자 조합 최소8자)" style="font-size:0.9em;">
+					</div>
+     				<div class="col-4">
+					</div>
+     		</div>
+     		<div class="row"> <!-- 비밀번호 확인 입력 -->
+     				<div class="col-8">
+						<label for="passwordConfirm" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호 확인</label>
+						<input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+							aria-describedby="nameHelp" placeholder="비밀번호 확인" style="font-size:0.9em;">
+					</div>
+     				<div class="col-4">
+					</div>
+     		</div>
+     		<div class="row"> <!-- 이름 입력 -->
+     				<div class="col-8">
+						<label for="userName" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이름</label>
+						<input type="text" class="form-control" id="userName" name="userName"
+							aria-describedby="nameHelp" placeholder="이름" style="font-size:0.9em;">
+					</div>
+     				<div class="col-4">
+					</div>
+     		</div>
+     		<div class="row"> <!-- 휴대폰 번호 입력 -->
+     				<div class="col-2">
+						<label for="phone1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">휴대전화</label>
+						<select class="form-control selectpicker"  name="phone1" id="phone1">
+							  <option>010</option>
+    						  <option>011</option>
+    						  <option>016</option>
+    						  <option>017</option>
+  							  <option>018</option>
+    						  <option>019</option>
+						</select>
+					</div>	
+					
+					<div class="col-2 pt-5 mt-2">
+						<input type="text" class="form-control" name="phone2" id="phone2" val="" style="font-size:0.9em;">
+					</div>
+					<div class="col-2 pt-5 mt-2">	
+						<input type="text" class="form-control" name="phone3" id="phone3" val="" style="font-size:0.9em;">
+   					</div>							
+     		</div>
+     		<div class="row"> <!-- 이메일 입력 -->
+     				<div class="col-8">
+						<label for="userEmail" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이메일</label>
+						<input type="text" class="form-control" id="userEmail" name="userEmail"
+							aria-describedby="nameHelp" placeholder="이메일" style="font-size:0.9em;">
+					</div>
+     				<div class="col-4">
+					</div>
+     		</div>
+     		<div class="row"> <!-- 생일 입력 -->
+     				<div class="col-3">
+						<label for="year" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">생년월일</label>
+						<select class="form-control selectpicker"  name="yy" id="year"></select>
+					</div>	
+					<div class="col-2 pt-5 mt-1">
+						<select class="form-control selectpicker"  name="mm" id="month"></select>
+					</div>
+					<div class="col-2 pt-5 mt-1">	
+						<select class="form-control selectpicker"  name="dd" id="day"></select>
+   					</div>							
+     		</div>
+     		<div class="row"> <!-- 성별 입력 -->
+     				<div class="col-8">
+     				<label  class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">성별</label><br>
+     					<div class="form-check form-check-inline">
+  							 <input class="form-check-input" type="radio" name="userGender" id="inlineRadio1" value="남성">
+  							 <label class="form-check-label" for="inlineRadio1">남성</label>
+						</div>
+						<div class="form-check form-check-inline">
+  							<input class="form-check-input" type="radio" name="userGender" id="inlineRadio2" value="여성">
+ 							<label class="form-check-label" for="inlineRadio2">여성</label>
+						</div>
+					</div>
+     				<div class="col-4">
+					</div>
+     		</div>
+     		<div class="container pl-0"> <!-- 주소 입력 -->
+				<label for="userAddress1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">주소</label>
+     				
+     			 <div class="row my-1">
+     				<div class="col-5 ">
+						<input type="text" class="form-control" id="1" name="userAddress1"
+							aria-describedby="nameHelp" placeholder="우편번호" style="font-size:0.9em;">
+					</div>
+									
+					<div class="col-3 ">
+						<button onclick="goPopup();" type="button" class="btn btn-secondary">우편번호 찾기</button>
+					</div>
+				 </div>	
+				 
+				 <div class="row my-1"> 
+     				<div class="col-9">
+						<input type="text" class="form-control" id="2" name="userAddress2"
+							aria-describedby="nameHelp" placeholder="도로명 주소" style="font-size:0.9em;">
+					</div>
+     				<div class="col-3">
+					</div>
+     			</div>
+				 <div class="row my-1"> 
+     				<div class="col-9">
+						<input type="text" class="form-control" id="3" name="userAddress3"
+							aria-describedby="nameHelp" placeholder="상세 주소" style="font-size:0.9em;">
+					</div>
+     				<div class="col-3">
+					</div>
+     			</div>
+				 
+				 <input type="hidden" id="userPhone" name="userPhone">
+				 <input type="hidden" id="userBirth" name="userBirth">
+				 
+				 
+     		</div>
+     		</form>
+    </div>  <!-- 입력 폼  끝 -->
+     	
+    <div class="underline my-5" style="border-bottom: 1px solid #e6e6e6;"></div>
+     	
+     <div class="container">
+     		<div class="bg-white py-2 px-0"></div>
+     			<div class="row">
+     				<div class="col chk_wrap">
+     					<input type="checkbox" id="chk_agree"> 
+     					<label for="chk_agree" class="font-weight-bold space" style="font-size:0.9em; cursor:pointer;">  
+      						&nbsp; 개인정보 수집 이용동의(필수)</label>
+     				</div>
+     				
+     				
+     			</div>
+     			
+      </div>
+</div>	
+    
+<div class="bg-white py-2 px-0"></div>    
+    
+    
+<div class=container>
+	<div class="row">
+		<div class="offset-1 col-4">
+			<input type="button" value="취소" class="btn btn-block border px-5 py-3 text-center font-weight-bold" OnClick="location.href ='/login'" 
+			style="background-color: white; cursor:pointer;">
+		</div>
+		<div class=" col-4">	
+			<button type="submit" form="signUpInsert" id="goInsert" class="btn btn-block border px-5 py-3 text-center font-weight-bold" 
+			 style="background-color: #b8e840; cursor:pointer;" disabled="disabled">등록</button>
+		</div>
+	</div>
+
+</div> 
+ 
+    
+    
+    
+</div> 
+
+ <!-- 8단길이 끝-->		
+  		<div class="col-md-1"></div>
+  			
+  			
+  		</div>
+    </div>
+<!-- 전체 컨테이너 끝 -->
+
+
+<script  type="text/javascript">
+
+$(document).ready(function(){            
+    var now = new Date();
+    var year = now.getFullYear();
+    var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
+    var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());           
+    //년도 selectbox만들기               
+    for(var i = 1900 ; i <= year ; i++) {
+        $('#year').append('<option value="' + i + '">' + i + '년</option>');    
+    }
+
+    // 월별 selectbox 만들기            
+    for(var i=1; i <= 12; i++) {
+        var mm = i > 9 ? i : "0"+i ;            
+        $('#month').append('<option value="' + mm + '">' + mm + '월</option>');    
+    }
+    
+    // 일별 selectbox 만들기
+    for(var i=1; i <= 31; i++) {
+        var dd = i > 9 ? i : "0"+i ;            
+        $('#day').append('<option value="' + dd + '">' + dd+ '일</option>');    
+    }
+    $("#year  > option[value="+year+"]").attr("selected", "true");        
+    $("#month  > option[value="+mon+"]").attr("selected", "true");    
+    $("#day  > option[value="+day+"]").attr("selected", "true");       
+    
+    
+	
+  
+})
+	
+	$(document).ready(function() {
+    $('#signUpInsert').submit(function() {
+    	 
+    	
+    	//  폰넘버
+    	var phoneNumber = $("#phone1").val() +"-"+ $("#phone2").val() + "-"+ $("#phone3").val();
+         
+    	 
+         console.log("phoneNumber" + phoneNumber);
+         
+     	$("#userPhone").val(phoneNumber);
+     	
+     	//생일
+     	var birthDate = $("#year").val() +"/"+ $("#month").val() + "/"+ $("#day").val();
+     	
+     	$("#userBirth").val(birthDate);
+    	
+    	
+    	
+    	
+    }); // end submit()
+}); // end ready()
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+  	$('#chk_agree').change(function(){
+  		/* console.log('AA'); */
+		var checked = $('#chk_agree').is(':checked');
+		
+		if(checked)
+			btn_on();
+		else
+			btn_off();
+		});
+	
+		var btn;
+		 //버튼활성화
+		 function btn_on() {
+		  btn = document.getElementById('goInsert');
+		  btn.disabled = false;
+		 }
+		 
+		 //버튼비활성화
+		 function btn_off() {
+		  btn = document.getElementById('goInsert');
+		  btn.disabled = 'disabled';
+		 }
+
+	
+		 
+		 function Checkform() {
+		    if( frm.userId.value == "" ) {
+		    	frm.userId.focus();
+		    	alert("아이디를 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.userPassword.value == "" ) {
+		    	frm.userPassword.focus();
+		    	alert("비밀번호를 입력해 주십시오.");
+		    	 return false;
+		    }
+		    
+		    if(frm.passwordConfirm.value == ''){
+				alert('비밀번호 확인을 입력하세요');
+				return false;
+			}
+		    
+		    if(frm.userPassword.value != frm.passwordConfirm.value){
+				alert('비밀번호와 비밀번호 확인이 다릅니다');	
+				 return false;
+		    }
+		   
+		    if( frm.userName.value == "" ) {
+		    	frm.userName.focus();
+		    	alert("이름을 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.phone1.value == "" ) {
+		    	frm.phone1.focus();
+		    	alert("휴대전화번호를 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.phone2.value == "" ) {
+		    	frm.phone2.focus();
+		    	alert("휴대전화번호를 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.phone3.value == "" ) {
+		    	frm.phone3.focus();
+		    	alert("휴대전화번호를 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.userEmail.value == "" ) {
+		    	frm.userEmail.focus();
+		    	alert("이메일을 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.userAddress1.value == "" ) {
+		    	frm.userAddress1.focus();
+		    	alert("우편번호를 입력해 주십시오.");
+		    	 return false;
+		    }
+		    if( frm.userAddress2.value == "" ) {
+		    	frm.userAddress2.focus();
+		    	alert("도로명주소를 입력해 주십시오.");
+		    	 return false;
+		    }
+		   
+		    if( frm.userAddress3.value == "" ) {
+		    	frm.userAddress3.focus();
+		    	alert("상세주소를 입력해 주십시오.");
+		    	 return false;
+		    }
+		    
+		    var pw = $("#userPassword").val();
+			var id = $("#userId").val();
+		    var checkNumber = pw.search(/[0-9]/g);
+		    var checkEnglish = pw.search(/[a-z]/ig);
+		 
+		    if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)){            
+		        alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
+		        return false;
+		    }else if(checkNumber <0 || checkEnglish <0){
+		        alert("숫자와 영문자를 혼용하여야 합니다.");
+		        return false;
+		    }else if(/(\w)\1\1\1/.test(pw)){
+		        alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+		        return false;
+		    }else if(pw.search(id) > -1){
+		        alert("비밀번호에 아이디가 포함되어 있습니다.");
+		        return false;
+		    }else {
+
+			console.log("통과");
+			
+			}
+		    
+		 }
+
+
+		
+		 function fn_idChk(){
+				$.ajax({
+					url : "/idChk",
+					type : "POST",
+					dataType : "text",
+					
+					data : {"userId" : $("#userId").val()},
+					success : function(data){
+						
+						if(data == "exist"){
+							alert("중복된 아이디입니다.");
+						}else if(data == "usable"){
+							alert("사용가능한 아이디입니다.");
+							$("#idChk").attr("value", "Y");
+						}
+					},error: function(err){
+						console.log(err);
+					}
+				})
+			}
+
+		 		 
+			var pop;
+
+			function goPopup() {
+				// window.name = "부모창 이름"; 
+				window.name = "parentForm";
+
+				//pop = window.open("/resources/kit/jusoPopup2.html", "pop","width=570, height=420, scrollbars=yes");
+				pop = window.open("/jusoPopup.html", "pop",
+						"width=570, height=420, scrollbars=yes");
+
+			}
+
+			function jusoCallBack(entX, entY) {
+				var form = $('<form></form>');
+				form.attr('action', '/map');
+				form.attr('method', 'post');
+				form.appendTo('body');
+				form.append($('<input type="hidden" value="' + entX + '" name=entX>'));
+				form.append($('<input type="hidden" value="' + entY + '" name=entY>'));
+				form.submit();
+
+				pop.close();
+			}
+		 
+			
+			
+			
+
+		 
+</script>
+
+<!-- <script  type="text/javascript" th:src=@{js/signUp.js}>
+</script>
+<script>
+$(document).ready(function(){
+	$(signUp()).on();
+})
+
+</script> -->
+  	
+
+	<!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 -->
+
+
+	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
+	<footer>
+		<div class="jumbotron text-center jumbotron-fluid bg-secondary mt-5">
+			<div class="foo_div"></div>
+			<img src="../img/Kit2_size.png" />
+			<div class="foo_div1">
+				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
+					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
+				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
+				<p>Kit.</p>
+				<img src="../img/kakaotalk.png">
+				<img src="../img/google+.png">
+				<img src="../img/naver.png">
+			</div>
+		</div>
+	</footer>
+
+
+</body>
+</html>

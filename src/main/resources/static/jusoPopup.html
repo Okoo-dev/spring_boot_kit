@@ -69,6 +69,14 @@ function daumZipCode() {
         	//opener.document.getElementById("2").value.style.display = "block";
         	//opener.document.getElementById("3").value.style.display = "block";
         }
+        
+        function setAndClose() {
+        	setParentText();
+            window.close();
+        }
+        
+        
+        
    </script>
    
 </head>
@@ -84,6 +92,6 @@ function daumZipCode() {
 </form>
 
 
-    <input type="button" value="전달하기" onclick="setParentText()">
+    <input type="button" value="전달하기" onclick="setAndClose()">
 </body>
 </html>

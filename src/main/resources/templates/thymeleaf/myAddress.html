@@ -1,7 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<taglib prefix="sec" uri="http://www.springframework.org/security/tags">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -171,7 +170,9 @@
      		<div class="bg-white py-2 px-0"></div>
      			<div class="row">
      				<div class="col py-2">
-     						<p th:text="${user.userAddress}"></p>
+     						<p th:text="${user.userAddress1}"></p>
+     						<p th:text="${user.userAddress2}"></p>
+     						<p th:text="${user.userAddress3}"></p>
      						<p th:text="${user.userPhone}"></p>
      				</div>
      			</div>
