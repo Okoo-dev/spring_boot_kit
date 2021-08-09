@@ -218,6 +218,19 @@
 									</div>
 								</div>
 
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
+									<table>
+										<c:forEach var="vo" items="${prod_view.fileList}">
+											<tr>
+												<td><label class="col-sm-2 col-sm-2 control-label"><img src="/images/${vo.srcFileName}"/></label></td>
+												<td><label class="col-sm-2 col-sm-2 control-label">|</label></td>
+												<td><label class="col-sm-2 col-sm-2 control-label">${vo.fileSize}kb</label></td>
+											</tr>
+										</c:forEach>
+									</table>
+								</div>
+
 								<table>
 									<tr>
 										<td colspan="2"><input type="submit" value="수정"

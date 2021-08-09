@@ -131,7 +131,7 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 공지사항 수정/삭제
+					<i class="fa fa-angle-right"></i> 답변달기
 				</h3>
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="row mt">
@@ -145,7 +145,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">글 제목</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" name="brdTitle" value="ㄴ[문의답변입니다.]${question_reply.brdTitle}">
+										<input type="text" class="form-control" name="brdTitle" value="ㄴ[문의답변입니다.]">
 									</div>
 								</div>
 
@@ -153,7 +153,7 @@
 									<label class="col-sm-2 col-sm-2 control-label">글 내용</label>
 									<div class="col-sm-10">
 										<textarea type="text" class="form-control" rows="10"
-											name="brdContent">${question_reply.brdContent}</textarea>
+											name="replyContent">${question_reply.replyContent}</textarea>
 									</div>
 								</div>
 
@@ -169,14 +169,11 @@
 								</div>
 								<table>
 									<tr>
-										<td colspan="2"><input type="submit" value="수정"
+										<td colspan="2"><input type="submit" value="등록"
 											class="btn btn-round btn-success"> &nbsp;&nbsp;<a
-											href="/admin/noticeList"><button type="button"
-													class="btn btn-round btn-info">목록보기</button></a> &nbsp;&nbsp; <a
-											id="a-delete"
-											href="${pageContext.request.contextPath}noticeDelete?brdId=${notice_view.brdId}">
-												<button type="button" class="btn btn-round btn-warning">삭제</button>
-										</a></td>
+											href="/admin/questionList"><button type="button"
+													class="btn btn-round btn-info">목록보기</button></a>
+										</td>
 									</tr>
 								</table>
 							</form>

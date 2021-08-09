@@ -138,8 +138,8 @@
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
-							<form class="form-horizontal style-form" action="prodUpload"
-								method="post">
+							<form class="form-horizontal style-form" action="/admin/prodUpload"
+								method="post" enctype="multipart/form-data">
 
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">상품 이름</label>
@@ -193,7 +193,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">상품 설명</label>
 									<div class="col-sm-10">
-										<textarea type="text" class="form-control" rows="10" name="prodComment"></textarea>
+										<textarea class="form-control" rows="10" name="prodComment"></textarea>
 									</div>
 								</div>
 
@@ -201,9 +201,8 @@
 									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
 									<div class="col-sm-10">
 										<div class="custom-file" id="inputFile">
-											<input name="file" type="file" class="custom-file-input"
-												id="customFile"> <label class="custom-file-label"
-												for="customFile">파일을 선택해 주세요.</label>
+											<input name="files" id="files" type="file" multiple="multiple" class="custom-file-input"
+												id="customFile"> 
 										</div>
 									</div>
 								</div>
