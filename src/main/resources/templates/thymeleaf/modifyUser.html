@@ -14,7 +14,7 @@
 <link rel="stylesheet" th:href="@{css/myOrder.css}">
 <link rel="stylesheet" th:href="@{css/all.css}">
 <link rel="stylesheet" th:href="@{css/bootstrap-select.min.css}">
-
+ 
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -24,11 +24,13 @@
 <script th:src="@{js/all.js}"></script>
 <script th:src="@{js/bootstrap-select.min.js}"></script>
 <script th:src="@{js/defaults-ko-KR.min.js}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 
 <title>Kit.</title>
 
+ <script>
+     
+    </script>
 
 <!-- 상단 로그인 회원가입 바 -->
 </head>
@@ -87,14 +89,68 @@
 	<div class="container">
   <div class="row">
 	
-	<div class="col-md-2"></div> <!-- 왼쪽 공백 -->
+	
+	<div class="col-md-3">
+<!-- 사이드 바 메뉴-->
+<div class="container">
+ <h1 class="text-left font-weight-bold my-4">MyKit</h1>
+ </div>
+  <!-- 패널 타이틀1 -->
+<div class="panel panel-info">
+    <!-- 사이드바 메뉴목록1 -->
+    <ul class="list-group">
+      <li class="list-group-item border-0 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 주문정보</h5></li>
+      <li class="list-group-item border-0 py-1"><a href="#">주문/배송 조회</a></li>
+      <li class="list-group-item border-0 py-1"><a href="#">배송지 관리</a></li>
+      <li class="list-group-item border-0 py-1"><a href="#">환불계좌 관리</a></li>
+    </ul>
+</div>
+
+
+  <!-- 패널 타이틀1 -->
+<div class="panel panel-info">
+    <!-- 사이드바 메뉴목록1 -->
+    <ul class="list-group">
+      <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 혜택</h5></li>
+      <li class="list-group-item border-0 py-1"><a href="#">쿠폰</a></li>
+      <li class="list-group-item border-0 py-1"><a href="#">포인트</a></li>
+    </ul>
+</div>
+
+
+  <!-- 패널 타이틀1 -->
+<div class="panel panel-info">
+    <!-- 사이드바 메뉴목록1 -->
+    <ul class="list-group">
+      <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 활동</h5></li>
+      <li class="list-group-item border-0 py-1"><a href="#">나의 리뷰</a></li>
+      <!-- <li class="list-group-item border-0 py-1"><a href="#">쇼핑찜</a></li>
+      <li class="list-group-item border-0 py-1"><a href="#">1:1문의</a></li> -->
+    </ul>
+</div>
+
+
+  <!-- 패널 타이틀1 -->
+<div class="panel panel-info">
+    <!-- 사이드바 메뉴목록1 -->
+    <ul class="list-group">
+      <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 정보</h5></li>
+      <li class="list-group-item border-0 py-1"><a href="#">개인정보 변경</a></li>
+      <li class="list-group-item border-0 py-1"><a href="#">회원탈퇴</a></li>
+    </ul>
+</div>
+
+
+</div>
+
+
 
 <!-- 9단길이 -->
-  <div class="col-md-9">
+    <div class="col-md-9">
   
        <div class="bg-white py-3 px-0"></div>
    <div class="container">
-      <h1 class="text-left font-weight-bold">회원가입</h1>
+      <h1 class="text-left font-weight-bold">개인정보 변경</h1>
       <hr class="underline ">
   </div>
     
@@ -102,20 +158,7 @@
 <div class="container">
   <div class="col-2"></div>
    <div class="container col-10">  <!-- 입력 폼  -->
-     <form th:action="@{signUpInsert}" method="POST" id="signUpInsert"  onSubmit="return Checkform()" name="frm">
-     		<div class="row"> <!-- 아이디 입력 -->
-     				<div class="col-5">
-						<label for="userId" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">아이디</label>
-						<input type="text" class="form-control" id="userId" name="userId"
-							aria-describedby="nameHelp" placeholder="아이디 입력(5~11자)" style="font-size:0.9em;">
-					</div>
-									
-					<div class="col-7  pt-5 mt-1 ">
-						<button type="button" class="btn btn-secondary" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
-						<!-- <span> &nbsp; 사용가능한 아이디입니다.</span> -->
-					</div>
-					
-     		</div>
+     <form th:action="@{updateUser}" method="POST" id="updateUser"  onSubmit="return Checkform()" name="frm">
      		<div class="row"> <!-- 비밀번호 입력 -->
      				<div class="col-8">
 						<label for="userPassword" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호</label>
@@ -135,12 +178,12 @@
 					</div>
      		</div>
      		<div class="row"> <!-- 이름 입력 -->
-     				<div class="col-8">
+     				<div class="col-6">
 						<label for="userName" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이름</label>
 						<input type="text" class="form-control" id="userName" name="userName"
-							aria-describedby="nameHelp" placeholder="이름" style="font-size:0.9em;">
+							aria-describedby="nameHelp" th:value="${user.userName}" style="font-size:0.9em;">
 					</div>
-     				<div class="col-4">
+     				<div class="col-6">
 					</div>
      		</div>
      		<div class="row"> <!-- 휴대폰 번호 입력 -->
@@ -157,17 +200,17 @@
 					</div>	
 					
 					<div class="col-2 pt-5 mt-2">
-						<input type="text" class="form-control" name="phone2" id="phone2" style="font-size:0.9em;">
+						<input type="text" class="form-control" name="phone2" id="phone2"  style="font-size:0.9em;">
 					</div>
 					<div class="col-2 pt-5 mt-2">	
-						<input type="text" class="form-control" name="phone3" id="phone3" style="font-size:0.9em;">
+						<input type="text" class="form-control" name="phone3" id="phone3"  style="font-size:0.9em;">
    					</div>							
      		</div>
      		<div class="row"> <!-- 이메일 입력 -->
      				<div class="col-8">
 						<label for="userEmail" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이메일</label>
 						<input type="text" class="form-control" id="userEmail" name="userEmail"
-							aria-describedby="nameHelp" placeholder="이메일" style="font-size:0.9em;">
+							aria-describedby="nameHelp" th:value="${user.userEmail}" style="font-size:0.9em;">
 					</div>
      				<div class="col-4">
 					</div>
@@ -205,7 +248,7 @@
      			 <div class="row my-1">
      				<div class="col-5 ">
 						<input type="text" class="form-control" id="1" name="userAddress1"
-							aria-describedby="nameHelp" placeholder="우편번호" style="font-size:0.9em;">
+							aria-describedby="nameHelp" th:value="${user.userAddress1}" style="font-size:0.9em;">
 					</div>
 									
 					<div class="col-3 ">
@@ -216,7 +259,7 @@
 				 <div class="row my-1"> 
      				<div class="col-9">
 						<input type="text" class="form-control" id="2" name="userAddress2"
-							aria-describedby="nameHelp" placeholder="도로명 주소" style="font-size:0.9em;">
+							aria-describedby="nameHelp" th:value="${user.userAddress2}" style="font-size:0.9em;">
 					</div>
      				<div class="col-3">
 					</div>
@@ -224,7 +267,7 @@
 				 <div class="row my-1"> 
      				<div class="col-9">
 						<input type="text" class="form-control" id="3" name="userAddress3"
-							aria-describedby="nameHelp" placeholder="상세 주소" style="font-size:0.9em;">
+							aria-describedby="nameHelp" th:value="${user.userAddress3}" style="font-size:0.9em;">
 					</div>
      				<div class="col-3">
 					</div>
@@ -232,6 +275,7 @@
 				 
 				 <input type="hidden" id="userPhone" name="userPhone">
 				 <input type="hidden" id="userBirth" name="userBirth">
+				 <input type="hidden" id="userId"  name="userId"  th:value="${user.userId}">
 				 
 				 
      		</div>
@@ -261,76 +305,62 @@
 <div class=container>
 	<div class="row">
 		<div class="offset-1 col-4">
-			<input type="button" value="취소" class="btn btn-block border px-5 py-3 text-center font-weight-bold" OnClick="location.href ='/login'" 
+			<input type="button" value="취소" class="btn btn-block border px-5 py-3 text-center font-weight-bold" OnClick="location.href ='/mymain'" 
 			style="background-color: white; cursor:pointer;">
 		</div>
 		<div class=" col-4">	
-			<button type="submit" form="signUpInsert" id="goInsert" class="btn btn-block border px-5 py-3 text-center font-weight-bold" 
+			<button type="submit" form="updateUser" id="goInsert" class="btn btn-block border px-5 py-3 text-center font-weight-bold" 
 			 style="background-color: #b8e840; cursor:pointer;" disabled="disabled">등록</button>
 		</div>
 	</div>
 
 </div> 
+  <!-- 9단길이 끝-->		
+  		
+  		
+  
+  
+  
  
-    
-    
-    
-</div> 
+  	
+  	
 
- <!-- 8단길이 끝-->		
-  		<div class="col-md-1"></div>
   			
   			
   		</div>
     </div>
+</div>
 <!-- 전체 컨테이너 끝 -->
 
-
-<!-- <script  type="text/javascript">
-
-$(document).ready(function(){            
-    var now = new Date();
-    var year = now.getFullYear();
-    
-    
-    $("#day  > option[value="+day+"]").attr("selected", "true");       
-    
-    
-	
-  
-}) 
-</script> -->
-	
-
- <script  type="text/javascript" th:src=@{js/signUp.js}>
-</script>
-<script>
-$(document).ready(function(){
-	$(signUp()).on();
-})
-
-</script>
   	
 
 	<!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 -->
+ <script  type="text/javascript" th:src=@{js/modifyUser.js}>
+</script>
+<script>
+$(document).ready(function(){
+	$(modifyUser()).on();
+})
 
+</script>
 
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
 	<footer>
 		<div class="jumbotron text-center jumbotron-fluid bg-secondary mt-5">
 			<div class="foo_div"></div>
-			<img src="../img/Kit2_size.png" />
+			<img src="img/Kit2_size.png" />
 			<div class="foo_div1">
 				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
 					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
 				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
 				<p>Kit.</p>
-				<img src="../img/kakaotalk.png">
-				<img src="../img/google+.png">
-				<img src="../img/naver.png">
+				<img src="img/kakaotalk.png">
+				<img src="img/google+.png">
+				<img src="img/naver.png">
 			</div>
 		</div>
 	</footer>
+
 
 
 </body>

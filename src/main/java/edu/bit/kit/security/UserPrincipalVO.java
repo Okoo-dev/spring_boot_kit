@@ -10,8 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import edu.bit.kit.vo.AuthVO;
 import edu.bit.kit.vo.UserVO;
+import lombok.Getter;
 
-
+@Getter
 public class UserPrincipalVO implements UserDetails{
 	
 	private ArrayList<UserVO> userVO;

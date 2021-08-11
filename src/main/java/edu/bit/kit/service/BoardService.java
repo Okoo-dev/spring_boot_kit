@@ -38,5 +38,7 @@ public interface BoardService {
     
     public void signUpPoint(UserVO userVO);
     
+    public void updateUser(UserVO userVO);
+    
 }
 

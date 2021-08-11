@@ -1,4 +1,4 @@
-	var now = new Date();
+    var now = new Date();
     var year = now.getFullYear();
     var mon = (now.getMonth() + 1) > 9 ? ''+(now.getMonth() + 1) : '0'+(now.getMonth() + 1); 
     var day = (now.getDate()) > 9 ? ''+(now.getDate()) : '0'+(now.getDate());           
@@ -21,6 +21,7 @@
     $("#year  > option[value="+year+"]").attr("selected", "true");        
     $("#month  > option[value="+mon+"]").attr("selected", "true");    
     $("#day  > option[value="+day+"]").attr("selected", "true");       
+    
     
 	
 
@@ -50,13 +51,8 @@
 	
 		 
 		 function Checkform() {
-		    if( frm.userId.value == "" ) {
-		    	frm.userId.focus();
-		    	alert("아이디를 입력해 주십시오.");
-		    	 return false;
-		    }
-		   
-		    if( frm.userPassword.value == "" ) {
+
+			 if( frm.userPassword.value == "" ) {
 		    	frm.userPassword.focus();
 		    	alert("비밀번호를 입력해 주십시오.");
 		    	 return false;
@@ -124,8 +120,9 @@
 			    	alert("성별을 입력해 주십시오.");
 			    	 return false;
 			 }
-		    
- 				// 공백제거 끝
+		  	
+	     	 
+	     	 // 공백제거 끝
 	     	 
 	     	 //  폰넘버
     		var phoneNumber = $("#phone1").val() +"-"+ $("#phone2").val() + "-"+ $("#phone3").val();
@@ -139,7 +136,7 @@
 	     	 
 	     	 
 	     	 
-			//유효성 검사	
+			//유효성 검사	     	 
 		    
 		    var pw = $("#userPassword").val();
 			var id = $("#userId").val();
@@ -164,7 +161,6 @@
 			
 			}
 		    
-		    
 		    var ph = $("#userPhone").val();
 		    var checkEnglishph = ph.search(/[a-z]/ig);
 		    var check_kor = ph.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/ig);
@@ -175,9 +171,7 @@
 		    }
 		    
 		    
-		    
-		    
-		 }
+		 }  //ChkFrm 끝
 
 
 		
@@ -226,3 +220,7 @@
 
 				pop.close();
 			}
+		 
+			
+			
+			

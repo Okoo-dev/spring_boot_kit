@@ -40,7 +40,7 @@ public interface BoardMapper {
    
    public int passChk(UserVO userVO);
    
-   
+   public void updateUser(UserVO userVO);
    
    
 
