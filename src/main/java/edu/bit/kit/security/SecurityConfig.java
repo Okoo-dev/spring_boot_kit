@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				/* .antMatchers().hasAnyAuthority() */
 		.anyRequest().authenticated()
 
+
 		.and()
 
 		.formLogin()

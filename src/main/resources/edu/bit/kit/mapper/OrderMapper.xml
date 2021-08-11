@@ -16,15 +16,75 @@
 		<result column="CO_DATE" property="cpnDate" />
 		<result column="CO_RATE" property="cpnRate" />
 		<result column="CO_PRICE" property="cpnPrice" />
-	
+		<result column="cpn" property="cpn" />
 	</resultMap>
 	
 	<select id="getListCoupon" resultMap="coupon">
-<![CDATA[
+<!-- <![CDATA[
 select COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,CO_RATE,CO_PRICE from HK_CPN p where p.USER_ID = #{userId}
+]]> -->
+<![CDATA[
+SELECT COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,
+ CASE 
+  WHEN CO_RATE != '0' THEN CO_RATE
+  WHEN CO_PRICE != '0' THEN CO_PRICE
+  END as cpn
+  FROM HK_CPN WHERE USER_ID = #{userId}
+]]>
+
+	</select>
+	
+		<select id="selectCoupon" resultMap="coupon">
+<!-- <![CDATA[
+select COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,CO_RATE,CO_PRICE from HK_CPN p where p.USER_ID = #{userId}
+]]> -->
+<![CDATA[
+SELECT COUPON_ID,USER_ID,CO_NAME,CO_EXPIRY_DATE,CO_DATE,
+ CASE 
+  WHEN CO_RATE != '0' THEN CO_RATE
+  WHEN CO_PRICE != '0' THEN CO_PRICE
+  END as cpn
+  FROM HK_CPN WHERE COUPON_ID = #{couponChoice}
+]]>
+
+	</select>
+	
+	<!-- 포인트 조회 -->
+	<resultMap type="edu.bit.kit.vo.PointVO" id="point">
+		<!-- <result column="ORDER_NUMBER" property="orderNumber" /> -->
+		<result column="USER_ID" property="userId" />
+		<result column="CO_POINT" property="point" />
+	</resultMap>
+	
+	<select id="pointList" resultMap="point">
+	<![CDATA[
+select USER_ID, CO_POINT from HK_POINT where USER_ID = #{userId}
 ]]>
 	</select>
 	
-	
+	<!-- 주문 유저 조회 -->
+	<resultMap type="edu.bit.kit.vo.UserVO" id="userMap">		
+		<result column="USER_ID" property="userId" />
+		<result column="CO_NUMBER" property="userNumber" />
+		<result column="CO_PASSWORD" property="userPassword" />
+		<result column="CO_NAME" property="userName" />
+		<result column="CO_PHONE" property="userPhone" />
+		<result column="CO_EMAIL" property="userEmail" />
+		<result column="CO_BIRTH" property="userBirth" />
+		<result column="CO_GENDER" property="userGender" />
+		<result column="CO_ENABLED" property="userEnabled" />
+		<result column="CO_JOINDATE" property="userJoinDate" />
+		<result column="CO_LOGINTIME" property="userLoginTime" />
+		<result column="ADDRESS_1" property="userAddress1" />
+		<result column="ADDRESS_2" property="userAddress2" />
+		<result column="ADDRESS_3" property="userAddress3" />
+		<result column="CO_ACCOUNT" property="userAccount" />
+		 
+	</resultMap>
+	<select id="userInfo" resultMap="userMap">
+	<![CDATA[
+select * from HK_USER  where USER_ID = #{userId}
+]]>
+	</select>
 	
 </mapper>
