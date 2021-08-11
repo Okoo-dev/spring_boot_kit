@@ -138,7 +138,7 @@
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
-							<form class="form-horizontal style-form" action="boardModify"
+							<form class="form-horizontal style-form" action="noticeModify"
 								method="post">
 								<input type="hidden" name="brdId" value="${notice_view.brdId}">
 
@@ -174,7 +174,7 @@
 											href="/admin/noticeList"><button type="button"
 													class="btn btn-round btn-info">목록보기</button></a> &nbsp;&nbsp; <a
 											id="a-delete"
-											href="${pageContext.request.contextPath}boardDelete?brdId=${notice_view.brdId}">
+											href="${pageContext.request.contextPath}noticeDelete?brdId=${notice_view.brdId}">
 												<button type="button" class="btn btn-round btn-warning">삭제</button>
 										</a></td>
 									</tr>

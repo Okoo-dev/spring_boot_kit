@@ -17,9 +17,10 @@ import lombok.ToString;
 public class ReplyVO {
     private int replyId;
     private String userId;
-    private int boardId;
+    private String boardId;
     private String replyContent;
     private Date replyDate;
+    
     private int replyGroup;
     private int replyStep;
     private int replyIndent;

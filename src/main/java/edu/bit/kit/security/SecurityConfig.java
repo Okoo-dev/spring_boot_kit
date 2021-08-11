@@ -55,22 +55,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		//HTTP 관련 보안 설정 **가장 중요 
 		http
+        .csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/**").permitAll()
 				/* .antMatchers().hasAnyAuthority() */
 		.anyRequest().authenticated()
-				
-	.and()
-		.csrf().ignoringAntMatchers("/user/save", "/menu/cart","/**")
-	.and()
+
+		.and()
+
 		.formLogin()
 		.defaultSuccessUrl("/menu")
-	.and()
+		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.deleteCookies("JSESSIONID")
 		.logoutSuccessUrl("/")
-	.and()
+		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/access-denied");
 		
@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 * 
 	 * anyRequest().authenticated() : 나머지 URL은 인증을 걸쳐야 한다.
 	 * 
-	 * .csrf().ignoringAntMatchers("/user/save") : CSRF 토큰 없이 실행 하겠다.
+	 * .csrf().ignoringAntMatchers("/user/save") : CSRF 토큰 없이 실행 하겠다는 의미 postmapping 사용할 경우 404에러가떠서 설정을해줘야함
 	 * 
 	 * defaultSuccessUrl("/") : 로그인이 성공 되면 해당 URL로 이동하겠다.
 	 * 

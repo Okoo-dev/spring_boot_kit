@@ -2,6 +2,7 @@ package edu.bit.kit.vo;
 
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,6 @@ public class ProductVO {
     private String prodCookingTime;
     private String prodPrepareTime;
     private String prodComment;
-
+    private List<ResourceFileVO> fileList;
     
 }

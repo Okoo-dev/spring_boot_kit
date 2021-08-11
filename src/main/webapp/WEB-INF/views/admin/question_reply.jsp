@@ -131,69 +131,29 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 상품 등록
+					<i class="fa fa-angle-right"></i> 답변달기
 				</h3>
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
-							<form class="form-horizontal style-form" action="/admin/prodUpload"
-								method="post" enctype="multipart/form-data">
+							<form class="form-horizontal style-form" action="replyUpload"
+								method="post">
+								<input type="hidden" name="brdId" value="${question_reply.brdId}">
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 이름</label>
+									<label class="col-sm-2 col-sm-2 control-label">글 제목</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodName">
+										<input type="text" class="form-control" name="brdTitle" value="ㄴ[문의답변입니다.]">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">재고량</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodStock">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 분류</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodCategory">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 가격</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodPrice">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">식사량</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodServings">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 조리 시간</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodCookingTime">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 준비 시간</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodPrepareTime">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 설명</label>
+									<label class="col-sm-2 col-sm-2 control-label">글 내용</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" rows="10" name="prodComment"></textarea>
+										<textarea type="text" class="form-control" rows="10"
+											name="replyContent">${question_reply.replyContent}</textarea>
 									</div>
 								</div>
 
@@ -201,17 +161,19 @@
 									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
 									<div class="col-sm-10">
 										<div class="custom-file" id="inputFile">
-											<input name="files" id="files" type="file" multiple="multiple" class="custom-file-input"
-												id="customFile"> 
+											<input name="file" type="file" class="custom-file-input"
+												id="customFile"> <label class="custom-file-label"
+												for="customFile">파일을 선택해 주세요.</label>
 										</div>
 									</div>
 								</div>
 								<table>
 									<tr>
-										<td colspan="2"><input type="submit" value="상품등록"
-											class="btn btn-round btn-success"> &nbsp;&nbsp; <a
-											href="/admin/prodList"><button type="button"
-													class="btn btn-round btn-info">목록보기</button></a></td>
+										<td colspan="2"><input type="submit" value="등록"
+											class="btn btn-round btn-success"> &nbsp;&nbsp;<a
+											href="/admin/questionList"><button type="button"
+													class="btn btn-round btn-info">목록보기</button></a>
+										</td>
 									</tr>
 								</table>
 							</form>

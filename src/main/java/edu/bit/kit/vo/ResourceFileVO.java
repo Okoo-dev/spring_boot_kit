@@ -8,10 +8,6 @@ package edu.bit.kit.vo;
 확장자	co_extension	N/A	VARCHAR2(100 BYTE)	NULL
 
 */
-import java.sql.Timestamp;
-
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,9 +22,9 @@ public class ResourceFileVO {
 
 	private int srcFileNumber;
 	private int prodNumber;
-	private int brdId;
+	private String brdId;
 	private String srcFileName;
 	private String srcFilePath;
 	private String srcFileExtension;
-
+	private long fileSize;
 }

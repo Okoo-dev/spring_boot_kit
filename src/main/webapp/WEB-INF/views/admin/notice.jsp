@@ -131,87 +131,48 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 상품 등록
+					<i class="fa fa-angle-right"></i> 공지사항 수정/삭제
 				</h3>
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
-							<form class="form-horizontal style-form" action="/admin/prodUpload"
-								method="post" enctype="multipart/form-data">
-
+							<form class="form-horizontal style-form" >
+								<input type="hidden" name="brdId" value="${notice.brdId}">
+								
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 이름</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodName">
-									</div>
+									<label class="col-sm-2 col-sm-2 control-label">글 제목</label> <label
+										class="col-sm-2 col-sm-2 control-label">${notice.brdTitle}</label>
 								</div>
-
+								
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">재고량</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodStock">
-									</div>
+									<label class="col-sm-2 col-sm-2 control-label">글 내용</label> <label
+										class="col-sm-2 col-sm-2 control-label">${notice.brdContent}</label>
 								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 분류</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodCategory">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 가격</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodPrice">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">식사량</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodServings">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 조리 시간</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodCookingTime">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 준비 시간</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="prodPrepareTime">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">상품 설명</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" rows="10" name="prodComment"></textarea>
-									</div>
-								</div>
-
+								
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
-									<div class="col-sm-10">
-										<div class="custom-file" id="inputFile">
-											<input name="files" id="files" type="file" multiple="multiple" class="custom-file-input"
-												id="customFile"> 
-										</div>
-									</div>
+									<table>
+										<c:forEach var="vo" items="${notice.fileList}">
+											<tr>
+												<td><label class="col-sm-2 col-sm-2 control-label"><img src="/images/${vo.srcFileName}"/></label></td>
+												<td><label class="col-sm-2 col-sm-2 control-label">|</label></td>
+												<td><label class="col-sm-2 col-sm-2 control-label">${vo.fileSize}kb</label></td>
+											</tr>
+										</c:forEach>
+									</table>
 								</div>
+								
+
 								<table>
 									<tr>
-										<td colspan="2"><input type="submit" value="상품등록"
-											class="btn btn-round btn-success"> &nbsp;&nbsp; <a
-											href="/admin/prodList"><button type="button"
-													class="btn btn-round btn-info">목록보기</button></a></td>
+										<td colspan="2"><a
+											href="/admin/noticeList"><button type="button"
+													class="btn btn-round btn-info">목록보기</button></a> &nbsp;&nbsp; <a
+											href="/admin/noticeView?brdId=${notice.brdId}">
+												<button type="button" class="btn btn-round btn-warning">수정하기</button>
+										</a></td>
 									</tr>
 								</table>
 							</form>

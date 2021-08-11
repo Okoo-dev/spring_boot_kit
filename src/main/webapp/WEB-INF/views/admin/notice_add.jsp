@@ -139,7 +139,7 @@
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
 							<form class="form-horizontal style-form" action="noticeUpload"
-								method="post">
+								method="post" enctype="multipart/form-data">
 
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">글 제목</label>
@@ -151,7 +151,8 @@
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">글 내용</label>
 									<div class="col-sm-10">
-										<textarea type="text" class="form-control" rows="10" name="brdContent"></textarea>
+										<textarea type="text" class="form-control" rows="10"
+											name="brdContent"></textarea>
 									</div>
 								</div>
 
@@ -159,12 +160,12 @@
 									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
 									<div class="col-sm-10">
 										<div class="custom-file" id="inputFile">
-											<input name="file" type="file" class="custom-file-input"
-												id="customFile"> <label class="custom-file-label"
-												for="customFile">파일을 선택해 주세요.</label>
+											<input name="files" id="files" type="file" multiple="multiple" class="custom-file-input"
+												id="customFile"> 
 										</div>
 									</div>
 								</div>
+		
 								<table>
 									<tr>
 										<td colspan="2"><input type="submit" value="등록"
@@ -174,6 +175,7 @@
 									</tr>
 								</table>
 							</form>
+
 
 						</div>
 					</div>

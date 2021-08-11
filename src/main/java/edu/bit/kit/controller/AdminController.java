@@ -1,12 +1,20 @@
 package edu.bit.kit.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import edu.bit.kit.service.AdminService;
 import edu.bit.kit.vo.BoardVO;
@@ -18,13 +26,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class AdminController {    
-    
+public class AdminController {
+
     @Autowired
     private AdminService adminService;
 
     // admin 페이지 호출 메서드
-    @GetMapping("/admin")
+    @GetMapping("/admin/index")
     public String adminMain() {
 
         log.info("adminMain..");
@@ -107,7 +115,6 @@ public class AdminController {
         log.info("prod_view..");
         log.info("productVO" + productVO);
         model.addAttribute("prod_view", adminService.getProd(productVO.getProdNumber()));
-
         return "admin/prod_view";
     }
 
@@ -119,9 +126,10 @@ public class AdminController {
 
     // 상품 등록 메서드
     @PostMapping("/admin/prodUpload")
-    public String prodUpload(ProductVO productVO) {
+    public String prodUpload(ProductVO productVO, MultipartHttpServletRequest multipartHttpServletRequest)
+            throws Exception {
         log.info("prodUpload()..");
-        adminService.prodUpload(productVO);
+        adminService.prodUpload(productVO, multipartHttpServletRequest);
 
         return "redirect:prodList";
     }
@@ -182,13 +190,24 @@ public class AdminController {
 
     // 공지사항 등록
     @PostMapping("/admin/noticeUpload")
-    public String noticeUpload(BoardVO boardVO) {
+    public String noticeUpload(BoardVO boardVO, MultipartHttpServletRequest multipartHttpServletRequest)
+            throws Exception {
         log.info("noticeUpload()..");
-        adminService.noticeUpload(boardVO);
+        adminService.noticeUpload(boardVO, multipartHttpServletRequest);
 
         return "redirect:noticeList";
     }
-    
+
+    // 공지사항 뷰
+    @GetMapping("/admin/notice")
+    public String notice(BoardVO boardVO, Model model) {
+        log.info("notice..");
+        log.info("boardVO" + boardVO);
+        model.addAttribute("notice", adminService.getBoard(boardVO.getBrdId()));
+
+        return "admin/notice";
+    }
+
     // 공지사항 수정 삭제 뷰
     @GetMapping("/admin/noticeView")
     public String noticeView(BoardVO boardVO, Model model) {
@@ -198,11 +217,11 @@ public class AdminController {
 
         return "admin/notice_view";
     }
-    
+
     // 공지사항 수정 메서드
-    @PostMapping("/admin/boardModify")
-    public String boardModify(BoardVO boardVO) {
-        log.info("boardModify()..");
+    @PostMapping("/admin/noticeModify")
+    public String noticeModify(BoardVO boardVO) {
+        log.info("noticeModify()..");
         log.info("boardVO" + boardVO);
 
         adminService.boardModify(boardVO);
@@ -211,16 +230,29 @@ public class AdminController {
     }
 
     // 공지사항 삭제 메서드
-    @GetMapping("/admin/boardDelete")
-    public String boardDelete(BoardVO boardVO) {
-        log.info("boardDelete()..");
+    @GetMapping("/admin/noticeDelete")
+    public String noticeDelete(BoardVO boardVO) {
+        log.info("noticeDelete()..");
         log.info("boardVO" + boardVO);
 
         adminService.boardRemove(boardVO.getBrdId());
 
         return "redirect:noticeList";
     }
-    
+
+    // 공지사항 선택삭제
+    @PostMapping("/admin/boardDelete")
+    public String ajaxBoardDelete(HttpServletRequest request) {
+
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for (int i = 0; i < size; i++) {
+            adminService.boardRemove(ajaxMsg[i]);
+        }
+
+        return "redirect:noticeList";
+    }
+
     // 1:1 문의 게시판
     @GetMapping("/admin/questionList")
     public String questionList(Model model) {
@@ -230,7 +262,7 @@ public class AdminController {
 
         return "admin/question_list";
     }
-    
+
     // 1:1 문의 확인 메서드
     @GetMapping("/admin/questionView")
     public String questionView(BoardVO boardVO, Model model) {
@@ -240,22 +272,76 @@ public class AdminController {
 
         return "admin/question_view";
     }
-    
-    // 1:1 문의 답글 등록 화면
-    @GetMapping("/admin/questionReply")
-    public String questionReply() {
-        return "admin/qurstion_Reply";
-    }
-    
-    // 1:1 문의 답글 등록 화면 
-    @PostMapping("/admin/replyUpload")
-    public String replyUpload(ReplyVO replyVO) {
-        log.info("replyUpload()..");
-        adminService.replyUpload(replyVO);
 
-        return "redirect:quetionList";
+    // 1:1 삭제 메서드
+    @GetMapping("/admin/questionDelete")
+    public String questionDelete(BoardVO boardVO) {
+        log.info("questionDelete()..");
+        log.info("boardVO" + boardVO);
+
+        adminService.boardRemove(boardVO.getBrdId());
+
+        return "redirect:questionList";
+    }
+
+    // 1:1 선택삭제
+    @PostMapping("/admin/questionDelete")
+    public String ajaxQuestionDelete(HttpServletRequest request) {
+
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for (int i = 0; i < size; i++) {
+            adminService.boardRemove(ajaxMsg[i]);
+        }
+
+        return "redirect:questionList";
+    }
+
+    // 1:1 문의 답글 등록 화면
+    // 우선 보류
+    /*
+     * @GetMapping("/admin/questionReply") public String questionReply() { return
+     * "admin/question_reply"; }
+     * 
+     * // 1:1 문의 답글 등록
+     * 
+     * @PostMapping("/admin/replyUpload") public String replyUpload(ReplyVO replyVO)
+     * { log.info("replyUpload().."); adminService.replyUpload(replyVO);
+     * 
+     * return "redirect:quetionList"; }
+     */
+
+    @RequestMapping("/admin/replyList") // 댓글 리스트
+    @ResponseBody
+    private List<ReplyVO> replyList(Model model, String brdId) throws Exception {
+
+        return adminService.replyList(brdId);
+    }
+
+    @RequestMapping("/admin/replyInsert") // 댓글 작성
+    @ResponseBody
+    private int replyInsert(ReplyVO replyVO) throws Exception {
+
+        log.info("replyVO" + replyVO);
+
+        return adminService.replyInsert(replyVO);
+    }
+
+    @RequestMapping("/admin/replyUpdate") // 댓글 수정
+    @ResponseBody
+    private int replyUpdate(ReplyVO replyVO) throws Exception {
+        log.info("replyVO" + replyVO);
+        return adminService.replyUpdate(replyVO);
     }
     
+
+    @RequestMapping("/admin/replyDelete/{replyId}") // 댓글 삭제
+    @ResponseBody
+    private int replyDelete(@PathVariable int replyId) throws Exception {
+
+        return adminService.replyDelete(replyId);
+    }
+
     // 이벤트 게시판
     @GetMapping("/admin/eventList")
     public String eventList(Model model) {
@@ -283,6 +369,5 @@ public class AdminController {
 
         return "admin/review_list";
     }
-
 
 }

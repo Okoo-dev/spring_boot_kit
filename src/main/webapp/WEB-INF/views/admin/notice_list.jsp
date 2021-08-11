@@ -165,7 +165,7 @@
 												value="${list.brdId}"></td>
 											<td>${list.brdId}</td>
 											<td>${list.brdName}</td>
-											<td><a href="/admin/noticeView?brdId=${list.brdId}">${list.brdTitle}</a></td>
+											<td><a href="/admin/notice?brdId=${list.brdId}">${list.brdTitle}</a></td>
 											<td>${list.brdDate}</td>
 											<td>${list.brdHit}</td>
 											<td>${list.brdUserid}</td>
@@ -317,7 +317,7 @@
 		});
 
 		function deleteValue() {
-			var url = "prodDelete";
+			var url = "boardDelete";
 			var valueArr = new Array();
 			var list = $("input[name='RowCheck']");
 			for (var i = 0; i < list.length; i++) {
@@ -326,7 +326,7 @@
 				}
 			}
 			if (valueArr.length == 0) {
-				alert("선택된 상품이 없습니다.")
+				alert("선택된 글이 없습니다.")
 			} else {
 				var chk = confirm("정말 삭제하시겠습니까?");
 				$.ajax({
@@ -340,7 +340,7 @@
 					success : function(data) {
 						if (data = 1) {
 							alert("삭제 되었습니다.");
-							location.replace("prodList") // 상품 리스트페이지 새로고침
+							location.replace("noticeList") 
 						} else {
 							alert("삭제 실패")
 						}

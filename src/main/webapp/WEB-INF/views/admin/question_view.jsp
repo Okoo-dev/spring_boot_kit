@@ -131,51 +131,56 @@
 		<section id="main-content">
 			<section class="wrapper">
 				<h3>
-					<i class="fa fa-angle-right"></i> 공지사항 수정/삭제
+					<i class="fa fa-angle-right"></i> 1:1문의
 				</h3>
 				<!-- BASIC FORM ELELEMNTS -->
 				<div class="row mt">
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<i class="fa fa-angle-right"></i>
-							<form class="form-horizontal style-form" action="noticeModify"
-								method="post">
+							<form class="form-horizontal style-form">
 								<input type="hidden" name="brdId" value="${question_view.brdId}">
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">글 제목</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" name="brdTitle">
-									</div>
+									<label class="col-sm-2 col-sm-2 control-label">글 제목</label> <label
+										class="col-sm-2 col-sm-2 control-label">${question_view.brdTitle}</label>
 								</div>
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">글 내용</label>
-									<div class="col-sm-10">
-										<textarea type="text" class="form-control" rows="10"
-											name="brdContent"></textarea>
-									</div>
+									<label class="col-sm-2 col-sm-2 control-label">글 내용</label> <label
+										class="col-sm-2 col-sm-2 control-label">${question_view.brdContent}</label>
 								</div>
 
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">첨부 파일</label>
-									<div class="col-sm-10">
-										<div class="custom-file" id="inputFile">
-											<input name="file" type="file" class="custom-file-input"
-												id="customFile"> <label class="custom-file-label"
-												for="customFile">파일을 선택해 주세요.</label>
+								<div class="container">
+									<label for="content">답글</label>
+									<form name="commentInsertForm">
+										<div class="input-group">
+											<input type="hidden" id="brdId" name="brdId"
+												value="${question_view.brdId}"> <input type="text"
+												id="replyContent" class="form-control" name="replyContent"
+												placeholder="내용을 입력하세요."> <span
+												class="input-group-btn">
+
+												<button class="btn btn-default" type="button"
+													name="commentInsertBtn">등록</button>
+											</span>
 										</div>
-									</div>
+									</form>
 								</div>
+
+								<div class="container">
+									<div class="commentList"></div>
+								</div>
+
+
+
 								<table>
 									<tr>
-										<td colspan="2"><input type="submit" value="수정"
-											class="btn btn-round btn-success"> &nbsp;&nbsp;<a
-											href="/admin/questionList"><button type="button"
-													class="btn btn-round btn-info">목록보기</button></a> &nbsp;&nbsp; <a
-											id="a-delete"
-											href="${pageContext.request.contextPath}questionReply?boardId=${question_view.brdId}">
-												<button type="button" class="btn btn-round btn-warning">답글</button>
+										<td colspan="2"><a href="/admin/questionList"><button
+													type="button" class="btn btn-round btn-info">목록보기</button></a>
+											&nbsp;&nbsp;<a id="a-delete"
+											href="${pageContext.request.contextPath}questionDelete?brdId=${question_view.brdId}">
+												<button type="button" class="btn btn-round btn-warning">삭제</button>
 										</a></td>
 									</tr>
 								</table>
@@ -242,6 +247,126 @@
 	<script type="text/javascript"
 		src="/admin/Dashio/lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 	<script src="/admin/Dashio/lib/form-component.js"></script>
+
+	<script>
+		var brdId = '${question_view.brdId}'; //게시글 번호
+
+		//댓글 목록 
+		function commentList() {
+			$
+					.ajax({
+						url : '/admin/replyList',
+						type : 'get',
+						data : {
+							'brdId' : brdId
+						},
+						success : function(data) {
+							var a = '';
+							$
+									.each(
+											data,
+											function(key, value) {
+												a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+												a += '<div class="commentInfo'+value.replyId+'">'
+														+ '답글번호 : '
+														+ value.replyId
+														+ ' / 작성자 : '
+														+ value.userId;
+												a += '<a onclick="commentUpdate('
+														+ value.replyId
+														+ ',\''
+														+ value.replyContent
+														+ '\');"> 수정 </a>';
+												a += '<a onclick="commentDelete('
+														+ value.replyId
+														+ ');"> 삭제 </a> </div>';
+												a += '<div class="commentContent'+value.replyId+'"> <p> 내용 : '
+														+ value.replyContent
+														+ '</p>';
+												a += '</div></div>';
+											});
+
+							$(".commentList").html(a);
+						}
+					});
+		}
+		
+		$('[name=commentInsertBtn]').click(function() { //댓글 등록 버튼 클릭시 
+
+			var data = {
+				replyContent : $("#replyContent").val(),
+				boardId : $("#brdId").val()
+			}
+
+			console.log(data);
+
+			$.ajax({
+				url : '/admin/replyInsert',
+				type : 'POST',
+				data : data,
+				success : function(data) {
+					if (data == 1) {
+						commentList(); //댓글 작성 후 댓글 목록 reload
+						$('[name=replyContent]').val('');
+					}
+				}
+			});
+
+		});
+		
+		//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+		function commentUpdate(replyId, replyContent) {
+			var a = '';
+
+			a += '<div class="input-group">';
+			a += '<input type="text" class="form-control" name="content_'+replyId+'" value="'+replyContent+'"/>';
+			a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('
+					+ replyId + ');">수정</button> </span>';
+			a += '</div>';
+
+			$('.commentContent' + replyId).html(a);
+
+		}
+		
+		//댓글 수정
+		function commentUpdateProc(replyId) {
+			var updateReply = $('[name=content_'+replyId+']').val()
+			console.log(updateReply);
+			
+			$.ajax({
+				url : '/admin/replyUpdate',
+				type : 'post',
+				data : {'replyContent' : updateReply, 'replyId' : replyId},
+				success : function(data) {
+					if (data == 1)
+						commentList(brdId); //댓글 수정후 목록 출력 
+				}
+			});
+		}
+
+		//댓글 삭제 
+		function commentDelete(replyId) {
+			$.ajax({
+				url : '/admin/replyDelete/' + replyId,
+				type : 'post',
+				success : function(data) {
+					if (data == 1)
+						commentList(brdId); //댓글 삭제후 목록 출력 
+				}
+			});
+		}
+
+		$(document).ready(function() {
+			commentList(); //페이지 로딩시 댓글 목록 출력 
+		});
+	</script>
+
+
+
+
+
+
+
 
 </body>
 
