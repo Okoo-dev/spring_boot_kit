@@ -87,10 +87,6 @@ public class BoardServiceImpl implements BoardService {
         
         userVO.setUserPassword(bCryptPasswordEncoder.encode(userVO.getUserPassword()));
         
-     
-        
-        
-        
         boardmapper.signUpInsert(userVO);
     }
 
@@ -121,10 +117,26 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void signUpPoint(UserVO userVO) {
-            log.info("signUpPoint()..");
+            
+        log.info("signUpPoint()..");
         
         boardmapper.signUpPoint(userVO);
         
     }
+
+    @Override
+    public void updateUser(UserVO userVO) {
+        
+        log.info("updateUser().."+ userVO);
+            
+        userVO.setUserPassword(bCryptPasswordEncoder.encode(userVO.getUserPassword()));
+        
+        boardmapper.updateUser(userVO);
+    }
+    
+    
+    
+    
+    
     
 }
