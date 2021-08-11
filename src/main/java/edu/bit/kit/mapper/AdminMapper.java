@@ -85,9 +85,11 @@ public interface AdminMapper {
     BoardVO getBoard(String brdId);
     
     
-     // 1:1 문의 답글 
-    void updateShape(ReplyVO replyVO); 
-    void replyUpload(ReplyVO replyVO);
+    // 1:1 문의 답글 
+    // 보류
+    /*
+     * void updateShape(ReplyVO replyVO); void replyUpload(ReplyVO replyVO);
+     */
      
     
     // 1:1 문의 내용
@@ -98,6 +100,24 @@ public interface AdminMapper {
     
     // 게시판 삭제 메서드
     void boardDelete(String brdId);
+    
+    // 댓글 개수
+    public int replyCount() throws Exception;
+ 
+    // 댓글 목록
+    public List<ReplyVO> getReply(String brdId) throws Exception;
+ 
+    // 댓글 작성
+    public int replyInsert(ReplyVO replyVO) throws Exception;
+    
+    // 댓글 수정
+    public int replyUpdate(ReplyVO replyVO) throws Exception;
+ 
+    // 댓글 삭제
+    public int replyDelete(int replyId) throws Exception;
+
+
+
     
     
     

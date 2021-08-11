@@ -74,8 +74,8 @@
 		<result column="CO_STEP" property="replyStep" />
 		<result column="CO_INDENT" property="replyIndent" />
 	</resultMap>
-	
-	
+
+
 	<resultMap id="fileList" type="edu.bit.kit.vo.ResourceFileVO">
 		<result column="file_number" property="srcFileNumber" />
 		<result column="ptoduct_number" property="prodNumber" />
@@ -85,7 +85,7 @@
 		<result column="co_extension" property="srcFileExtension" />
 		<result column="co_size" property="fileSize" />
 	</resultMap>
-	
+
 	<select id="getList" resultMap="userList">
 		SELECT *
 		FROM hk_user
@@ -149,7 +149,8 @@
 		product_number = #{prodNumber}
 	</select>
 
-	<insert id="insertProd" useGeneratedKeys = "true" keyProperty = "prodNumber">
+	<insert id="insertProd" useGeneratedKeys="true"
+		keyProperty="prodNumber">
 		INSERT INTO hk_prod
 		VALUES (hk_prod_seq.nextval,
 		#{prodName},sysdate,
@@ -157,61 +158,61 @@
 		#{prodServings},#{prodCookingTime},
 		#{prodPrepareTime},#{prodComment})
 	</insert>
-	
+
 
 	<insert id="insertFileList">
 		INSERT INTO SRC_FILE
 		(
-		 file_number,
-		 product_number,
-		 co_name,
-		 co_path,
-		 co_size
+		file_number,
+		product_number,
+		co_name,
+		co_path,
+		co_size
 		)
 		VALUES
-		<foreach collection="list" item = "item" separator=",">
-		(
-		FILE_NUMBER_SEQ.nextval,
-		hk_prod_seq.currval,
-		#{item.srcFileName},
-		#{item.srcFilePath},
-		#{item.fileSize}
-		)
+		<foreach collection="list" item="item" separator=",">
+			(
+			FILE_NUMBER_SEQ.nextval,
+			hk_prod_seq.currval,
+			#{item.srcFileName},
+			#{item.srcFilePath},
+			#{item.fileSize}
+			)
 		</foreach>
 	</insert>
-	
+
 	<insert id="insertFileList02">
 		INSERT INTO SRC_FILE
 		(
-		 file_number,
-		 board_id,
-		 co_name,
-		 co_path,
-		 co_size
+		file_number,
+		board_id,
+		co_name,
+		co_path,
+		co_size
 		)
 		VALUES
-		<foreach collection="list" item = "item" separator=",">
-		(
-		FILE_NUMBER_SEQ.nextval,
-		hk_brd_seq.currval,
-		#{item.srcFileName},
-		#{item.srcFilePath},
-		#{item.fileSize}
-		)
+		<foreach collection="list" item="item" separator=",">
+			(
+			FILE_NUMBER_SEQ.nextval,
+			hk_brd_seq.currval,
+			#{item.srcFileName},
+			#{item.srcFilePath},
+			#{item.fileSize}
+			)
 		</foreach>
 	</insert>
-	
-	
+
+
 	<select id="getFileList" resultMap="fileList">
 		SELECT
-			FILE_NUMBER,
-			product_number,
-			co_name,
-			round(co_size / 1024)as co_size
-		FROM 
-			SRC_FILE
+		FILE_NUMBER,
+		product_number,
+		co_name,
+		round(co_size / 1024)as co_size
+		FROM
+		SRC_FILE
 		WHERE
-			product_number = #{prodNumber}
+		product_number = #{prodNumber}
 	</select>
 
 
@@ -253,17 +254,17 @@
 		board_id
 		= #{brdId}
 	</select>
-	
+
 	<select id="getFileList02" resultMap="fileList">
 		SELECT
-			FILE_NUMBER,
-			board_id,
-			co_name,
-			round(co_size / 1024)as co_size
-		FROM 
-			SRC_FILE
+		FILE_NUMBER,
+		board_id,
+		co_name,
+		round(co_size / 1024)as co_size
+		FROM
+		SRC_FILE
 		WHERE
-			board_id = #{brdId}
+		board_id = #{brdId}
 	</select>
 
 	<select id="getQuestionList" resultMap="boardList">
@@ -329,17 +330,44 @@
 		#{brdTitle},#{brdContent},sysdate,0)
 	</insert>
 
-	<update id="updateShape">
+	<!-- 계층형 답글 우선 보류 -->
+	<!-- <update id="updateShape"> UPDATE HK_REPLY SET CO_STEP = CO_STEP + 1 
+		WHERE CO_GROUP = #{replyGroup} AND CO_STEP > #{replyStep} </update> <insert 
+		id="replyUpload"> insert into hk_reply(board_id,reply_id,user_id,co_content,co_date,co_group,co_step,co_indent) 
+		values(hk_brd_seq.nextval,REPLY_ID_SEQ.nextval,'HONG',#{replyContent},sysdate,#{replyGroup},#{replyStep}+1,#{replyIndent}+1) 
+		</insert> -->
+
+	<select id="replyCount" resultMap="replyList">
+		SELECT
+		COUNT(*)
+		FROM COMMENT
+	</select>
+
+	<select id="getReply" resultMap="replyList">
+		SELECT
+		*
+		FROM HK_REPLY
+		WHERE BOARD_ID = #{boardId}
+	</select>
+
+
+	<insert id="replyInsert">
+		INSERT INTO
+		HK_REPLY (REPLY_ID, USER_ID, BOARD_ID, CO_CONTENT, CO_DATE)
+		VALUES(REPLY_ID_SEQ.NEXTVAL,'HONG',#{boardId},#{replyContent},sysdate)
+	</insert>
+
+	<update id="replyUpdate">
 		UPDATE HK_REPLY
-		SET CO_STEP = CO_STEP + 1
-		WHERE CO_GROUP = #{replyGroup} AND CO_STEP > #{replyStep}
+		SET
+		CO_CONTENT = #{replyContent}
+		WHERE REPLY_ID = #{replyId}
 	</update>
 
-	<insert id="replyUpload">
-		insert into
-		hk_reply(reply_id,user_id,co_content,co_date,co_group,co_step,co_indent)
-		values(REPLY_ID_SEQ.nextval,'HONG',#{replyContent},sysdate,#{replyGroup},#{replyStep}+1,#{replyIndent}+1)
-	</insert>
+	<delete id="replyDelete">
+		DELETE FROM HK_REPLY WHERE REPLY_ID = #{replyId}
+	</delete>
+
 
 
 </mapper>

@@ -76,7 +76,17 @@ public interface AdminService {
     // 게시판 글확인 메서드
     public BoardVO getBoard(String brdId);
 
-    // 1:1문의 답글
-    public void replyUpload(ReplyVO replyVO);
+    // 1:1문의 답글 
+    // 보류
+    // public void replyUpload(ReplyVO replyVO);
+
+    // 1:1문의 댓글 목록
+    public List<ReplyVO> replyList(String brdId) throws Exception;
+    // 1:1문의 댓글 입력
+    public int replyInsert(ReplyVO replyVO)throws Exception;
+    // 1:1문의 댓글 수정
+    public int replyUpdate(ReplyVO replyVO)throws Exception;
+    // 1:1문의 댓글 삭제
+    public int replyDelete(int replyId)throws Exception;
 
 }

@@ -203,6 +203,27 @@ public class AdminServiceImpl implements AdminService {
         boardVO.setFileList(fileList);
         return boardVO;
     }
+
+    @Override
+    public List<ReplyVO> replyList(String brdId) throws Exception {
+        return adminMapper.getReply(brdId);
+    }
+
+    @Override
+    public int replyInsert(ReplyVO replyVO)throws Exception {
+        log.info("replyVO: " + replyVO);
+        return adminMapper.replyInsert(replyVO);
+    }
+
+    @Override
+    public int replyUpdate(ReplyVO replyVO)throws Exception {
+        return adminMapper.replyUpdate(replyVO);
+    }
+
+    @Override
+    public int replyDelete(int replyId) throws Exception{
+        return adminMapper.replyDelete(replyId);
+    }
     
     
     
@@ -212,14 +233,12 @@ public class AdminServiceImpl implements AdminService {
      // replyUpload는 글작성 메소드와 비슷하나 group의 value값을 현재값 즉 currval로 
      // 넣어주는게아니라 해당 group값을 원본의 글인 댓글이기 때문에 id값으로 해당글의 bgroup값을 넣어주는것이고 
      // 계층형구조를 위해 step과 indent를 + 1씩 해준다.
-    
-     @Override public void replyUpload(ReplyVO replyVO) {
-     adminMapper.updateShape(replyVO);
-     log.info("replyVO: " + replyVO);
-     adminMapper.replyUpload(replyVO);
-     log.info("replyVO: " + replyVO);
-     }
-     
+     // 보류
+     /*
+      * @Override public void replyUpload(ReplyVO replyVO) {
+      * adminMapper.updateShape(replyVO); log.info("replyVO: " + replyVO);
+      * adminMapper.replyUpload(replyVO); log.info("replyVO: " + replyVO); }
+      */
     
     
    

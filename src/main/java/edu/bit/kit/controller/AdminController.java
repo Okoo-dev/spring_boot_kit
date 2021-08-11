@@ -1,5 +1,6 @@
 package edu.bit.kit.controller;
 
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,15 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import edu.bit.kit.service.AdminService;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.OrderDetailVO;
 import edu.bit.kit.vo.ProductVO;
 import edu.bit.kit.vo.ReplyVO;
-import edu.bit.kit.vo.ResourceFileVO;
 import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -121,10 +126,11 @@ public class AdminController {
 
     // 상품 등록 메서드
     @PostMapping("/admin/prodUpload")
-    public String prodUpload(ProductVO productVO,MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+    public String prodUpload(ProductVO productVO, MultipartHttpServletRequest multipartHttpServletRequest)
+            throws Exception {
         log.info("prodUpload()..");
-        adminService.prodUpload(productVO,multipartHttpServletRequest);
-        
+        adminService.prodUpload(productVO, multipartHttpServletRequest);
+
         return "redirect:prodList";
     }
 
@@ -184,9 +190,10 @@ public class AdminController {
 
     // 공지사항 등록
     @PostMapping("/admin/noticeUpload")
-    public String noticeUpload(BoardVO boardVO,MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
+    public String noticeUpload(BoardVO boardVO, MultipartHttpServletRequest multipartHttpServletRequest)
+            throws Exception {
         log.info("noticeUpload()..");
-        adminService.noticeUpload(boardVO,multipartHttpServletRequest);
+        adminService.noticeUpload(boardVO, multipartHttpServletRequest);
 
         return "redirect:noticeList";
     }
@@ -289,23 +296,51 @@ public class AdminController {
 
         return "redirect:questionList";
     }
-    
-     // 1:1 문의 답글 등록 화면
-     
-     @GetMapping("/admin/questionReply") public String questionReply() { 
-         return "admin/question_reply"; 
-     }
-     
-     // 1:1 문의 답글 등록
-     
-     @PostMapping("/admin/replyUpload") public String replyUpload(ReplyVO replyVO)
-     { log.info("replyUpload().."); adminService.replyUpload(replyVO);
-     
-     return "redirect:quetionList"; 
-     }
-     
 
-   
+    // 1:1 문의 답글 등록 화면
+    // 우선 보류
+    /*
+     * @GetMapping("/admin/questionReply") public String questionReply() { return
+     * "admin/question_reply"; }
+     * 
+     * // 1:1 문의 답글 등록
+     * 
+     * @PostMapping("/admin/replyUpload") public String replyUpload(ReplyVO replyVO)
+     * { log.info("replyUpload().."); adminService.replyUpload(replyVO);
+     * 
+     * return "redirect:quetionList"; }
+     */
+
+    @RequestMapping("/admin/replyList") // 댓글 리스트
+    @ResponseBody
+    private List<ReplyVO> replyList(Model model, String brdId) throws Exception {
+
+        return adminService.replyList(brdId);
+    }
+
+    @RequestMapping("/admin/replyInsert") // 댓글 작성
+    @ResponseBody
+    private int replyInsert(ReplyVO replyVO) throws Exception {
+
+        log.info("replyVO" + replyVO);
+
+        return adminService.replyInsert(replyVO);
+    }
+
+    @RequestMapping("/admin/replyUpdate") // 댓글 수정
+    @ResponseBody
+    private int replyUpdate(ReplyVO replyVO) throws Exception {
+        log.info("replyVO" + replyVO);
+        return adminService.replyUpdate(replyVO);
+    }
+    
+
+    @RequestMapping("/admin/replyDelete/{replyId}") // 댓글 삭제
+    @ResponseBody
+    private int replyDelete(@PathVariable int replyId) throws Exception {
+
+        return adminService.replyDelete(replyId);
+    }
 
     // 이벤트 게시판
     @GetMapping("/admin/eventList")
@@ -334,7 +369,5 @@ public class AdminController {
 
         return "admin/review_list";
     }
-    
-    
 
 }

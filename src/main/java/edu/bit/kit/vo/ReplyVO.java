@@ -20,6 +20,7 @@ public class ReplyVO {
     private String boardId;
     private String replyContent;
     private Date replyDate;
+    
     private int replyGroup;
     private int replyStep;
     private int replyIndent;
