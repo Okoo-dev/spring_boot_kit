@@ -2,13 +2,16 @@ package edu.bit.kit.security;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,10 @@ import edu.bit.kit.service.OrderService;
 import edu.bit.kit.service.ProductService;
 import edu.bit.kit.vo.CartVO;
 import edu.bit.kit.vo.CouponVO;
+import edu.bit.kit.vo.OrderVO;
+import edu.bit.kit.vo.PointVO;
 import edu.bit.kit.vo.ProductVO;
+import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -119,8 +125,11 @@ public class SecurityController {
 	
 	// 주문페이지 주문 상품 리스트
 	@RequestMapping(value="/order", method = RequestMethod.GET)
-	public String orderCartList(Principal principal, Model model) throws Exception {
+	public String orderCartList(Principal principal, Model model, CouponVO couponVO) throws Exception {
 		log.info("get orderCartList");
+		
+		log.info("couponVO" + couponVO);
+		
 		String userId = principal.getName();
 		
 		List<CartVO> orderCartList = productService.listCart(userId);
@@ -135,8 +144,38 @@ public class SecurityController {
 				List<CouponVO> orderCouponList = orderService.couponList(userId);
 				log.info("List<CouponVO> orderCouponList::::::" + orderCouponList);				
 				model.addAttribute("orderCouponList", orderCouponList);
+				// 쿠폰 적용 시 할인 금액 & 쿠폰명 노출
+				if(couponVO.getCpn() != 0) {
+				// 적용 쿠폰 할인 금액 노출		
+						model.addAttribute("couponDiscount", couponVO.getCpn());
+						log.info("couponDiscount::::::" + couponVO.getCpn());				
+				// 적용 쿠폰 노출			
+						String selectCpnId = String.valueOf(couponVO.getCpnId());
+						List<CouponVO> selectCoupon = orderService.selectCoupon(selectCpnId);							
+						model.addAttribute("selectCoupon", selectCoupon);
+						log.info("selectCoupon::::::" + selectCoupon);
+				}else {
+					model.addAttribute("couponDiscount", 0);
+					model.addAttribute("selectCoupon", null);
+					
+				}
 				
-		
+		// 가용 적립금
+				PointVO savePoint = orderService.PointList(userId);
+				int point = savePoint.getPoint();
+				model.addAttribute("point", point);
+				
+		// 로그인 시, 유저 정보 받아오기
+				UserVO userInfo = orderService.userInfo(userId);
+				model.addAttribute("userInfo", userInfo);
+				log.info("userInfo::::::" + userInfo);
+		/*
+		 * List<CouponVO> selectCoupon = orderService.selectCoupon(selectId);
+		 * log.info("selectCoupon::::::" + selectCoupon);
+		 */
+				// 쿠폰네임으로 쿠폰선택 파라미터로 받을때
+				//model.addAttribute("selectCoupon", couponVO.getCpnName());
+				//log.info("couponVO.getCpnId()::::::" + couponVO.getCpnName(), "UTF-8");
 		return "thymeleaf/OrderPage";
 	}
 	
@@ -156,18 +195,43 @@ public class SecurityController {
 	}
 	
 	// 쿠폰 선택
-	@RequestMapping(value="/test6_1", method = RequestMethod.POST)
-	public String couponChoice(Principal principal, Model model, List<CartVO> orderCouponList, int couponChoice) throws Exception {
-		log.info("couponChoice");
-		String userId = principal.getName();
+	@RequestMapping(value="/coupon/choice", method = RequestMethod.POST)
+	public String couponChoice(Principal principal, Model model, String couponChoice) throws Exception {
+					
+		log.info("cpn아이디 확인" + couponChoice);
+		List<CouponVO> selectCoupon = orderService.selectCoupon(couponChoice);		
+		log.info("선택 쿠폰 확인" + selectCoupon);
 		
+		String userId = principal.getName();		
+		// 장바구니 총 금액
+		int sumMoney = productService.sumCartMoney(userId);	
 		
+		// 적용 쿠폰 할인
+		int coupon;		
+		if(selectCoupon.get(0).getCpn() <= 100) {					
+			coupon = (int)(sumMoney*((float)selectCoupon.get(0).getCpn()/100));
+			log.info("퍼센트일경우" + coupon);		
+		}else {						
+			coupon = selectCoupon.get(0).getCpn();
+			log.info("할인액일경우" + coupon);
+		}
 		
-		
-		
-		
-		return "thymeleaf/OrderPage";
+		// 적용 쿠폰 번호
+				int selectId = selectCoupon.get(0).getCpnId();
+		// 적용 쿠폰 이름
+				String selectName = selectCoupon.get(0).getCpnName();
+				log.info("이름확인" + selectName);
+		return "redirect:/order?cpn=" + String.valueOf(coupon)+"&"+ "cpnId="+ String.valueOf(selectId);
+			
 	}
+	
+	// 최종결제 정보 받아오기
+		@RequestMapping(value="/orderComplete", method = RequestMethod.POST)
+		public String orderComplete(Principal principal, OrderVO orderVO) throws Exception{
+			log.info("주문건 넘어오는거 확인" + orderVO);
+			
+			return "thymeleaf/orderComplete";
+		}
 	
 }
 /*

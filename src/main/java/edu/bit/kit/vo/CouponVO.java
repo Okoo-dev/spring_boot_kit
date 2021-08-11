@@ -2,6 +2,8 @@ package edu.bit.kit.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 
@@ -24,7 +26,9 @@ public class CouponVO {
    private int cpnId;
    private String userId;
    private String cpnName;
+   @DateTimeFormat(pattern = "yyyy-MM-dd")
    private Date cpnExpiryDate;
+   @DateTimeFormat(pattern = "yyyy-MM-dd")
    private Date cpnDate;
    private int cpnRate;
    private int cpnPrice;
