@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/myMain.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/all.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/eventstyle.css">
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
