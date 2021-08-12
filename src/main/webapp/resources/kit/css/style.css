@@ -14,14 +14,13 @@ body {
 }
 */
 a.btn1{
-  text-decoration: overline underline;
-  font-weight:bolder;
+  font-weight:bold;
   color: #000;
-  font-size: 20px;
+  font-size: 22px;
   position: relative;
   padding: 10px;
   display: block;
-  margin: 30px;
+  margin: 20px;
 }
 
 /* a.btn1 */
@@ -44,30 +43,91 @@ a.btn1:hover:before {
 footer img{
 	width: 150px;
 	height: 90px;
-	margin-top: 7px;
+	margin-top: 2px;
+	margin-left : 20px;
+	padding-bottom : 10px;
 }
 
-.foo_div{
-	float: left;
+
+
+
+
+#nav1{
+	background-color: black;
+	padding-top :1px;
+	padding-bottom: 1px;
+	
 }
 
-.foo_div1 {
- 	text-align: center;	
+#navtop1{
+	font-size:0.8em; 
+	color:white;
+	margin-right:5px;
 }
 
-.foo_div1 span{
-	font-size: 15px;
-	color: black;
+
+#nav2{
+	background-color: white;
+	border-style : solid;
+	border-width:0px 0px 1px 0px;
+	border-color: #cccccc;
+	padding-top :1px;
+	padding-bottom: 1px;
+	height: 85px;
 }
 
-.foo_div1 p {
-	margin-top: 5px;
-	color: black;
+#cart{
+	font-size : 0.35em;
+	font-weight : bold !important;
+	margin-bottom : 0px;
+	
 }
 
-.foo_div1 img{
-	width: 25px;
-	height: 25px;
-	margin-top: 10px;
+#cartbadge{
+	background:Tomato; 
+	font-size: 1.2em;
+	font-weight: bold;
+	
+}
+ 
+#bot1{
+	background: #1a1a1a;
+	height: 220px;
+	padding-top : 30px;
+	margin-top : 70px;
 }
 
+
+#bot2{
+	
+	border-right: 1px solid; 
+	border-color: #505050!important; 
+	line-height: 10px;
+}
+
+
+#bot3{
+	color: #A9A9A9;
+	font-size: 0.8em;
+	font-weight : bold;
+	border-right: 1px solid; 
+	border-color: #505050 !important; 
+	line-height: 15px;
+	margin-right : 5px;
+	padding-right : 5px;
+}
+
+/* d-day 버튼 색깔 */
+kbd.red{
+    padding: 3px 5px;
+    font-size: 90%;
+    color: #fff;
+    background-color: #ff1a1a;
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+}
+
+
+.underline {
+   text-decoration: none;
+   border-bottom: 2px solid black;

@@ -1,7 +1,7 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko">
 <head>
+
 
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -9,23 +9,24 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-<link rel="stylesheet" th:href="@{css/style.css}">
-<link rel="stylesheet" th:href="@{css/myOrder.css}">
-<link rel="stylesheet" th:href="@{css/all.css}">
-<link rel="stylesheet" th:href="@{css/bootstrap-select.min.css}">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/myOrder.css">
+<link rel="stylesheet" href="../css/all.css">
+<link rel="stylesheet" href="../css/bootstrap-select.min.css">
+
+
 
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script th:src="@{js/jquery-3.2.1.slim.min.js}"></script>
-<script th:src="@{popper/popper.min.js}"></script>
-<script th:src="@{js/bootstrap.min.js}"></script>
-<script th:src="@{js/all.js}"></script>
-<script th:src="@{js/bootstrap-select.min.js}"></script>
-<script th:src="@{js/defaults-ko-KR.min.js}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+<script src="../js/jquery-3.2.1.slim.min.js"></script>
+<script src="../popper/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/all.js"></script>
+<script src="../js/bootstrap-select.min.js"></script>
+<script src="../js/defaults-ko-KR.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <title>Kit.</title>
 
@@ -36,33 +37,18 @@
 		class="navbar navbar-expand-sm justify-content-end" id="nav1">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name"  id="navtop1">사용자</a></li>
-					<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
-				
-				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
-					<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
-					 <a class="nav-link" th:text="${#authentication.name}"></a> 			
-					<a class="nav-link" th:href="@{/logout} "  id="navtop1">로그아웃</a>
-				</li>
-				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
-				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-					<a class="nav-link" th:href="@{/login}"  id="navtop1">로그인</a>
-				</li>
-					<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
-				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-				 	<a class="nav-link" href="signup"  id="navtop1">회원가입</a></li>
+				<li class="nav-item"><a class="nav-link font-weight-bold" href="#" id="navtop1">로그인</a></li>
+				<li class="nav-item"><a class="nav-link font-weight-bold" href="#" id="navtop1">회원가입</a></li>
 			</ul>
 		</div>
 	</div>
-
 
 
 <!-- 상단 로고 메뉴 바 -->
 	<!-- Navigation -->
 	<nav
 		class="navbar navbar-expand-lg justify-content-center" id="nav2">
-		<a class="navbar-brand" href="#"><img th:src="@{img/Kit2_size.png}"
+		<a class="navbar-brand" href="#"><img src="../img/Kit2_size.png"
 			class="d-inline-block align-top" alt=""></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -98,10 +84,12 @@
 	<div class="container">
   <div class="row">
 	
-	<div class="col-md-2"></div> <!-- 왼쪽 공백 -->
+	
+	<div class="col-md-2"></div>
 
 <!-- 9단길이 -->
   <div class="col-md-9">
+  
   
        <div class="bg-white py-3 px-0"></div>
    <div class="container">
@@ -113,24 +101,23 @@
 <div class="container">
   <div class="col-2"></div>
    <div class="container col-10">  <!-- 입력 폼  -->
-     <form th:action="@{signUpInsert}" method="POST" id="signUpInsert"  onSubmit="return Checkform()" name="frm">
      		<div class="row"> <!-- 아이디 입력 -->
      				<div class="col-5">
-						<label for="userId" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">아이디</label>
-						<input type="text" class="form-control" id="userId" name="userId"
+						<label for="exampleInputName1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">아이디</label>
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="아이디 입력(5~11자)" style="font-size:0.9em;">
 					</div>
 									
 					<div class="col-7  pt-5 mt-1 ">
-						<button type="button" class="btn btn-secondary" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
-						<!-- <span> &nbsp; 사용가능한 아이디입니다.</span> -->
+						<button type="button" class="btn btn-secondary">중복확인</button>
+						<span> &nbsp; 사용가능한 아이디입니다.</span>
 					</div>
 					
      		</div>
      		<div class="row"> <!-- 비밀번호 입력 -->
      				<div class="col-8">
-						<label for="userPassword" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호</label>
-						<input type="password" class="form-control" id="userPassword" name="userPassword"
+						<label for="exampleInputName1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호</label>
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="비밀번호(숫자,영문,특수문자 조합 최소8자)" style="font-size:0.9em;">
 					</div>
      				<div class="col-4">
@@ -138,17 +125,18 @@
      		</div>
      		<div class="row"> <!-- 비밀번호 확인 입력 -->
      				<div class="col-8">
-						<label for="passwordConfirm" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호 확인</label>
-						<input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+						<label for="exampleInputName1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">비밀번호 확인</label>
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="비밀번호 확인" style="font-size:0.9em;">
+						<span> &nbsp; 비밀번호가 일치하지 않습니다.</span>	
 					</div>
      				<div class="col-4">
 					</div>
      		</div>
      		<div class="row"> <!-- 이름 입력 -->
      				<div class="col-8">
-						<label for="userName" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이름</label>
-						<input type="text" class="form-control" id="userName" name="userName"
+						<label for="exampleInputName1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이름</label>
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="이름" style="font-size:0.9em;">
 					</div>
      				<div class="col-4">
@@ -168,16 +156,16 @@
 					</div>	
 					
 					<div class="col-2 pt-5 mt-2">
-						<input type="text" class="form-control" name="phone2" id="phone2" style="font-size:0.9em;">
+						<input type="text" class="form-control" id="exampleInputName1" style="font-size:0.9em;">
 					</div>
 					<div class="col-2 pt-5 mt-2">	
-						<input type="text" class="form-control" name="phone3" id="phone3" style="font-size:0.9em;">
+						<input type="text" class="form-control" id="exampleInputName1" style="font-size:0.9em;">
    					</div>							
      		</div>
      		<div class="row"> <!-- 이메일 입력 -->
      				<div class="col-8">
-						<label for="userEmail" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이메일</label>
-						<input type="text" class="form-control" id="userEmail" name="userEmail"
+						<label for="exampleInputName1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">이메일</label>
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="이메일" style="font-size:0.9em;">
 					</div>
      				<div class="col-4">
@@ -199,11 +187,11 @@
      				<div class="col-8">
      				<label  class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">성별</label><br>
      					<div class="form-check form-check-inline">
-  							 <input class="form-check-input" type="radio" name="userGender" id="inlineRadio1" value="남성">
+  							 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
   							 <label class="form-check-label" for="inlineRadio1">남성</label>
 						</div>
 						<div class="form-check form-check-inline">
-  							<input class="form-check-input" type="radio" name="userGender" id="inlineRadio2" value="여성">
+  							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
  							<label class="form-check-label" for="inlineRadio2">여성</label>
 						</div>
 					</div>
@@ -211,22 +199,22 @@
 					</div>
      		</div>
      		<div class="container pl-0"> <!-- 주소 입력 -->
-				<label for="userAddress1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">주소</label>
+				<label for="exampleInputName1" class="form-label mt-4 font-weight-bold" style="font-size:0.9em;">주소</label>
      				
      			 <div class="row my-1">
      				<div class="col-5 ">
-						<input type="text" class="form-control" id="1" name="userAddress1"
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="우편번호" style="font-size:0.9em;">
 					</div>
 									
 					<div class="col-3 ">
-						<button onclick="goPopup();" type="button" class="btn btn-secondary">우편번호 찾기</button>
+						<button type="button" class="btn btn-secondary">우편번호 찾기</button>
 					</div>
 				 </div>	
 				 
 				 <div class="row my-1"> 
      				<div class="col-9">
-						<input type="text" class="form-control" id="2" name="userAddress2"
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="도로명 주소" style="font-size:0.9em;">
 					</div>
      				<div class="col-3">
@@ -234,19 +222,16 @@
      			</div>
 				 <div class="row my-1"> 
      				<div class="col-9">
-						<input type="text" class="form-control" id="3" name="userAddress3"
+						<input type="text" class="form-control" id="exampleInputName1"
 							aria-describedby="nameHelp" placeholder="상세 주소" style="font-size:0.9em;">
 					</div>
      				<div class="col-3">
 					</div>
      			</div>
 				 
-				 <input type="hidden" id="userPhone" name="userPhone">
-				 <input type="hidden" id="userBirth" name="userBirth">
-				 
 				 
      		</div>
-     		</form>
+     		
     </div>  <!-- 입력 폼  끝 -->
      	
     <div class="underline my-5" style="border-bottom: 1px solid #e6e6e6;"></div>
@@ -254,13 +239,11 @@
      <div class="container">
      		<div class="bg-white py-2 px-0"></div>
      			<div class="row">
-     				<div class="col chk_wrap">
-     					<input type="checkbox" id="chk_agree"> 
-     					<label for="chk_agree" class="font-weight-bold space" style="font-size:0.9em; cursor:pointer;">  
-      						&nbsp; 개인정보 수집 이용동의(필수)</label>
+     				<div class="col ">
+     						<p class="font-weight-bold" style="font-size:0.9em;">
+     						<i class="far fa-check-circle fa-lg" style="color: gray;"></i>
+     						&nbsp; 개인정보 수집 이용동의(필수)</p>
      				</div>
-     				
-     				
      			</div>
      			
       </div>
@@ -271,14 +254,10 @@
     
 <div class=container>
 	<div class="row">
-		<div class="offset-1 col-4">
-			<input type="button" value="취소" class="btn btn-block border px-5 py-3 text-center font-weight-bold" OnClick="location.href ='/login'" 
-			style="background-color: white; cursor:pointer;">
-		</div>
+		<div class="offset-2 col-4">
+			<div class="border px-5 py-3 text-center font-weight-bold" OnClick="location.href ='#'" style="background-color: white; cursor:pointer;">취소</div></div>
 		<div class=" col-4">	
-			<button type="submit" form="signUpInsert" id="goInsert" class="btn btn-block border px-5 py-3 text-center font-weight-bold" 
-			 style="background-color: #b8e840; cursor:pointer;" disabled="disabled">등록</button>
-		</div>
+			<div class="border px-5 py-3 text-center font-weight-bold" OnClick="location.href ='#'" style="background-color: #b8e840; cursor:pointer;">등록</div></div>
 	</div>
 
 </div> 
@@ -290,33 +269,24 @@
 
  <!-- 8단길이 끝-->		
   		<div class="col-md-1"></div>
-  			
-  			
+  		
   		</div>
     </div>
 <!-- 전체 컨테이너 끝 -->
 
 
-
- <script  type="text/javascript" th:src=@{js/signUp.js}>
-</script>
-<script>
-$(document).ready(function(){
-	$(signUp()).on();
-})
-</script>
   	
 
 	<!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 --><!-- 컨텐츠 넣으면됨 -->
 
 
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
-<footer>
+	<footer>
 		<div class="jumbotron jumbotron-fluid " id="bot1">
 			<div class="row">
 			<div class="container col-1"></div>
 			<div class="container col-2">
-			  <img th:src="@{img/KitWhite.png}" />
+			  <img src="../img/KitWhite.png" />
 			  </div>
 			<div class="container col-9">
 				<div class="row mb-4" style="line-height: 40px;">
@@ -351,9 +321,11 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</footer>
+
 <script>
 $('#cartbadge').text('0');
 </script>
+
 
 </body>
 </html>

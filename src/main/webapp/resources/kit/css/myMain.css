@@ -94,3 +94,33 @@ li a{
 	
 }
 
+
+.ing a {
+	 color: black;
+   text-decoration: none;
+   font-size: 1.3em;
+}
+
+
+.ing a:hover {
+	 color: black;
+	  font-size: 1.3em;
+}
+
+
+.ing a:link {
+  color : black;
+   font-size: 1.3em;
+}
+
+.ing a:visited {
+  color : black;
+   font-size: 1.3em;
+}
+
+.ing a:active {
+  color : black;
+   font-size: 1.3em;
+}
+
+

@@ -24,13 +24,16 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/eventstyle.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/myMain.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/kit/css/all.css">
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="js/jquery-3.2.1.slim.min.js"></script>
-<script src="popper/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/kit/js/jquery-3.2.1.slim.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/kit/popper/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/kit/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/kit/js/all.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <title>Kit.</title>
 
@@ -38,44 +41,55 @@
 <!-- 상단 로그인 회원가입 바 -->
 </head>
 <div
-		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		class="navbar navbar-expand-sm justify-content-end" id="nav1">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
 				<sec:authorize access="isAnonymous()">
 				<!-- 로그인 하지 않은 사용자에게 보이도록  -->
-					<li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link" href="/login" id="navtop1">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" id="navtop1">회원가입</a></li>
 				</sec:authorize>
 				<!-- 로그인한 사용자에게 보이도록  -->
 				<sec:authorize access="isAuthenticated()">
-    				<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+    				<li class="nav-item"><a class="nav-link" href="/logout" id="navtop1">로그아웃</a></li>
 				</sec:authorize>
-			</ul>
+				</ul>
 		</div>
 	</div>
+
 
 
 <!-- 상단 로고 메뉴 바 -->
 	<!-- Navigation -->
 	<nav
-		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
+		class="navbar navbar-expand-lg justify-content-center" id="nav2">
 		<a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png"
-			class="d-inline-block align-top" alt=""></a>
+			class="d-inline-block align-top" alt="로고"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
-			</ul>
-		</div>
-	</nav>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav ml-auto" id="ul1">
+			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+		</ul>
+		<ul class="navbar-nav ml-auto mr-5" >
+			<li class="nav-item fa-2x" OnClick="location.href ='#'" style="cursor:pointer;">
+			  <span class="fa-layers fa-fw" style="background:white">
+    				<i class="fas fa-shopping-cart"></i>
+    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" > 1</span>
+  			  </span>
+  			   <p id="cart" >장바구니</p>
+		
+			</li>
+		</ul>
+	</div>
+</nav>
 
 <body>
 	
@@ -91,8 +105,9 @@
       <hr class="underline">
       
       <ul class="nav mb-5" >
-         <li id="topmenu1"><a href="#">진행중</a></li>
-         <li id="topmenu1"><a href="#">당첨자 발표</a></li>
+         <li id="topmenu1" class="ing"><a href="#">진행중</a></li>
+         
+         <li id="topmenu1" class="ing ml-3"><a href="#">당첨자 발표</a></li>
       </ul>
       
 
@@ -136,22 +151,48 @@
 
 
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
-	<footer>
-		<div class="jumbotron text-center jumbotron-fluid bg-secondary mt-5">
-			<div class="foo_div"></div>
-			<img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png" />
-			<div class="foo_div1">
-				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
-					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
-				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
-				<p>Kit.</p>
-				<img src="${pageContext.request.contextPath}/resources/kit/img/kakaotalk.png">
-				<img src="${pageContext.request.contextPath}/resources/kit/img/google+.png">
-				<img src="${pageContext.request.contextPath}/resources/kit/img/naver.png">
+<footer>
+		<div class="jumbotron jumbotron-fluid " id="bot1">
+			<div class="row">
+			<div class="container col-1"></div>
+			<div class="container col-2">
+			  <img src="${pageContext.request.contextPath}/resources/kit/img/KitWhite.png" />
+			  </div>
+			<div class="container col-9">
+				<div class="row mb-4" style="line-height: 40px;">
+      					<div  class="text-center col-2" id="bot2" >
+      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">이용약관</span><br>
+						</div>
+      					<div  class="text-center col-3" id="bot2" >
+      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">개인정보처리 방침</span><br>
+						</div>
+      					<div  class="text-center col-2" id="bot2">
+      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">법적고지</span><br>
+						</div>
+						<div  class="text-center col-3" style="line-height: 10px;">
+								<span class="font-weight-bold " style="font-size: 0.8em; color: white;">사업자정보 확인</span><br>
+						</div>	
+						<div class="container col-2"></div>
+      	     	</div>
+      	     	<div class="container ml-2 mr-0 mt-3 ">
+      	     		<span id="bot3"> Kit.(주)</span>
+      	     		<span id="bot3"> 대표이사: 송진우, 홍정호, 김선규</span>
+      	     		<span id="bot3"> 사업자등록번호: 103-03-290820</span> <br>
+      	     		<span id="bot3"> 주소 : 서울특별시 종로구 종로 69(종로2가) 7층 Kit. </span> 
+      	     		<span id="bot3"> 통신판매업신고 중구 제0000호 </span>  <br>
+      	     		<span id="bot3"> 이메일: kit@kit.com </span> 
+      	     		<span id="bot3"> 호스팅제공자: 비트캠프7층어딘가 </span> <br>
+      	     		<span id="bot3"> ⓒKit. CORP. ALL RIGHTS RESERVERD. </span> 
+      	     	</div>
+			</div>
+			
+			
+			
 			</div>
 		</div>
 	</footer>
-
-
+<script>
+$('#cartbadge').text('0');
+</script>
 </body>
 </html>

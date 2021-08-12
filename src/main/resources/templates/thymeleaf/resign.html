@@ -35,51 +35,63 @@
 <!-- 상단 로그인 회원가입 바 -->
 </head>
 <div
-		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		class="navbar navbar-expand-sm justify-content-end" id="nav1">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name">사용자</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name"  id="navtop1">사용자</a></li>
 					<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
 				
 				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
 					<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
 					<!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->				
-					<a class="nav-link" th:href="@{/logout}">Logout</a>
+					<a class="nav-link" th:href="@{/logout} "  id="navtop1">로그아웃</a>
 				</li>
 				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
 				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-					<a class="nav-link" th:href="@{/login}">Login</a>
+					<a class="nav-link" th:href="@{/login}"  id="navtop1">로그인</a>
 				</li>
 					<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
 				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-				 	<a class="nav-link" href="signup">회원가입</a></li>
+				 	<a class="nav-link" href="signup"  id="navtop1">회원가입</a></li>
 			</ul>
 		</div>
 	</div>
 
 
+
 <!-- 상단 로고 메뉴 바 -->
 	<!-- Navigation -->
 	<nav
-		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center ">
-		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
+		class="navbar navbar-expand-lg justify-content-center" id="nav2">
+		<a class="navbar-brand" href="#"><img th:src="@{img/Kit2_size.png}"
 			class="d-inline-block align-top" alt=""></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
-				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
-			</ul>
-		</div>
-	</nav>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav ml-auto" id="ul1">
+			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+		</ul>
+		<ul class="navbar-nav ml-auto mr-5" >
+			<li class="nav-item fa-2x" OnClick="location.href ='#'" style="cursor:pointer;">
+			  <span class="fa-layers fa-fw" style="background:white">
+    				<i class="fas fa-shopping-cart"></i>
+    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" > 1</span>
+  			  </span>
+  			   <p id="cart" >장바구니</p>
+		
+			</li>
+		</ul>
+	</div>
+</nav>
+
 
 <body>
 	
@@ -237,23 +249,48 @@ if(result == 'notEqual'){
 </script>
 
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
-	<footer>
-		<div class="jumbotron text-center jumbotron-fluid bg-secondary mt-5">
-			<div class="foo_div"></div>
-			<img src="img/Kit2_size.png" />
-			<div class="foo_div1">
-				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
-					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
-				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
-				<p>Kit.</p>
-				<img src="img/kakaotalk.png">
-				<img src="img/google+.png">
-				<img src="img/naver.png">
+<footer>
+		<div class="jumbotron jumbotron-fluid " id="bot1">
+			<div class="row">
+			<div class="container col-1"></div>
+			<div class="container col-2">
+			  <img th:src="@{img/KitWhite.png}" />
+			  </div>
+			<div class="container col-9">
+				<div class="row mb-4" style="line-height: 40px;">
+      					<div  class="text-center col-2" id="bot2" >
+      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">이용약관</span><br>
+						</div>
+      					<div  class="text-center col-3" id="bot2" >
+      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">개인정보처리 방침</span><br>
+						</div>
+      					<div  class="text-center col-2" id="bot2">
+      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">법적고지</span><br>
+						</div>
+						<div  class="text-center col-3" style="line-height: 10px;">
+								<span class="font-weight-bold " style="font-size: 0.8em; color: white;">사업자정보 확인</span><br>
+						</div>	
+						<div class="container col-2"></div>
+      	     	</div>
+      	     	<div class="container ml-2 mr-0 mt-3 ">
+      	     		<span id="bot3"> Kit.(주)</span>
+      	     		<span id="bot3"> 대표이사: 송진우, 홍정호, 김선규</span>
+      	     		<span id="bot3"> 사업자등록번호: 103-03-290820</span> <br>
+      	     		<span id="bot3"> 주소 : 서울특별시 종로구 종로 69(종로2가) 7층 Kit. </span> 
+      	     		<span id="bot3"> 통신판매업신고 중구 제0000호 </span>  <br>
+      	     		<span id="bot3"> 이메일: kit@kit.com </span> 
+      	     		<span id="bot3"> 호스팅제공자: 비트캠프7층어딘가 </span> <br>
+      	     		<span id="bot3"> ⓒKit. CORP. ALL RIGHTS RESERVERD. </span> 
+      	     	</div>
+			</div>
+			
+			
+			
 			</div>
 		</div>
 	</footer>
-
-
-
+<script>
+$('#cartbadge').text('0');
+</script>
 </body>
 </html>
