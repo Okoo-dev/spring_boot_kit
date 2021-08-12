@@ -356,12 +356,19 @@ public class MyMainBoardController {
     
     // 탈퇴 메소드 
     @Transactional(rollbackFor = Exception.class)   //트랜잭션 추가
-    @RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
-    public String deleteUser(UserVO vo, RedirectAttributes rttr) throws Exception {
+    @RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
+    public String deleteUser(@AuthenticationPrincipal UserPrincipalVO userVO, RedirectAttributes rttr) throws Exception {
         
         log.info("deleteUser()..");
         
-        boardService.updateUser(vo);
+        log.info(userVO.getUserVO().get(0).getUserId());
+        UserVO user = userVO.getUserVO().get(0);
+        
+        log.info("user().." + user);
+        
+        
+        
+        boardService.deleteUser(user);
        
         rttr.addFlashAttribute("result", "deleteOK");  
         

@@ -173,5 +173,13 @@
    </update> 
    
    
+      <delete id="deleteUser">
+   <![CDATA[
+      DELETE FROM HK_USER
+		WHERE user_id = #{userId}
+   ]]>
+   </delete>  
+   
+   
    
 </mapper>

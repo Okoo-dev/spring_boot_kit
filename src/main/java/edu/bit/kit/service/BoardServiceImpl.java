@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.bit.kit.mapper.BoardMapper;
+import edu.bit.kit.security.UserPrincipalVO;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.CouponVO;
 import edu.bit.kit.vo.DeliveryVO;
@@ -132,6 +133,17 @@ public class BoardServiceImpl implements BoardService {
         userVO.setUserPassword(bCryptPasswordEncoder.encode(userVO.getUserPassword()));
         
         boardmapper.updateUser(userVO);
+    }
+
+    @Override
+    public void deleteUser(UserVO userVO) {
+        
+        log.info("deleteUser().."+ userVO);
+        
+        
+        boardmapper.deleteUser(userVO);
+        
+        
     }
     
     

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import edu.bit.kit.vo.AuthVO;
+import edu.bit.kit.security.UserPrincipalVO;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.CouponVO;
 import edu.bit.kit.vo.DeliveryVO;
@@ -41,6 +41,8 @@ public interface BoardMapper {
    public int passChk(UserVO userVO);
    
    public void updateUser(UserVO userVO);
+   
+   public void deleteUser(UserVO userVO);
    
    
 

@@ -2,6 +2,7 @@ package edu.bit.kit.service;
 
 import java.util.List;
 
+import edu.bit.kit.security.UserPrincipalVO;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.CouponVO;
 import edu.bit.kit.vo.DeliveryVO;
@@ -39,6 +40,8 @@ public interface BoardService {
     public void signUpPoint(UserVO userVO);
     
     public void updateUser(UserVO userVO);
+    
+    public void deleteUser(UserVO userVO);
     
 }
 
