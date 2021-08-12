@@ -162,7 +162,23 @@
    </select>
    
    
+     <update id="updateUser">
+   <![CDATA[
+	UPDATE HK_USER 
+	SET  CO_PASSWORD = #{userPassword}, CO_NAME = #{userName}, CO_PHONE =#{userPhone}, CO_EMAIL = #{userEmail},
+    	 CO_BIRTH = #{userBirth}, CO_GENDER = #{userGender}, CO_LOGINTIME = CURRENT_TIMESTAMP,
+    	 ADDRESS_1 = #{userAddress1}, ADDRESS_2 = #{userAddress2}, ADDRESS_3 = ADDRESS_3
+	WHERE user_id = #{userId}
+   ]]>
+   </update> 
    
+   
+      <delete id="deleteUser">
+   <![CDATA[
+      DELETE FROM HK_USER
+		WHERE user_id = #{userId}
+   ]]>
+   </delete>  
    
    
    
