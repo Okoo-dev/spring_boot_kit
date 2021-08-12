@@ -127,9 +127,13 @@ public class UserController{
 		
 		user.setAuthList(authList);
 		
-		service.addUser(user);	
-		
-		
+		service.addUser(user);					
+	}
+	// 테스트 결제 모듈
+	@GetMapping("/testpayment")
+	public String testPayment() {
+			
+		return "/examplePayment";
 	}
 	
 }
