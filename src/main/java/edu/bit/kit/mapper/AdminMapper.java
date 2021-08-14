@@ -119,11 +119,4 @@ public interface AdminMapper {
 
 
     
-    
-    
-   
-    
-
-
-    
 }

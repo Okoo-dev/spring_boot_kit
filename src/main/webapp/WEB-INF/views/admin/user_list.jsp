@@ -170,7 +170,7 @@
 											<td>${vo.userEmail}</td>
 											<td>${vo.userGender}</td>
 											<td>${vo.userJoinDate}</td>
-											<td>${vo.userAddress}</td>
+											<td>${vo.userAddress1}</td>
 											<td>${vo.userAccount}</td>
 										</tr>
 									</c:forEach>
