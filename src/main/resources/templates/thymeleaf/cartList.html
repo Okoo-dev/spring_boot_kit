@@ -102,25 +102,23 @@ p {
 
 <!-- 상단 로그인 회원가입 바 -->
 </head>
-<div
-		class="navbar navbar-expand-sm justify-content-end" id="nav1">
+	<div class="navbar navbar-expand-sm justify-content-end" id="nav1">
 		<div class="navbar-nav" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name"  id="navtop1">사용자</a></li>
 					<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+			
+					<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:text="${#authentication.name}"  id="navtop1">사용자</a></li>
 				
-				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
-					<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
-					<!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->				
-					<a class="nav-link" th:href="@{/logout} "  id="navtop1">로그아웃</a>
-				</li>
-				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
-				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-					<a class="nav-link" th:href="@{/login}"  id="navtop1">로그인</a>
-				</li>
-					<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
-				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+					<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:href="@{/logout} "  id="navtop1">로그아웃</a></li>
+				
+					<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+					
+					<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:href="@{/login}"  id="navtop1">로그인</a></li>
+				
+					<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
 				 	<a class="nav-link" href="signup"  id="navtop1">회원가입</a></li>
 			</ul>
 		</div>

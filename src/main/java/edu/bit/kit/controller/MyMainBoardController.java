@@ -37,6 +37,19 @@ public class MyMainBoardController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     
+    @GetMapping("/index")
+    public String main() {
+        
+        log.info("main()..");
+    
+        
+        
+        
+        return "thymeleaf/main";
+    }
+    
+    
+    
     // 'ROLE_MEMBER' 또는 'ROLE_ADMIN' 인 권한 가진 상태에서만 접속 가능.  아닌 경우 login페이지로 리다이렉트.
     @PreAuthorize("hasRole('ROLE_MEMBER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/mymain")
