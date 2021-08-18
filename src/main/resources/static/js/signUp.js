@@ -170,6 +170,7 @@
 		    var check_kor = ph.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/ig);
 
 		    if( checkEnglishph >0 || check_kor>0 ){
+		   		 frm.phone2.focus();
 		        alert("숫자만 입력가능합니다.");
 		        return false;
 		    }

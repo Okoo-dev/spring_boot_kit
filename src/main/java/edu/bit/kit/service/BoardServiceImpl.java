@@ -7,10 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.bit.kit.mapper.BoardMapper;
-import edu.bit.kit.security.UserPrincipalVO;
 import edu.bit.kit.vo.BoardVO;
 import edu.bit.kit.vo.CouponVO;
 import edu.bit.kit.vo.DeliveryVO;
+import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.PointVO;
 import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -44,13 +44,32 @@ public class BoardServiceImpl implements BoardService {
         log.info("getPoint()..");
         return  boardmapper.getPoint(userId);
     }
+    
+    
+
+    @Override
+    public List<OrderVO> getOrderList(String userId) {
+
+        log.info("getOrderList()..");
+        
+        return boardmapper.getOrderList(userId);
+    }
+    
 
     @Override
     public int getCouponCount(String userId) {
 
-        log.info("getCoupon()..");
+        log.info("getCouponCount()..");
         return  boardmapper.getCouponCount(userId);
     }
+    
+    @Override
+    public int getCartCount(String userId) {
+        
+        log.info("getCartCount()..");
+        return boardmapper.getCartCount(userId);
+    }
+    
 
 
     @Override
@@ -145,7 +164,9 @@ public class BoardServiceImpl implements BoardService {
         
         
     }
-    
+
+
+   
     
     
     

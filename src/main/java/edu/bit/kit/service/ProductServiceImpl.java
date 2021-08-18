@@ -80,6 +80,15 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.sumCartMoney(userId);
 	}
 
+	
+	// 장바구니 뱃지 위한 cart 카운트
+    @Override
+    public int getCartCount(String userId) {
+
+        
+        return productMapper.getCartCount(userId);
+    }
+
 
 
 

@@ -198,4 +198,14 @@ ADDRESS_1, ADDRESS_2, ADDRESS_3, CO_ACCOUNT, CO_AUTHORITY, AUTHORITIES_ID
 		FROM HK_AUTH
 		WHERE AUTHORITIES_ID = #{authId}
 	</select>
+	
+	
+	<!-- 장바구니 뱃지 위한 cart 카운트 쿼리 -->
+	<select id="getCartCount" resultType="int">
+   	SELECT COUNT(CART_ID) FROM HK_CART WHERE USER_ID = #{userId}
+   </select>
+   
+	
+	
+	
 </mapper>

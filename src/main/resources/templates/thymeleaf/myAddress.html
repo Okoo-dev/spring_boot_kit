@@ -25,57 +25,60 @@
 
 <!-- 상단 로그인 회원가입 바 -->
 </head>
-	<div class="navbar navbar-expand-sm justify-content-end" id="nav1">
-		<div class="navbar-nav" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto">
-					<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
-			
-					<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
-					<a class="nav-link" th:text="${#authentication.name}"  id="navtop1">사용자</a></li>
-				
-					<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
-					<a class="nav-link" th:href="@{/logout} "  id="navtop1">로그아웃</a></li>
-				
-					<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
-					
-					<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-					<a class="nav-link" th:href="@{/login}"  id="navtop1">로그인</a></li>
-				
-					<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
-				 	<a class="nav-link" href="signup"  id="navtop1">회원가입</a></li>
-			</ul>
-		</div>
+<div class="navbar navbar-expand-sm justify-content-end" id="nav1">
+	<div class="navbar-nav" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto">
+			<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+
+			<li class="nav-item"
+				th:if="${#authorization.expr('isAuthenticated()')}"><a
+				class="nav-link" th:text="${#authentication.name}" id="navtop1">사용자</a></li>
+
+			<li class="nav-item"
+				th:if="${#authorization.expr('isAuthenticated()')}"><a
+				class="nav-link" th:href="@{/logout} " id="navtop1">로그아웃</a></li>
+
+			<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+
+			<li class="nav-item"
+				th:unless="${#authorization.expr('isAuthenticated()')}"><a
+				class="nav-link" th:href="@{/signin}" id="navtop1">로그인</a></li>
+
+			<li class="nav-item"
+				th:unless="${#authorization.expr('isAuthenticated()')}"><a
+				class="nav-link" th:href="@{/signup}" id="navtop1">회원가입</a></li>
+		</ul>
 	</div>
+</div>
+
 
 
 <!-- 상단 로고 메뉴 바 -->
-	<!-- Navigation -->
-	<nav
-		class="navbar navbar-expand-lg justify-content-center" id="nav2">
-		<a class="navbar-brand" href="#"><img th:src="@{img/Kit2_size.png}"
-			class="d-inline-block align-top" alt=""></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg justify-content-center" id="nav2">
+	<a class="navbar-brand" th:href="@{index}"><img th:src="@{img/Kit2_size.png}"
+		class="d-inline-block align-top" alt=""></a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarNav" aria-controls="navbarNav"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav ml-auto" id="ul1">
 			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" th:href="@{/menu}">Kit.메뉴</a></li>
 			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" th:href="@{event}">이벤트</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" th:href="@{mymain}">MyKit.</a></li>
 		</ul>
-		<ul class="navbar-nav ml-auto mr-5" >
-			<li class="nav-item fa-2x" OnClick="location.href ='#'" style="cursor:pointer;">
-			  <span class="fa-layers fa-fw" style="background:white">
-    				<i class="fas fa-shopping-cart"></i>
-    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" > 1</span>
-  			  </span>
-  			   <p id="cart" >장바구니</p>
-		
-			</li>
+		<ul class="navbar-nav ml-auto mr-5">
+			<li class="nav-item fa-2x" th:onclick="|location.href='@{/cart}'|"
+				style="cursor: pointer;"><span class="fa-layers fa-fw"
+				style="background: white"> <i class="fas fa-shopping-cart"></i>
+					<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" th:text="${cartCount}">
+						</span>
+			</span>
+				<p id="cart">장바구니</p></li>
 		</ul>
 	</div>
 </nav>
@@ -94,48 +97,48 @@
 <div class="container">
  <h1 class="text-left font-weight-bold my-4">MyKit</h1>
  </div>
-  <!-- 패널 타이틀1 -->
+    <!-- 패널 타이틀1 -->
 <div class="panel panel-info">
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 주문정보</h5></li>
-      <li class="list-group-item border-0 py-1"><a href="#">주문/배송 조회</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">배송지 관리</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">환불계좌 관리</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/myorder}">주문/배송 조회</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/myaddress}">배송지 관리</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/myaccount}">환불계좌 관리</a></li>
     </ul>
 </div>
 
 
-  <!-- 패널 타이틀1 -->
+  <!-- 패널 타이틀2 -->
 <div class="panel panel-info">
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 혜택</h5></li>
-      <li class="list-group-item border-0 py-1"><a href="#">쿠폰</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">포인트</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/mycoupon}">쿠폰</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/mypoint}">포인트</a></li>
     </ul>
 </div>
 
 
-  <!-- 패널 타이틀1 -->
+  <!-- 패널 타이틀3 -->
 <div class="panel panel-info">
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 활동</h5></li>
       <li class="list-group-item border-0 py-1"><a href="#">나의 리뷰</a></li>
       <li class="list-group-item border-0 py-1"><a href="#">쇼핑찜</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">1:1문의</a></li>
+      <li class="list-group-item border-0 py-1"><a href="#">1:1문의</a></li> 
     </ul>
 </div>
 
 
-  <!-- 패널 타이틀1 -->
+  <!-- 패널 타이틀4 -->
 <div class="panel panel-info">
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 정보</h5></li>
-      <li class="list-group-item border-0 py-1"><a href="#">개인정보 변경</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">회원탈퇴</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/tomodify}">개인정보 변경</a></li>
+      <li class="list-group-item border-0 py-1"><a th:href="@{/toresign}">회원탈퇴</a></li>
     </ul>
 </div>
 
@@ -193,7 +196,7 @@
 <div class=container>
 	<div class="row">
 		<div class="offset-4 col-lg-4">
-			<div class="border px-5 py-3 text-center font-weight-bold" OnClick="location.href='#'" style="background-color: #b8e840; cursor:pointer;">수정</div></div>
+			<div class="border px-5 py-3 text-center font-weight-bold" th:onclick="|location.href='@{/tomodify}'|" style="background-color: #b8e840; cursor:pointer;">수정</div></div>
 	</div>
 <!-- 기존 배송지 추가 버튼 수정 버튼으로 변경 
     당장은 회원 정보 변경으로 href 넘기고, 추후에 js 또는 jQuery, ajax 이용해서 기존 정보에 덮어쓰고 DB 업데이트하는 방안 구상할 수도.
@@ -267,8 +270,5 @@
 			</div>
 		</div>
 	</footer>
-<script>
-$('#cartbadge').text('0');
-</script>
 </body>
 </html>

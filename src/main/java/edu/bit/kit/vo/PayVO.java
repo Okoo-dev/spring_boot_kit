@@ -18,8 +18,9 @@ import lombok.Data;
 public class PayVO {
    private int payId;
    private int ordNumber;
-   private String payResult;
+   private String payResult;  // 결제 상태 - 결제 대기중, 결제 완료../
    private Date payDate;
+   private String payType;
    
     
 }
