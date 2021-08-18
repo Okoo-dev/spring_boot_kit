@@ -26,6 +26,7 @@ public class ProductVO {
     private String CO_SERVINGS;
     private String CO_COOKINGTIME;
     private String CO_PREPARE_TIME;
+    private String CO_COMMENT;
 
     private String prodNumber;
     private String prodName;

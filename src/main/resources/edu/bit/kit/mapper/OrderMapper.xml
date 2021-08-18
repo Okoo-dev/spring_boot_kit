@@ -86,5 +86,66 @@ select USER_ID, CO_POINT from HK_POINT where USER_ID = #{userId}
 select * from HK_USER  where USER_ID = #{userId}
 ]]>
 	</select>
-	
+	<!-- 주문성공 데이터 삽입-->
+	<resultMap type="edu.bit.kit.vo.OrderVO" id="orderComplete">		
+		<result column="ORDER_NUMBER" property="ordNumber" />
+		<result column="USER_ID" property="userId" />
+		<result column="CO_RECEIPIENT" property="receiverName" />
+		<result column="CO_PHONE" property="receiverTel" />
+		<result column="ADDRESS_1" property="receiverZipcode" />
+		<result column="ADDRESS_2" property="receiverAddress1" />
+		<result column="ADDRESS_3" property="receiverAddress2" />
+		<result column="TOTAL_PRICE" property="sumMoney" />
+		<result column="CPN_DC" property="couponDiscount" />
+		<result column="POINT_DC" property="pointDiscount" />
+		<result column="TOTAL_PAY" property="totalPay" />
+		<result column="CO_DATE" property="ordDate" />
+		<result column="COUPON_ID" property="cpnId" />
+		<result column="ORD_TITLE" property="ordTitle" />
+		<result column="CO_PAYTYPE" property="payChoice"/>
+	</resultMap>
+	<insert id="orderSuccess">
+	<![CDATA[
+INSERT INTO HK_ORD
+        (
+            ORDER_NUMBER,USER_ID,CO_RECEIPIENT,CO_PHONE,ADDRESS_1,ADDRESS_2,ADDRESS_3,TOTAL_PRICE,CPN_DC,POINT_DC,TOTAL_PAY,CO_DATE,COUPON_ID,ORD_TITLE
+        )
+        VALUES
+        (
+            #{ordNumber},#{userId},#{receiverName},#{receiverTel},#{receiverZipcode},#{receiverAddress1},#{receiverAddress2},
+            #{sumMoney},#{couponDiscount},#{pointDiscount},#{totalPay},#{ordDate},#{cpnId},#{ordTitle}
+        )
+]]>
+	</insert>
+	<!-- 장바구니 비우기 -->
+	<delete id="cartDelete">
+   <![CDATA[
+     DELETE HK_CART WHERE USER_ID = #{userId}
+   ]]>
+   </delete>  
+	<!-- 적용된 쿠폰 삭제 -->
+	<delete id="couponDelete">
+   <![CDATA[
+   DELETE HK_CPN WHERE COUPON_ID = #{cpnId}
+   ]]>
+   </delete>
+   <!-- 적용된 포인트 차감 -->
+   <update id="pointDeducted">
+   <![CDATA[
+   UPDATE HK_POINT SET CO_POINT = (CO_POINT - #{pointDiscount}) WHERE USER_ID = #{userId}
+   ]]>
+   </update>
+   <!-- 주문 상세 삽입 -->
+   <insert id="orderDetail">
+   insert into ord_det(ORDER_NUMBER, PRODUCT_NUMBER, CO_AMOUNT, DET_NUMBER)
+     select #{ordNumber}, PRODUCT_NUMBER, CO_AMOUNT, DET_NUMBER_seq.nextval
+         from hk_cart  WHERE USER_ID = #{userId}
+         </insert>
+   <!-- 페이 인포 삽입 -->
+    <insert id="payInfo">
+   <![CDATA[
+   INSERT INTO HK_PAY (PAYMENT_ID, ORDER_NUMBER, CO_RESULT, CO_DATE, CO_PAYTYPE)
+   VALUES ( PAYMENT_ID.NEXTVAL, #{ordNumber}, '결제완료', CURRENT_TIMESTAMP, #{payChoice} )
+   ]]>
+   </insert>
 </mapper>

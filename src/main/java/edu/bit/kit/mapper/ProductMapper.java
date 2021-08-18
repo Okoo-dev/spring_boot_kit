@@ -37,6 +37,9 @@ public interface ProductMapper {
 	void updateCart(CartVO cart);
 	// 장바구니 총합
 	int sumCartMoney(String userId);
+
+	// 메뉴 디테일 불러오기
+	ProductVO getMenu(int product_NUMBER);
 	
 	
 	// 장바구니 뱃지 위한 cart 카운트
