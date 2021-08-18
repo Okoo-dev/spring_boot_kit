@@ -80,6 +80,7 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.sumCartMoney(userId);
 	}
 
+
 	
 	// 장바구니 뱃지 위한 cart 카운트
     @Override
@@ -88,6 +89,12 @@ public class ProductServiceImpl implements ProductService {
         
         return productMapper.getCartCount(userId);
     }
+
+	@Override
+	public ProductVO getMenu(int product_NUMBER) {
+		return productMapper.getMenu(product_NUMBER);
+	}
+
 
 
 

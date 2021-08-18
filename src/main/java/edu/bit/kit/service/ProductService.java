@@ -29,8 +29,13 @@ public interface ProductService {
 	// 장바구니 총 금액
 	int sumCartMoney(String userId);
 	
+
 	// 장바구니 뱃지 위한 cart 카운트
 	int getCartCount(String userId);
 	
+
+	// 메뉴 디테일 불러오기
+	ProductVO getMenu(int product_NUMBER);
+
 	
 }

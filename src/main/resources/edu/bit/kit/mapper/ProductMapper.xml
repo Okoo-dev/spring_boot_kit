@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.bit.kit.mapper.ProductMapper">
 
-
+<!-- 메뉴 상품 불러오기 -->
 	<select id="getList" resultType="edu.bit.kit.vo.ProductVO">
 <![CDATA[
 select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRICE, CO_SERVINGS,CO_COOKINGTIME, CO_PREPARE_TIME, CO_COMMENT from HK_PROD order by PRODUCT_NUMBER desc
@@ -31,6 +31,15 @@ select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRIC
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}		
    ]]>
 	</select>
+
+<!-- 상품 디테일 불러오기 -->
+<select id="getMenu" resultType="edu.bit.kit.vo.ProductVO">
+<![CDATA[
+		select * from HK_PROD where PRODUCT_NUMBER = #{PRODUCT_NUMBER}
+	]]>
+</select>
+
+
 
 	<!-- 장바구니 -->
 	<!-- <resultMap type="edu.bit.kit.vo.CartVO" id="addCart"> -->

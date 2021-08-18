@@ -10,6 +10,7 @@ import edu.bit.kit.mapper.ProductMapper;
 import edu.bit.kit.page.Criteria;
 import edu.bit.kit.vo.CartVO;
 import edu.bit.kit.vo.CouponVO;
+import edu.bit.kit.vo.OrderVO;
 import edu.bit.kit.vo.PointVO;
 import edu.bit.kit.vo.ProductVO;
 import edu.bit.kit.vo.UserVO;
@@ -47,6 +48,45 @@ public class OrderServiceImpl implements OrderService {
 		
 		return orderMapper.userInfo(userId);
 	}
+	
+	// 주문 성공 전달
+	@Override
+	public void orderSuccess(OrderVO orderVO) {
+		orderMapper.orderSuccess(orderVO);
+		
+	}
+	// 주문 성공 시 장바구니 비우기
+	@Override
+	public void cartDelete(String userId) {
+		
+		orderMapper.cartDelete(userId);
+	}
+	// 주문 적용 쿠폰 삭제
+	@Override
+	public void couponDelete(int cpnId) {
+		 orderMapper.couponDelete(cpnId);
+		
+	}
+	// 주문 적용 적립금 차감
+	@Override
+	public void pointDeducted(int pointDiscount, String userId) {
+		orderMapper.pointDeducted(pointDiscount, userId);
+		
+	}
+	// 오더 디테일 삽입
+	@Override
+	public void orderDetail(int ordNumber, String userId) {
+		orderMapper.orderDetail(ordNumber, userId);
+		
+	}
+	// 페이 정보 삽입
+	@Override
+	public void payInfo(int ordNumber, String payChoice) {
+		orderMapper.payInfo(ordNumber, payChoice);
+		
+	}
+	
+	
 
 
 
