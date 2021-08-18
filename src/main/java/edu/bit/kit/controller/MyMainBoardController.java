@@ -41,11 +41,34 @@ public class MyMainBoardController {
     public String main() {
         
         log.info("main()..");
-    
-        
         
         
         return "thymeleaf/main";
+    }
+    
+    
+    
+    @GetMapping("/signin")
+    public String logIn() {
+        
+        log.info("logIn()..");
+        
+        return "thymeleaf/signIn";
+    }
+    
+    
+    
+    @GetMapping("/event")
+    public String eventList(Model model) {
+        
+        
+        log.info("event()..");
+        
+               
+        model.addAttribute("eventList",boardService.getEventList());
+       
+        
+        return "eventPage";
     }
     
     
@@ -62,6 +85,7 @@ public class MyMainBoardController {
           model.addAttribute("user",boardService.getUser(userId ));
           model.addAttribute("point",boardService.getPoint(userId ));
           model.addAttribute("couponCount",boardService.getCouponCount(userId ));
+          model.addAttribute("cartCount",boardService.getCartCount(userId));
           
          
 
@@ -77,8 +101,11 @@ public class MyMainBoardController {
         log.info("myOrder()..");
         String userId = principal.getName();
         
-        model.addAttribute("deliveryList",boardService.getDeliveryList(userId));
-
+        model.addAttribute("orderList",boardService.getOrderList(userId));
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
+        
+        
+        log.info(boardService.getOrderList(userId).get(0).getUserId());
         
         return "thymeleaf/myOrder";
     }
@@ -92,7 +119,7 @@ public class MyMainBoardController {
         String userId = principal.getName();
         
         model.addAttribute("user",boardService.getUser(userId ));
-        
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
         
         return "thymeleaf/myAddress";
     }
@@ -107,7 +134,7 @@ public class MyMainBoardController {
         String userId = principal.getName();
         
         model.addAttribute("user",boardService.getUser(userId ));
-        
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
         
         return "thymeleaf/myAccount";
     }
@@ -145,6 +172,8 @@ public class MyMainBoardController {
         model.addAttribute("couponCount",boardService.getCouponCount(userId )); //아이디로 가진 쿠폰 개수 식별
         model.addAttribute("expCouponCount",boardService.getExpCouponCount(userId )); // 아이디로 가진 쿠폰 중 소멸예정(14일 이내) 쿠폰 개수 식별
         model.addAttribute("couponList",boardService.getCoupon(userId ));  // 아이디로 가지고 있는 쿠폰 전체 읽어내기
+        model.addAttribute("cartCount",boardService.getCartCount(userId)); //아이디로 카트에 담긴 개수 읽어내기
+        
         
         return "thymeleaf/myCoupon";
     }
@@ -160,7 +189,7 @@ public class MyMainBoardController {
         
         model.addAttribute("user",boardService.getUser(userId));
         model.addAttribute("point",boardService.getPoint(userId ));
-
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
         
         
         return "thymeleaf/myPoint";
@@ -220,10 +249,10 @@ public class MyMainBoardController {
        
         
         
-        rttr.addFlashAttribute("result", "registerOK");  // 성공시 리다리렉트 된 페이지(myMain.jsp)에서 alert 띄우도록
+        rttr.addFlashAttribute("result", "registerOK");  // 성공시 리다리렉트 된 페이지에서 alert 띄우도록
         
         
-        return "redirect:/event";
+        return "redirect:/index";
         }
     
          
@@ -245,9 +274,11 @@ public class MyMainBoardController {
     // 수정 전 비밀번호 확인 페이지
     @PreAuthorize("hasRole('ROLE_MEMBER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/tomodify")
-    public String toModify() {
+    public String toModify(Principal principal, Model model) {
         
         log.info("toModify()..");
+        String userId = principal.getName();
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
         
         return "thymeleaf/toModify";
     }
@@ -289,7 +320,7 @@ public class MyMainBoardController {
         String userId = principal.getName();
         
         model.addAttribute("user",boardService.getUser(userId ));
-        
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
         
         return "thymeleaf/modifyUser";
     }
@@ -318,10 +349,12 @@ public class MyMainBoardController {
     // 탈퇴 전 비밀번호 확인 페이지
     @PreAuthorize("hasRole('ROLE_MEMBER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/toresign")
-    public String toResign() {
+    public String toResign(Principal principal, Model model) {
         
         log.info("toResign()..");
         
+        String userId = principal.getName();
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
         
         return "thymeleaf/toResign";
     }
@@ -361,7 +394,8 @@ public class MyMainBoardController {
         String userId = principal.getName();
         
         model.addAttribute("user",boardService.getUser(userId ));
-        
+        model.addAttribute("cartCount",boardService.getCartCount(userId));
+
         
         return "thymeleaf/resign";
     }
@@ -370,7 +404,7 @@ public class MyMainBoardController {
     // 탈퇴 메소드 
     @Transactional(rollbackFor = Exception.class)   //트랜잭션 추가
     @RequestMapping(value = "/deleteuser", method = RequestMethod.GET)
-    public String deleteUser(@AuthenticationPrincipal UserPrincipalVO userVO, RedirectAttributes rttr) throws Exception {
+    public String deleteUser(@AuthenticationPrincipal UserPrincipalVO userVO) throws Exception {
         
         log.info("deleteUser()..");
         
@@ -379,14 +413,10 @@ public class MyMainBoardController {
         
         log.info("user().." + user);
         
-        
-        
         boardService.deleteUser(user);
        
-        rttr.addFlashAttribute("result", "deleteOK");  
         
-        
-        return "redirect:/event";
+        return "redirect:/logout";
         }
     
     

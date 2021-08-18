@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.bit.kit.service.BoardService;
 import edu.bit.kit.service.OrderService;
 import edu.bit.kit.service.ProductService;
 import edu.bit.kit.vo.CartVO;
@@ -41,6 +43,9 @@ public class SecurityController {
 	private ProductService productService;
 	@Autowired
 	private OrderService orderService;
+	
+	
+	
 
 //장바구니 담기
 	@ResponseBody
@@ -92,6 +97,7 @@ public class SecurityController {
 	 */
 
 	// 장바구니 리스트
+	@PreAuthorize("hasRole('ROLE_MEMBER') or hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String getCartList(Principal principal, Model model) throws Exception {
 		log.info("get cart list");
@@ -102,6 +108,12 @@ public class SecurityController {
 		log.info("List<CartVO> cartList :::::::" + cartList);
 		//log.info("List<CartVO> cartList :::::::" + cartList.get(4));
 		model.addAttribute("cartList", cartList);
+		
+		
+		//장바구니 뱃지 위한 카운트 
+		model.addAttribute("cartCount",productService.getCartCount(userId));
+		
+
 		
 		// 장바구니 총 금액
 		int sumMoney = productService.sumCartMoney(userId);						
@@ -176,6 +188,12 @@ public class SecurityController {
 				// 쿠폰네임으로 쿠폰선택 파라미터로 받을때
 				//model.addAttribute("selectCoupon", couponVO.getCpnName());
 				//log.info("couponVO.getCpnId()::::::" + couponVO.getCpnName(), "UTF-8");
+				
+		//장바구니 뱃지 위한 카운트 
+		model.addAttribute("cartCount",productService.getCartCount(userId));		
+				
+				
+				
 		return "thymeleaf/OrderPage";
 	}
 	
@@ -189,6 +207,9 @@ public class SecurityController {
 		log.info("List<CouponVO> orderCouponList::::::" + orderCouponList);
 		
 		model.addAttribute("orderCouponList", orderCouponList);
+		
+		//장바구니 뱃지 위한 카운트 
+        model.addAttribute("cartCount",productService.getCartCount(userId));
 		
 		
 		return "thymeleaf/OrderPage";
@@ -229,6 +250,9 @@ public class SecurityController {
 		@RequestMapping(value="/orderComplete", method = RequestMethod.POST)
 		public String orderComplete(Principal principal, OrderVO orderVO) throws Exception{
 			log.info("주문건 넘어오는거 확인" + orderVO);
+			
+			
+			
 			
 			return "thymeleaf/orderComplete";
 		}

@@ -1,6 +1,7 @@
 package edu.bit.kit.vo;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import lombok.Data;
@@ -31,4 +32,10 @@ public class OrderVO {
   private int totalPay;
    private Date ordDate;
    private String payChoice;
+   private String ordTitle;
+   private int cpnId;
+   
+   private PayVO payList;
+
+   
 }

@@ -46,8 +46,8 @@
 			<ul class="navbar-nav ml-auto">
 				<sec:authorize access="isAnonymous()">
 				<!-- 로그인 하지 않은 사용자에게 보이도록  -->
-					<li class="nav-item"><a class="nav-link" href="/login" id="navtop1">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" id="navtop1">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link" href="/signin" id="navtop1">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="/signup" id="navtop1">회원가입</a></li>
 				</sec:authorize>
 				<!-- 로그인한 사용자에게 보이도록  -->
 				<sec:authorize access="isAuthenticated()">
@@ -63,7 +63,7 @@
 	<!-- Navigation -->
 	<nav
 		class="navbar navbar-expand-lg justify-content-center" id="nav2">
-		<a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png"
+		<a class="navbar-brand" href="/index"><img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png"
 			class="d-inline-block align-top" alt="로고"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -73,18 +73,18 @@
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav ml-auto" id="ul1">
 			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="/menu">Kit.메뉴</a></li>
 			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="/event">이벤트</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="/mymain">MyKit.</a></li>
 		</ul>
 		<ul class="navbar-nav ml-auto mr-5" >
-			<li class="nav-item fa-2x" OnClick="location.href ='#'" style="cursor:pointer;">
+			<!-- <li class="nav-item fa-2x" OnClick="location.href ='/cart'" style="cursor:pointer;">
 			  <span class="fa-layers fa-fw" style="background:white">
     				<i class="fas fa-shopping-cart"></i>
-    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" > 1</span>
+    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" >0</span>
   			  </span>
-  			   <p id="cart" >장바구니</p>
+  			   <p id="cart" >장바구니</p> -->
 		
 			</li>
 		</ul>
@@ -191,8 +191,5 @@
 			</div>
 		</div>
 	</footer>
-<script>
-$('#cartbadge').text('0');
-</script>
 </body>
 </html>

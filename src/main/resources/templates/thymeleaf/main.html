@@ -56,11 +56,11 @@
 
 			<li class="nav-item"
 				th:unless="${#authorization.expr('isAuthenticated()')}"><a
-				class="nav-link" th:href="@{/login}" id="navtop1">로그인</a></li>
+				class="nav-link" th:href="@{/signin}" id="navtop1">로그인</a></li>
 
 			<li class="nav-item"
 				th:unless="${#authorization.expr('isAuthenticated()')}"><a
-				class="nav-link" href="signup" id="navtop1">회원가입</a></li>
+				class="nav-link" th:href="@{/signup}" id="navtop1">회원가입</a></li>
 		</ul>
 	</div>
 </div>
@@ -70,7 +70,7 @@
 <!-- 상단 로고 메뉴 바 -->
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg justify-content-center" id="nav2">
-	<a class="navbar-brand" href="#"><img th:src="@{img/Kit2_size.png}"
+	<a class="navbar-brand" th:href="@{index}"><img th:src="@{img/Kit2_size.png}"
 		class="d-inline-block align-top" alt=""></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarNav" aria-controls="navbarNav"
@@ -80,19 +80,18 @@
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav ml-auto" id="ul1">
 			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" th:href="@{/menu}">Kit.메뉴</a></li>
 			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" th:href="@{event}">이벤트</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" th:href="@{mymain}">MyKit.</a></li>
 		</ul>
 		<ul class="navbar-nav ml-auto mr-5">
-			<li class="nav-item fa-2x" OnClick="location.href ='#'"
-				style="cursor: pointer;"><span class="fa-layers fa-fw"
-				style="background: white"> <i class="fas fa-shopping-cart"></i>
-					<span class="fa-layers-counter fa-layers-top-right" id="cartbadge">
-						1</span>
-			</span>
-				<p id="cart">장바구니</p></li>
+			<!-- <li class="nav-item fa-2x"	th:onclick="|location.href='@{/cart}'|"	style="cursor: pointer;">
+			    <span class="fa-layers fa-fw" style="background: white"> <i class="fas fa-shopping-cart"></i>
+					<span class="fa-layers-counter fa-layers-top-right" id="cartbadge">	0</span>
+				</span>
+				<p id="cart">장바구니</p></li> -->
+				
 		</ul>
 	</div>
 </nav>
@@ -134,7 +133,7 @@
 	<div class="container"></div>
 
 
-<div class="jumbotron jumbotron-fluid mt-5" style="background-color:white;">
+<div class="jumbotron jumbotron-fluid mt-5 mb-1" style="background-color:white;">
 <img th:src="@{img/banner5.png}" />
 
 </div>
@@ -201,20 +200,23 @@
 			</div>
 		</div>
 	</footer>
-	<script>
-		$('#cartbadge').text('12');
+<script  th:inline="javascript" type="text/javascript" >
+	
+	/*[+
+	var result = [[${result}]];
+	+]*/
+		
 
-		$(window).on('load', function() {
-			var result = $('#navtop3').text();
-
+    console.log(result);
+		
+	if(result === 'registerOK'){
+			alert('등록이 완료되었습니다.');
 			console.log(result);
-			console.log("ss");
-			if (result == 'anonymous') {
-				$('#navtop3').val('hi')
-				console.log("dd");
-			}
-		});
-	</script>
-
+		}
+		
+		
+</script>
+	
+	
 </body>
 </html>
