@@ -66,12 +66,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and()
 
 		.formLogin()
-		.defaultSuccessUrl("/menu")
+		.defaultSuccessUrl("/index")
 		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.deleteCookies("JSESSIONID")
-		.logoutSuccessUrl("/menu")
+		.logoutSuccessUrl("/index")
 		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/access-denied");
