@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<taglib prefix="sec" uri="http://www.springframework.org/security/tags">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href=@{css/bootstrap.min.css}>
+<link rel="stylesheet" th:href=@{css/style.css}>
+<link rel="stylesheet"
+	th:href=@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src=@{js/jquery-3.2.1.slim.min.js}></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script th:src=@{popper/popper.min.js}></script>
+<script th:src=@{js/bootstrap.min.js}></script>
+
+
+<title>Kit.</title>
+
+<style type="text/css">
+.underline {
+	text-decoration: none;
+	border-bottom: 2px solid black;
+}
+
+.card-text {
+	margin: 0;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+p {
+	color: black;
+}
+
+.price {
+	color: red;
+	font-size: x-large;
+	font-weight: bold;
+	text-align: center;
+}
+
+.lead{
+font-weight: normal;
+}
+</style>
+
+</head>
+<body>
+
+
+
+	<div class="myline"></div>
+
+	<div
+		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		<div class="navbar-nav" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#" sec:authentication="name">사용자</a></li>
+					<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+				<li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+					<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함-->
+					<!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->				
+					<a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+					<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+					<a class="nav-link" th:href="@{/login}">Login</a>
+				</li>
+					<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
+				<li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}"
+					><a class="nav-link" href="signup">회원가입</a>
+			 	</li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!-- 상단 로고 메뉴 바 -->
+	<!-- Navigation -->
+
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
+		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
+			class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- 메뉴 : 대제목, 정렬 -->
+	<div class="bg-white py-3"></div>
+	<div class="container">
+		<h1 class="text-left fw-bolder">메뉴상세</h1>
+		<hr class="underline">	
+	</div>
+
+
+	<!-- 상품메뉴 상세 -->
+	<section class="container">
+		<div class="bg-white py-3"></div>
+
+		 <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="img/11.jpg" alt="..."></div>
+                    <div class="col-md-6">
+                    <input type="hidden" th:value=${menudetails.PRODUCT_NUMBER}>                       
+                        <h1 class="display-5 fw-bolder" th:text=${menudetails.CO_NAME}>상품명</h1>
+                        <div class="fs-5 mb-5">                        
+                            <span class="price" th:text="${#numbers.formatInteger(menudetails.CO_PRICE, 3, 'POINT')+'원'}">가격</span>
+                        </div>
+                        <div class="fs-5 mb-5" style='line-height:10%'>
+                            <span class="cookingInfo" th:text="${menudetails.CO_SERVINGS + ' |'}">인분</span>                    
+                            <span class="cookingInfo" th:text="${'조리시간 : ' + menudetails.CO_COOKINGTIME + ' |'}">조리시간</span>                       
+                            <span class="cookingInfo" th:text="${'준비시간 : ' + menudetails.CO_PREPARE_TIME}">준비시간</span>
+                        </div>
+                        <p class="lead" th:text="${menudetails.CO_COMMENT}">상품설명</p>
+                        <div class="d-flex">
+                         <button type="button" class="btn btn-primary plus">+</button>
+                            <input class="form-control text-center me-3 numBox" id="inputQuantity" 
+                            type="number" value="1" style="max-width: 3rem">
+                         <button type="button" class="btn btn-primary minus">-</button>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                <i class="bi-cart-fill me-1"></i>
+                                Add to cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+	</section>
+
+
+
+	<div class="bg-white py-5"></div>
+
+	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
+	<footer>
+		<div class="jumbotron text-center jumbotron-fluid bg-secondary ">
+			<div class="foo_div"></div>
+			<img src="img/Kit2_size.png" />
+			<div class="foo_div1">
+				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
+					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
+				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
+				<p>Kit.</p>
+				<img src="img/kakaotalk.png"> <img src="img/google+.png">
+				<img src="img/naver.png">
+			</div>
+		</div>
+	</footer>
+
+
+</body>
+</html>

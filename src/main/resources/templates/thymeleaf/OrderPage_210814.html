@@ -25,15 +25,6 @@
 <script th:src="@{js/bootstrap-select.min.js}"></script>
 <script th:src="@{js/defaults-ko-KR.min.js}"></script>
 
-<!-- 결제 API -->
-
-<script type="text/javascript"
-   src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js">
-
-   </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
 
 
 
@@ -122,66 +113,56 @@ font-size: small;
 
 
 
-<!-- 상단 로그인 회원가입 바 -->
 </head>
-<div class="navbar navbar-expand-sm justify-content-end" id="nav1">
-	<div class="navbar-nav" id="navbarSupportedContent">
-		<ul class="navbar-nav ml-auto">
-			<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+<body>
+	<div class="myline"></div>
 
-			<li class="nav-item"
-				th:if="${#authorization.expr('isAuthenticated()')}"><a
-				class="nav-link" th:text="${#authentication.name}" id="navtop1">사용자</a></li>
-
-			<li class="nav-item"
-				th:if="${#authorization.expr('isAuthenticated()')}"><a
-				class="nav-link" th:href="@{/logout} " id="navtop1">로그아웃</a></li>
-
-			<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
-
-			<li class="nav-item"
-				th:unless="${#authorization.expr('isAuthenticated()')}"><a
-				class="nav-link" th:href="@{/signin}" id="navtop1">로그인</a></li>
-
-			<li class="nav-item"
-				th:unless="${#authorization.expr('isAuthenticated()')}"><a
-				class="nav-link" th:href="@{/signup}" id="navtop1">회원가입</a></li>
-		</ul>
+	<div
+		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
+		<div class="navbar-nav" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#"
+					sec:authentication="name">사용자</a></li>
+				<!--  로그인한 상태라면 이름과, logout 버튼 출력      -->
+				<li class="nav-item"
+					th:if="${#authorization.expr('isAuthenticated()')}">
+					<!-- 비회원 페이지 조회시 anonymousUser 안나오게 할때 아래 코드 사용, 단 간격 배치 해야함--> <!-- <a class="nav-link" th:text="${#authentication.name}"></a> -->
+					<a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+				<!--  로그인한 상태가 아니라면 login 버튼 출력  -->
+				<li class="nav-item"
+					th:unless="${#authorization.expr('isAuthenticated()')}"><a
+					class="nav-link" th:href="@{/login}">Login</a></li>
+				<!-- <li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAnonymous()"></a><a th:href="@{/login}">로그인</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" sec:authorize="isAuthenticated()"></a><a th:href="@{/logout}">로그아웃</a></li> -->
+				<li class="nav-item"><a class="nav-link" href="signup">회원가입</a></li>
+			</ul>
+		</div>
 	</div>
-</div>
 
 
+	<!-- 상단 로고 메뉴 바 -->
+	<!-- Navigation -->
 
-<!-- 상단 로고 메뉴 바 -->
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg justify-content-center" id="nav2">
-	<a class="navbar-brand" th:href="@{index}"><img th:src="@{img/Kit2_size.png}"
-		class="d-inline-block align-top" alt=""></a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbarNav" aria-controls="navbarNav"
-		aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav ml-auto" id="ul1">
-			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" th:href="@{/menu}">Kit.메뉴</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" th:href="@{event}">이벤트</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" th:href="@{mymain}">MyKit.</a></li>
-		</ul>
-		<ul class="navbar-nav ml-auto mr-5">
-			<li class="nav-item fa-2x" th:onclick="|location.href='@{/cart}'|"
-				style="cursor: pointer;"><span class="fa-layers fa-fw"
-				style="background: white"> <i class="fas fa-shopping-cart"></i>
-					<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" th:text="${cartCount}">
-						</span>
-			</span>
-				<p id="cart">장바구니</p></li>
-		</ul>
-	</div>
-</nav>
-
+	<nav
+		class="navbar navbar-expand-lg navbar-light bg-light justify-content-center sticky-top">
+		<a class="navbar-brand" href="#"><img src="img/Kit2_size.png"
+			class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
+				<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			</ul>
+		</div>
+	</nav>
 
 	<!-- 메뉴 : 대제목, 정렬  -->
 	<div class="bg-white py-3"></div>
@@ -197,14 +178,14 @@ font-size: small;
 			<div class="col-7">
 				<h4 class="text-left fw-bolder">주문자</h4>
 				<hr class="underline"></hr>
-				<form th:action="@{/orderComplete}" method="POST" id="receiverInfo"  name="receiverInfo">
+				<form th:action="@{/orderComplete}" method="POST" id="receiverInfo"  name="receiverInfo" onsubmit="return payMent();">
 				
-				<input type="hidden" id="sumMoney" name="sumMoney" >
-				<input type="hidden" id="totalPayInput" name="totalPay" >
-				<input type="hidden" id="pointDiscount" name="pointDiscount" value=0>
-				<input type="hidden" id="couponDiscount" name="couponDiscount" value=0>
-				<input type="hidden" id="payChoice" name="payChoice" value=''>
-				<input type="hidden" id="cpnId" name="cpnId" value=0>
+				<input type="hidden" name="sumMoney" >
+				<input type="hidden" name="totalPay" >
+				<input type="hidden" name="pointDiscount" value=0>
+				<input type="hidden" name="couponDiscount" value=0>
+				<input type="hidden" name="payChoice" value=''>
+				<input type="hidden" name="cpnId" value=0>
 				
 				<div class="row">
 				
@@ -527,9 +508,8 @@ font-size: small;
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
 										data-dismiss="modal">취소</button>
-										
-									<button type="button" id="payclick" class="btn btn-primary" onclick="paymentConfirm()">결제</button>
-								<!-- <button type="submit" form="receiverInfo" id="payclick" class="btn btn-primary">결제</button> -->
+									<button type="submit" form="receiverInfo" id="payclick" class="btn btn-primary" >결제</button>
+									
 									
 								</div>
 							</div>
@@ -548,46 +528,22 @@ font-size: small;
 	<div class="bg-white py-5"></div>
 
 	<!-- footer 배너인데 우선 이렇게 두고 나중에 크기랑 이런거 손보겠습니다. -->
-<footer>
-		<div class="jumbotron jumbotron-fluid " id="bot1">
-			<div class="row">
-			<div class="container col-1"></div>
-			<div class="container col-2">
-			  <img th:src="@{img/KitWhite.png}" />
-			  </div>
-			<div class="container col-9">
-				<div class="row mb-4" style="line-height: 40px;">
-      					<div  class="text-center col-2" id="bot2" >
-      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">이용약관</span><br>
-						</div>
-      					<div  class="text-center col-3" id="bot2" >
-      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">개인정보처리 방침</span><br>
-						</div>
-      					<div  class="text-center col-2" id="bot2">
-      							<span class="font-weight-bold" style="font-size: 0.8em; color: white;">법적고지</span><br>
-						</div>
-						<div  class="text-center col-3" style="line-height: 10px;">
-								<span class="font-weight-bold " style="font-size: 0.8em; color: white;">사업자정보 확인</span><br>
-						</div>	
-						<div class="container col-2"></div>
-      	     	</div>
-      	     	<div class="container ml-2 mr-0 mt-3 ">
-      	     		<span id="bot3"> Kit.(주)</span>
-      	     		<span id="bot3"> 대표이사: 송진우, 홍정호, 김선규</span>
-      	     		<span id="bot3"> 사업자등록번호: 103-03-290820</span> <br>
-      	     		<span id="bot3"> 주소 : 서울특별시 종로구 종로 69(종로2가) 7층 Kit. </span> 
-      	     		<span id="bot3"> 통신판매업신고 중구 제0000호 </span>  <br>
-      	     		<span id="bot3"> 이메일: kit@kit.com </span> 
-      	     		<span id="bot3"> 호스팅제공자: 비트캠프7층어딘가 </span> <br>
-      	     		<span id="bot3"> ⓒKit. CORP. ALL RIGHTS RESERVERD. </span> 
-      	     	</div>
-			</div>
-			
-			
-			
+	<footer>
+		<div class="jumbotron text-center jumbotron-fluid bg-secondary ">
+			<div class="foo_div"></div>
+			<img src="img/Kit2_size.png" />
+			<div class="foo_div1">
+				<span>(주)Kit.</span> <span> | </span> <span>대표 : 선진정형 </span> <span>
+					| </span> <span>사업자 등록 번호 : 000-00-0000</span> <span> | </span>
+				<p>주소 : 서울 종로구 종로 69 서울YMCA 7층.</p>
+				<p>Kit.</p>
+				<img src="img/kakaotalk.png"> <img src="img/google+.png">
+				<img src="img/naver.png">
 			</div>
 		</div>
 	</footer>
+
+
 </body>
 <!-- 결제 API -->
 <script type="text/javascript"
@@ -628,15 +584,42 @@ font-size: small;
 	}
 </script>
 
-
-
-
 <!-- 쿠폰, 적립금  -->
-<script th:inline="javascript" type="text/javascript" >
+<script th:inline="javascript"> 
+
+/* 1.총 결제(주문전체금액 - 쿠폰금액)*/
+$(document).ready(function() {
+	/* 결제수단 선택자 */
+	var paySelect;
+	/* var paySelect = $('input:button[name=bankbook]').is(':checked'); */
+
+
+	$(".payChoice").click(function() {	 
+		 paySelect = $(this);	
+		console.log($(this).html());
+		console.log($(this).text());
+		
+		$('input[name=payChoice]').attr('value',$(this).text());
+	
+	})	
+	
+	/*[+
+	var sumMoney = [[${sumMoney}]];
+	var couponDiscount = [[${couponDiscount}]];
+	+]*/
+	var pointDiscount = document.getElementById("insertPoint").value;
+	var a = sumMoney-(couponDiscount);
+	var b = a.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	document.getElementById("totalPay").innerHTML = b +"원";		
+})
+
+
+
+
+
 
 /* 적립금 */
 function pointFuntion(val) {
-	
 var x = document.getElementById("overPoint").value;
 var y = document.getElementById("aPoint").value;
 /*[+
@@ -677,103 +660,25 @@ function btn_off() {
  btn.disabled = 'disabled';
 }
 
-
-/* 1.총 결제(주문전체금액 - 쿠폰금액)*/
+/* 적립금 적용 */
 $(document).ready(function() {
-	
-	/* 적립금 적용 */
-	
-	btn = document.getElementById('pointApply');
-	btn.onclick = function(event) {
-		alert('적립금이 적용되었습니다!');
-	var a = document.getElementById("insertPoint").value;
-	var b = a.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-	document.getElementById("showPoint").innerHTML = b +"원";
-	
-	$('input[name=pointDiscount]').attr('value',a);	
-	}	
-	
-	/* 결제수단 선택자 */
-	var paySelect;
-
-	$(".payChoice").click(function() {	 
-		 paySelect = $(this);	
-		console.log($(this).html());
-		console.log($(this).text());
-		
-		$('input[name=payChoice]').attr('value',$(this).text());	
-	})	
-	
-	/*[+
-	var sumMoney = [[${sumMoney}]];
-	var couponDiscount = [[${couponDiscount}]];
-	+]*/
-	var pointDiscount = document.getElementById("insertPoint").value;
-	var a = sumMoney-(couponDiscount);
-	var b = a.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-	document.getElementById("totalPay").innerHTML = b +"원";		
+btn = document.getElementById('pointApply');
+btn.onclick = function(event) {
+	alert('적립금이 적용되었습니다!');
+var a = document.getElementById("insertPoint").value;
+var b = a.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+document.getElementById("showPoint").innerHTML = b +"원";
 
 
-	/* 쿠폰ID 커맨드객체 전달을 위한 함수 */
-	$.urlParam = function(name){
-	    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-	    if (results==null) {
-	       return 0;
-	    }
-	    return decodeURI(results[1]) || 0;
-	}
-	
-	var cpnId = $.urlParam('cpnId');
-	console.log(cpnId);
 
-	$('input[name=cpnId]').attr('value',cpnId);		
-	
-	
-	/* 1. 총 비용 함수 */
-	function getTotalPay(){
-		/*[+
-		var sumMoney = [[${sumMoney}]];
-		var couponDiscount = [[${couponDiscount}]];
-		+]*/
-		var a = document.getElementById("insertPoint").value;
-		var b = sumMoney-couponDiscount;
-		var totalPay = b-a;
-		
-		return totalPay;
-	}
-	
-		/* 결제 클릭 시 커맨드객체에 전달하기 위한 코드 */
-		
-		/*[+
-		var sumMoney = [[${sumMoney}]];
-		var couponDiscount = [[${couponDiscount}]];
-		+]*/
-		var a = document.getElementById("insertPoint").value;
-		var b = sumMoney-couponDiscount;
-		var c = b-a;
-		var d = c.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-		document.getElementById("totalPay").innerHTML = d +"원";
-
-		$('input[name=totalPay]').attr('value',c);
-		/*안먹히는거 document.getElementsByName('totalPay').value = c; */
-		/* $('input[name=pointDiscount]').attr('value',a); */
-		$('input[name=couponDiscount]').attr('value',couponDiscount);
-		$('input[name=sumMoney]').attr('value',sumMoney);				
- 		/* $('input[name=payChoice]').attr('value',paySelect.html());   */		
+}
 })
-	
 
 
+function payMent(paySelt) {
 
 
-
-
-	  
-function paymentConfirm() {
-
-	
-	var a =document.getElementsByName("payChoice")[0];
-	var paySelect = a.value;
+	var paySelect1 = paySelect;
 	var receiverName = receiverInfo.receiverName.value;		
 	var receiverTel = document.getElementById('receiverTel').value;
 	var receiverZipcode = document.getElementById('receiverZipcode').value;
@@ -796,33 +701,18 @@ function paymentConfirm() {
 		    }else if(!receiverAddress1){
 		    	document.getElementById('receiverAddress1').focus();
 			      alert( '수령자 주소를 입력해주세요!' );
-			      return false;
+			      return false
 		    }else if(!receiverAddress2){
 		    	document.getElementById('receiverAddress2').focus();
 			      alert( '수령자 상세주소를 입력해주세요!' );
-			      return false;
-		    }else if(!paySelect) {
-		    	alert( '결제수단을 선택해주세요!' );
-		    	return false;
+			      return false
 		    }
 	
 		/* 결제수단 별 경로 */
 
-		/* 1. 총 비용 함수 */
-		function getTotalPay(){
-			
-			/*[+
-			var sumMoney = [[${sumMoney}]];
-			var couponDiscount = [[${couponDiscount}]];
-			+]*/
-			var a = document.getElementById("insertPoint").value;
-			var b = sumMoney-couponDiscount;
-			var totalPay = b-a;
-			
-			return totalPay;
-		}
-	    
-	    	if(paySelect == '무통장입금'){
+	    if(paySelect) {		        
+	    	var payselected = paySelect.html();
+	    	if(payselected == '무통장입금'){
 	    		alert('무통장 ㄱㄱ');
 	    	}else{
 	    		/* 나머지 수단으로 결제 시  */
@@ -853,91 +743,84 @@ function paymentConfirm() {
 	    				userInfo.userAddress2 = [[${userInfo.userAddress2}]];
 	    				userInfo.userAddress3 = [[${userInfo.userAddress3}]];
 	    				+]*/		
-	    				console.log(userInfo);		    			
-	    			    console.log(totalPay);	    			    
-	    					
-
-	    		        IMP.init('imp75081675'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	    		        IMP.request_pay({
-	    		            pg : 'html5_inicis',
-	    		            pay_method : 'card',
-	    		            merchant_uid : 'merchant_' + new Date().getTime(),
-	    		            name : lastP,
-	    		            amount : totalPay,
-	    		            buyer_email : userInfo.userEmail,
-	    		            buyer_name : userInfo.userName,
-	    		            buyer_tel : userInfo.userPhone,
-	    		            buyer_addr : userInfo.userAddress2,
-	    		            buyer_postcode : userInfo.userAddress1
-	    		        }, function(rsp) {
-	    		           if ( rsp.success ) {
-	    		                  
-	    				        var date = new Date();
-	    				        var year = date.getFullYear();
-	    				        var month = ("0" + (1 + date.getMonth())).slice(-2);
-	    				        var day = ("0" + date.getDate()).slice(-2);
-
-	    				        var ordDate= year + "-" + month + "-" + day;
-	    				        
-	    				    	var dateDate = date.getFullYear();
-	    				        var random = Math.floor(Math.random()*10000000);
-	    				        var orderNumber1 = dateDate + random;
-	    				        
-	    				  var form = {
-	    					    receiverName : receiverName,
-	    					    receiverTel: receiverTel,
-	    					    receiverZipcode : receiverZipcode,
-	    					    receiverAddress1 : receiverAddress1,
-	    					    receiverAddress2 : receiverAddress2,
-	    					    sumMoney : $('#sumMoney').val(),
-	    					    couponDiscount : $('#couponDiscount').val(),
-	    					    pointDiscount : $('#pointDiscount').val(),
-	    					    totalPay : $('#totalPayInput').val(),
-	    					    payChoice : paySelect,
-	    					    ordDate : ordDate,
-	    					    ordTitle : lastP,
-	    					    cpnId : $('#cpnId').val(),
-	    					    ordNumber : orderNumber1
-	    				    }
-	    				    
-	    				    console.log(form);
-	    				    
-	    				    $.ajax({
-	    		                   type : "POST",
-	    		                   url : "/orderInfo",
-	    		                   cache : false,
-	    		                   contentType : 'application/json; charset=utf-8',
-	    		                   dataType : 'text',
-	    		                   data : JSON.stringify(form),      
-	    		                   
-	    		                   success : function(result) {
-	    		                	  console.log(result);
-	 	    				    	  var msg = '결제가 완료되었습니다.';
-	 		    		                msg += '고유ID : ' + rsp.imp_uid;
-	 		    		                msg += '상점 거래ID : ' + rsp.merchant_uid;
-	 		    		                msg += '결제 금액 : ' + rsp.paid_amount;
-	 		    		                msg += '카드 승인번호 : ' + rsp.apply_num;
-	 	    							alert(msg);
-	 		    						location.href = '/orderComplete'; 
-	 	    						},
-	 	    						error : function() {
-	 	    							alert("실패~!");
-	 	    						}
-	    		                
-	    		             })
-	    						   }else{
-	    		           var msg = '결제에 실패하였습니다.';
-   		                msg += '에러내용 : ' + rsp.error_msg;
-   		                alert(msg);
-	    						   }
-	    		        });
-	    			    
-   			   
+	    				console.log(userInfo);	
+	    				
+	    			
+	    		$(payment(totalPay,lastP, userInfo)).on();
+	    			
+	    	
 	    	} 	
-	   
-	    	 
-}
+	    }
+	    else {	
+	    	/* 결제수단 미선택 시 */
+	    	alert("결제수단을 선택해 주십시오.");
+	        return false; 
+	    }  
 
+}
+</script>
+
+<!-- 결제 API -->
+<script th:inline="javascript" th:src=@{js/payment.js}>
+</script>
+
+<script th:inline="javascript" >
+
+
+$(document).ready(function() {
+	
+	/* 쿠폰ID 커맨드객체 전달을 위한 함수 */
+	$.urlParam = function(name){
+	    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	    if (results==null) {
+	       return 0;
+	    }
+	    return decodeURI(results[1]) || 0;
+	}
+	
+	var cpnId = $.urlParam('cpnId');
+	console.log(cpnId);
+
+	$('input[name=cpnId]').attr('value',cpnId);		
+	
+
+ 	
+	/* 1. 총 비용 함수 */
+	function getTotalPay(){
+		/*[+
+		var sumMoney = [[${sumMoney}]];
+		var couponDiscount = [[${couponDiscount}]];
+		+]*/
+		var a = document.getElementById("insertPoint").value;
+		var b = sumMoney-couponDiscount;
+		var totalPay = b-a;
+		
+		return totalPay;
+	}
+	
+	
+	
+		
+		/* 결제 클릭 시 커맨드객체에 전달하기 위한 코드 */
+		
+		/*[+
+		var sumMoney = [[${sumMoney}]];
+		var couponDiscount = [[${couponDiscount}]];
+		+]*/
+		var a = document.getElementById("insertPoint").value;
+		var b = sumMoney-couponDiscount;
+		var c = b-a;
+		var d = c.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		document.getElementById("totalPay").innerHTML = d +"원";
+
+		$('input[name=totalPay]').attr('value',c);
+		/*안먹히는거 document.getElementsByName('totalPay').value = c; */
+		$('input[name=pointDiscount]').attr('value',a);
+		$('input[name=couponDiscount]').attr('value',couponDiscount);
+		$('input[name=sumMoney]').attr('value',sumMoney);				
+ 		/* $('input[name=payChoice]').attr('value',paySelect.html());   */		
+	
+})
 </script>
 
 </html>
