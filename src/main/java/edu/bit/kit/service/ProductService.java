@@ -29,4 +29,7 @@ public interface ProductService {
 	// 장바구니 총 금액
 	int sumCartMoney(String userId);
 	
+	// 메뉴 디테일 불러오기
+	ProductVO getMenu(int product_NUMBER);
+	
 }

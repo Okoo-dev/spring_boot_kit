@@ -29,6 +29,7 @@ import edu.bit.kit.security.UserPrincipalVO;
 import edu.bit.kit.service.ProductService;
 import edu.bit.kit.vo.AuthVO;
 import edu.bit.kit.vo.CartVO;
+import edu.bit.kit.vo.ProductVO;
 import edu.bit.kit.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -103,6 +104,17 @@ public class UserController{
 	
 	
 	
+	// 상품상세
+	@RequestMapping(value="/menudetails", method=RequestMethod.GET)
+	public String menuDetails(ProductVO productVO, Model model) throws Exception {
+		
+		model.addAttribute("menudetails", productService.getMenu(productVO.getPRODUCT_NUMBER()));
+		log.info("상품 디테일확인:;;;;;;;;" + productService.getMenu(productVO.getPRODUCT_NUMBER()));
+		return "thymeleaf/menuDetails";			
+	}
+	
+	
+//**테스트용---------------------------------------------------------------------------------	
 	
 	@Autowired
 	SecurityService service;

@@ -80,6 +80,11 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.sumCartMoney(userId);
 	}
 
+	@Override
+	public ProductVO getMenu(int product_NUMBER) {
+		return productMapper.getMenu(product_NUMBER);
+	}
+
 
 
 

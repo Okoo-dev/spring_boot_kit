@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -124,6 +127,7 @@ public class SecurityController {
 	//@RequestMapping(value = "/cartModify", method = RequestMethod.POST)
 	
 	// 주문페이지 주문 상품 리스트
+	
 	@RequestMapping(value="/order", method = RequestMethod.GET)
 	public String orderCartList(Principal principal, Model model, CouponVO couponVO) throws Exception {
 		log.info("get orderCartList");
@@ -226,13 +230,45 @@ public class SecurityController {
 	}
 	
 	// 최종결제 정보 받아오기
-		@RequestMapping(value="/orderComplete", method = RequestMethod.POST)
-		public String orderComplete(Principal principal, OrderVO orderVO) throws Exception{
+	
+		@RequestMapping(value="/orderInfo", method=RequestMethod.POST)
+		@ResponseBody
+		public String orderComplete(Principal principal,@RequestBody OrderVO orderVO) throws Exception{
+						
 			log.info("주문건 넘어오는거 확인" + orderVO);
+					
+			String userId = principal.getName();
+			orderVO.setUserId(userId);
+			// 주문 정보
+			orderService.orderSuccess(orderVO);
+			// 주문상품 장바구니 비우기
+			orderService.cartDelete(orderVO.getUserId());
+			// 주문 적용 쿠폰 삭제
+			if(orderVO.getCpnId() != 0) {
+				orderService.couponDelete(orderVO.getCpnId());
+			}else {
+				log.info("쿠폰 미적용 시");
+			}
+			// 주문 적용 포인트 차감
+			if(orderVO.getPointDiscount() != 0) {
+				orderService.pointDeducted(orderVO.getPointDiscount(), orderVO.getUserId());
+			}else {
+				log.info("포인트 미적용 시");
+			}
+			// 주문 상세
+			orderService.orderDetail(orderVO.getOrdNumber(), orderVO.getUserId());
+			// 페이 정보
+			orderService.payInfo(orderVO.getOrdNumber(), orderVO.getPayChoice());
 			
+			return "SUCCESS";
+		}
+		@RequestMapping(value="/orderComplete", method=RequestMethod.GET)
+
+		public String orderCompletea(Principal principal) throws Exception{
+					log.info("ajax 넘어가냐~~~~~~");
 			return "thymeleaf/orderComplete";
 		}
-	
+		
 }
 /*
  * 

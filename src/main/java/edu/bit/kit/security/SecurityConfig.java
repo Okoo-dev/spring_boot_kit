@@ -69,9 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.deleteCookies("JSESSIONID")
-		.logoutSuccessUrl("/")
+		.logoutSuccessUrl("/menu")
 	.and()
-		.exceptionHandling()
+		.exceptionHandling()	
 		.accessDeniedPage("/access-denied");
 		
 		// 로그인 유지 기능 추가

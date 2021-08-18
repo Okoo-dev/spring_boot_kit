@@ -172,7 +172,8 @@ p {
 				<div class="col-sm-3">
 					<div class="card mx-3">
 						<!-- <tr th:each="ProductVO : ${list}"> -->
-						<a href="#"> <img src="img/2.jpg" class="card-img-top"
+					
+						<a th:href="@{/menudetails?(PRODUCT_NUMBER=${ProductVO.PRODUCT_NUMBER})}"> <img src="img/2.jpg" class="card-img-top"
 							alt="..."> <!-- <div class="card-body"> -->
 							<p class="card-text">
 								<small><td th:text="${ProductVO.CO_SERVINGS}"></td> |
@@ -183,7 +184,8 @@ p {
 								<td th:text="${ProductVO.CO_NAME}"></td>
 							</p>
 							<p>
-								<td th:text="${ProductVO.CO_PRICE}"></td>
+							
+								<td th:text="${#numbers.formatInteger(ProductVO.CO_PRICE, 3, 'POINT')+'원'}"></td>
 							</p>
 
 							<p class="card-text">
