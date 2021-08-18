@@ -167,6 +167,7 @@
 
 		    if( checkEnglishph >0 || check_kor>0 ){
 		        alert("숫자만 입력가능합니다.");
+		        frm.phone2.focus();
 		        return false;
 		    }
 		    

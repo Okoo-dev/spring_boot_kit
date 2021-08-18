@@ -57,7 +57,38 @@
       <result column="CO_DATE" property="delvDate" />
       <result column="CO_DELIVERY_NUMBER" property="delvNumber" />
       <result column="CO_STATE" property="delvState" />
+      
    </resultMap>
+   
+   
+   <resultMap  id="payList" type="edu.bit.kit.vo.PayVO" >
+		<result column="PAYMENT_ID" property="payId" />
+		<result column="ORDER_NUMBER" property="ordNumber" />
+		<result column="CO_RESULT" property="payResult" />
+		<result column="CO_DATE" property="payDate" />
+		<result column="CO_PAYTYPE" property="payType" />
+	</resultMap>
+   
+   <resultMap  id="ordList" type="edu.bit.kit.vo.OrderVO" >
+		<result column="ORDER_NUMBER" property="ordNumber" />
+		<result column="USER_ID" property="userId" />
+		<result column="CO_DATE" property="ordDate" />
+		<result column="CO_RECEIPIENT" property="receiverName" />
+		<result column="ADDRESS_1" property="receiverZipcode" />
+		<result column="ADDRESS_2" property="receiverAddress1" />
+		<result column="ADDRESS_3" property="receiverAddress2" />
+		<result column="CO_PHONE" property="receiverTel" />
+		<result column="TOTAL_PRICE" property="sumMoney" />
+		<result column="CPN_DC" property="couponDiscount" />
+		<result column="POINT_DC" property="pointDiscount" />
+		<result column="TOTAL_PAY" property="totalPay" />
+		<result column="ORD_TITLE" property="ordTitle" />
+		<result column="COUPON_ID" property="cpnId" />
+		
+		
+		<collection resultMap="payList" property="payList">
+		</collection>
+	</resultMap>
    
    
    <resultMap  id="authList" type="edu.bit.kit.vo.AuthVO" >
@@ -99,9 +130,18 @@
    
    
    <select id="getDeliveryList" resultMap="deliveryList">
-   	SELECT * FROM HK_DELV WHERE ORDER_NUMBER =
-   (SELECT ord.ORDER_NUMBER FROM  HK_ORD ord,  HK_USER us WHERE ord.USER_ID 
-     = us.USER_ID AND us.USER_ID= #{userId})
+   	SELECT *
+	FROM   hk_delv hkd , HK_ORD hko
+	WHERE  hko.USER_ID=#{userId} AND
+     	   hkd.order_number = hko.order_number
+   </select>
+   
+   
+      <select id="getOrderList" resultMap="ordList">
+    SELECT *
+	FROM   HK_ORD hko, HK_PAY hkp
+	WHERE  hko.USER_ID= #{userId} AND
+     	  hko.order_number =  hkp.order_number 
    </select>
    
    
@@ -116,6 +156,10 @@
    <![CDATA[
       SELECT * FROM HK_CPN WHERE USER_ID = #{userId}
       ]]>
+   </select>
+   
+   <select id="getCartCount" resultType="int">
+   	SELECT COUNT(CART_ID) FROM HK_CART WHERE USER_ID = #{userId}
    </select>
    
     <insert id="signUpInsert">
@@ -179,6 +223,45 @@
 		WHERE user_id = #{userId}
    ]]>
    </delete>  
+   <!-- 
+   
+   
+   
+   
+   진우에게 
+   
+      <delete id="deleteCart">
+   <![CDATA[
+     DELETE HK_CART WHERE USER_ID = ${userId}
+   ]]>
+   </delete>  
+   
+   
+   
+      <delete id="deleteCoupon">
+   <![CDATA[
+	DELETE HK_CPN WHERE COUPON_ID = ${cpnId}
+   ]]>
+   </delete>  
+   
+   
+   
+   
+   <update id="usePoint">
+   <![CDATA[
+	UPDATE HK_POINT SET CO_POINT = (CO_POINT - ${pointDiscount}) WHERE USER_ID = ${userId}
+   ]]>
+   </update> 
+   
+   
+    <insert id="insertPay">
+   <![CDATA[
+	INSERT INTO HK_PAY (PAYMENT_ID, ORDER_NUMBER, CO_RESULT, CO_DATE, CO_PAYTYPE)
+	VALUES ( PAYMENT_ID.NEXTVAL, ORDER_NUMBER 시퀀스 새로, '결제완료', CURRENT_TIMESTAMP, '신용카드' );
+   ]]>
+   </insert>
+   
+    -->
    
    
    

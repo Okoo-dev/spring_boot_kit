@@ -1,6 +1,7 @@
 package edu.bit.kit.vo;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import lombok.Data;
@@ -26,5 +27,6 @@ public class DeliveryVO {
    private Date delvDate;
    private String delvNumber;
    private String delvState;
+      
     
 }

@@ -39,8 +39,8 @@
 			<ul class="navbar-nav ml-auto">
 				<sec:authorize access="isAnonymous()">
 				<!-- 로그인 하지 않은 사용자에게 보이도록  -->
-					<li class="nav-item"><a class="nav-link" href="/login" id="navtop1">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" id="navtop1">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link" href="/signin" id="navtop1">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="/signup" id="navtop1">회원가입</a></li>
 				</sec:authorize>
 				<!-- 로그인한 사용자에게 보이도록  -->
 				<sec:authorize access="isAuthenticated()">
@@ -58,7 +58,7 @@
 	<!-- Navigation -->
 	<nav
 		class="navbar navbar-expand-lg justify-content-center" id="nav2">
-		<a class="navbar-brand" href="#"><img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png"
+		<a class="navbar-brand" href="/index"><img src="${pageContext.request.contextPath}/resources/kit/img/Kit2_size.png"
 			class="d-inline-block align-top" alt="로고"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -68,16 +68,16 @@
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav ml-auto" id="ul1">
 			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.소개</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">Kit.메뉴</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="/menu">Kit.메뉴</a></li>
 			<li class="nav-item"><a class="btn1 nav-link" href="">리뷰</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">이벤트</a></li>
-			<li class="nav-item"><a class="btn1 nav-link" href="">MyKit.</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="/event">이벤트</a></li>
+			<li class="nav-item"><a class="btn1 nav-link" href="/mymain">MyKit.</a></li>
 		</ul>
 		<ul class="navbar-nav ml-auto mr-5" >
-			<li class="nav-item fa-2x" OnClick="location.href ='#'" style="cursor:pointer;">
+			<li class="nav-item fa-2x" OnClick="location.href ='/cart'" style="cursor:pointer;">
 			  <span class="fa-layers fa-fw" style="background:white">
     				<i class="fas fa-shopping-cart"></i>
-    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" > 1</span>
+    			<span class="fa-layers-counter fa-layers-top-right" id="cartbadge" > ${cartCount}</span>
   			  </span>
   			   <p id="cart" >장바구니</p>
 		
@@ -105,9 +105,9 @@
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 주문정보</h5></li>
-      <li class="list-group-item border-0 py-1"><a href="#">주문/배송 조회</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">배송지 관리</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">환불계좌 관리</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/myorder">주문/배송 조회</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/myaddress">배송지 관리</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/myaccount">환불계좌 관리</a></li>
     </ul>
 </div>
 
@@ -117,8 +117,8 @@
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 혜택</h5></li>
-      <li class="list-group-item border-0 py-1"><a href="#">쿠폰</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">포인트</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/mycoupon">쿠폰</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/mypoint">포인트</a></li>
     </ul>
 </div>
 
@@ -140,8 +140,8 @@
     <!-- 사이드바 메뉴목록1 -->
     <ul class="list-group">
       <li class="list-group-item border-0 mt-3 mb-0 pb-0"><h5 class= "font-weight-bold ">나의 정보</h5></li>
-      <li class="list-group-item border-0 py-1"><a href="#">개인정보 변경</a></li>
-      <li class="list-group-item border-0 py-1"><a href="#">회원탈퇴</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/tomodify">개인정보 변경</a></li>
+      <li class="list-group-item border-0 py-1"><a href="/toresign">회원탈퇴</a></li>
     </ul>
 </div>
 
@@ -164,11 +164,11 @@
       	<div class="row" style="border:2px solid; border-top: none; border-color: #f2f2f2; background: white; line-height: 70px;">
       		<div  class="text-center col-7 my-3" style="border-right:2px solid;  border-color: #f2f2f2; line-height: 40px;" >
       			<span class="font-weight-bold" style="font-size: 1.1em;">포인트</span><br>
-      			<span class="font-weight-bold" OnClick="location.href ='#'" style="font-size: 2em; cursor:pointer;"><fmt:formatNumber value="${point.point}" pattern="#,###"/>P</span>
+      			<span class="font-weight-bold" OnClick="location.href ='/mypoint'" style="font-size: 2em; cursor:pointer;"><fmt:formatNumber value="${point.point}" pattern="#,###"/>P</span>
 			</div>
 			<div  class="text-center col-5 my-3" style="line-height: 40px;">
 				<span class="font-weight-bold " style="font-size: 1.1em;">보유쿠폰</span><br>
-				<span class="font-weight-bold " OnClick="location.href ='#'" style="font-size: 2em; cursor:pointer;"> ${couponCount}장</span>
+				<span class="font-weight-bold " OnClick="location.href ='/mycoupon'" style="font-size: 2em; cursor:pointer;"> ${couponCount}장</span>
 			</div>	
       	</div>
       </div>
@@ -178,7 +178,7 @@
 			<thead class="thead-no">
 				<tr>
 					<th  class="text-nowrap border-0 text-left "><h5 class="font-weight-bold"> 주문/배송조회</h5></th>
-					<th  class="text-nowrap border-0 text-right small "><a href="#">더보기 ></a></th>
+					<th  class="text-nowrap border-0 text-right small "><a href="/myorder">더보기 ></a></th>
 				</tr>
 			</thead>
   		</table>
@@ -188,7 +188,7 @@
   	<!-- card deck 시작 -->
   	<div class="card-group ml-4 my-3">
  
- 	<div class="col-sm-2 mx-0 px-0" OnClick="location.href ='#'" style="cursor:pointer;">
+ 	<div class="col-sm-2 mx-0 px-0" OnClick="location.href ='/myorder'" style="cursor:pointer;">
 		<div class="card border-0 ">
     			<div class="card-body px-4 my-4 ">
     				<div class="fa-layers fa-fw my-2" style="background:white">
@@ -211,7 +211,7 @@
    	</div>
    		
  
- 	<div class="col-sm-2 " OnClick="location.href ='#'" style="cursor:pointer;">
+ 	<div class="col-sm-2 " OnClick="location.href ='/myorder'" style="cursor:pointer;">
 		<div class="card border-0 ">
     			<div class="card-body px-2 my-4 ">
     				<div class="fa-layers fa-fw my-2" style="background:white">
@@ -235,7 +235,7 @@
    		
    		
  
- 	<div class="col-sm-2 " OnClick="location.href ='#'" style="cursor:pointer;">
+ 	<div class="col-sm-2 " OnClick="location.href ='/myorder'" style="cursor:pointer;">
 		<div class="card border-0 ">
     			<div class="card-body px-2 my-4 ">
     				<div class="fa-layers fa-fw my-2" style="background:white">
@@ -258,7 +258,7 @@
    	</div>
    		
  
- 	<div class="col-sm-2 " OnClick="location.href ='#'" style="cursor:pointer;">
+ 	<div class="col-sm-2 " OnClick="location.href ='/myorder'" style="cursor:pointer;">
 		<div class="card border-0 ">
     			<div class="card-body px-2 my-4 ">
     				<div class="fa-layers fa-fw my-2" style="background:white">
@@ -361,9 +361,6 @@
 			</div>
 		</div>
 	</footer>
-<script>
-$('#cartbadge').text('0');
-</script>
 
 
 </body>
