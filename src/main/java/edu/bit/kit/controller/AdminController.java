@@ -33,7 +33,11 @@ public class AdminController {
     private AdminService adminService;
 
     // admin 페이지 호출 메서드
+
 	/* @PreAuthorize("hasRole('ROLE_ADMIN')") */
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @GetMapping("/admin/index")
     public String adminMain() {
 

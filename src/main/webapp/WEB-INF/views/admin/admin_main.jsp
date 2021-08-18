@@ -59,7 +59,7 @@
 			<div class="top-menu">
 				<ul class="nav pull-right top-menu">
 					<li><a class="logout" href="/login" onclick="confirmLogout();">로그아웃</a></li>
-					<li><a class="logout" href="/menu" >홈페이지</a></li>
+					<li><a class="logout" href="/menu">홈페이지</a></li>
 				</ul>
 			</div>
 		</header>
@@ -142,21 +142,21 @@
 						<div class="col-lg-12">
 							<div class="content-panel">
 								<h4>
-									<i class="fa fa-angle-right"></i> Doughnut
+									<i class="fa fa-angle-right"></i> 조회수
 								</h4>
 								<div class="panel-body text-center">
 									<canvas id="doughnut" height="300" width="400"></canvas>
 								</div>
 
 								<h4>
-									<i class="fa fa-angle-right"></i> Line
+									<i class="fa fa-angle-right"></i> 판매량
 								</h4>
 								<div class="panel-body text-center">
 									<canvas id="line" height="300" width="400"></canvas>
 								</div>
 
 								<h4>
-									<i class="fa fa-angle-right"></i> Line
+									<i class="fa fa-angle-right"></i> 방문자
 								</h4>
 								<div class="custom-bar-chart">
 									<ul class="y-axis">
@@ -209,148 +209,13 @@
 					<!-- /col-lg-9 END SECTION MIDDLE -->
 					<!-- 우측 사이드바 -->
 					<div class="col-lg-3 ds">
-						<!--COMPLETED ACTIONS DONUTS CHART-->
-						<div class="donut-main">
-							<h4>COMPLETED ACTIONS & PROGRESS</h4>
-							<canvas id="newchart" height="130" width="130"></canvas>
-							<script>
-								var doughnutData = [ {
-									value : 70,
-									color : "#4ECDC4"
-								}, {
-									value : 30,
-									color : "#fdfdfd"
-								} ];
-								var myDoughnut = new Chart(document
-										.getElementById("newchart").getContext(
-												"2d")).Doughnut(doughnutData);
-							</script>
+						<!-- WEATHER PANEL -->
+						<div class="weather pn">
+							<i class="fa fa-cloud fa-4x"></i>
+							<h2>31º C</h2>
+							<h4>서울</h4>
 						</div>
-						<!--NEW EARNING STATS -->
-						<div class="panel terques-chart">
-							<div class="panel-body">
-								<div class="chart">
-									<div class="centered">
-										<span>TODAY EARNINGS</span> <strong>$ 890,00 | 15%</strong>
-									</div>
-									<br>
-									<div class="sparkline" data-type="line" data-resize="true"
-										data-height="75" data-width="90%" data-line-width="1"
-										data-line-color="#fff" data-spot-color="#fff"
-										data-fill-color="" data-highlight-line-color="#fff"
-										data-spot-radius="4"
-										data-data="[200,135,667,333,526,996,564,123,890,564,455]"></div>
-								</div>
-							</div>
-						</div>
-						<!--new earning end-->
-						<!-- RECENT ACTIVITIES SECTION -->
-						<h4 class="centered mt">RECENT ACTIVITY</h4>
-						<!-- First Activity -->
-						<div class="desc">
-							<div class="thumb">
-								<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-							</div>
-							<div class="details">
-								<p>
-									<muted>Just Now</muted>
-									<br /> <a href="#">Paul Rudd</a> purchased an item.<br />
-								</p>
-							</div>
-						</div>
-						<!-- Second Activity -->
-						<div class="desc">
-							<div class="thumb">
-								<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-							</div>
-							<div class="details">
-								<p>
-									<muted>2 Minutes Ago</muted>
-									<br /> <a href="#">James Brown</a> subscribed to your
-									newsletter.<br />
-								</p>
-							</div>
-						</div>
-						<!-- Third Activity -->
-						<div class="desc">
-							<div class="thumb">
-								<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-							</div>
-							<div class="details">
-								<p>
-									<muted>3 Hours Ago</muted>
-									<br /> <a href="#">Diana Kennedy</a> purchased a year
-									subscription.<br />
-								</p>
-							</div>
-						</div>
-						<!-- Fourth Activity -->
-						<div class="desc">
-							<div class="thumb">
-								<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-							</div>
-							<div class="details">
-								<p>
-									<muted>7 Hours Ago</muted>
-									<br /> <a href="#">Brando Page</a> purchased a year
-									subscription.<br />
-								</p>
-							</div>
-						</div>
-						<!-- USERS ONLINE SECTION -->
-						<h4 class="centered mt">TEAM MEMBERS ONLINE</h4>
-						<!-- First Member -->
-						<div class="desc">
-							<div class="thumb">
-								<img class="img-circle" src="img/ui-divya.jpg" width="35px"
-									height="35px" align="">
-							</div>
-							<div class="details">
-								<p>
-									<a href="#">DIVYA MANIAN</a><br />
-									<muted>Available</muted>
-								</p>
-							</div>
-						</div>
-						<!-- Second Member -->
-						<div class="desc">
-							<div class="thumb">
-								<img class="img-circle" src="img/ui-sherman.jpg" width="35px"
-									height="35px" align="">
-							</div>
-							<div class="details">
-								<p>
-									<a href="#">DJ SHERMAN</a><br />
-									<muted>I am Busy</muted>
-								</p>
-							</div>
-						</div>
-						<!-- Third Member -->
-						<div class="desc">
-							<div class="thumb">
-								<img class="img-circle" src="img/ui-danro.jpg" width="35px"
-									height="35px" align="">
-							</div>
-							<div class="details">
-								<p>
-									<a href="#">DAN ROGERS</a><br />
-									<muted>Available</muted>
-								</p>
-							</div>
-						</div>
-						<!-- Fourth Member -->
-						<div class="desc">
-							<div class="thumb">
-								<img class="img-circle" src="img/ui-zac.jpg" width="35px"
-									height="35px" align="">
-							</div>
-							<div class="details">
-								<p>
-									<a href="#">Zac Sniders</a><br />
-									<muted>Available</muted>
-								</p>
-							</div>
-						</div>
+
 						<!-- CALENDAR-->
 						<div id="calendar" class="mb">
 							<div class="panel green-panel no-margin">
@@ -425,6 +290,59 @@
 	<script src="/admin/Dashio/lib/chart-master/Chart.js"></script>
 	<script src="/admin/Dashio/lib/chartjs-conf.js"></script>
 
+	<!-- calendar -->
+	<script src="/admin/Dashio/lib/zabuto_calendar.js"></script>
+
+	<script type="application/javascript">
+		
+		
+		
+		
+    $(document).ready(function() {
+      $("#date-popover").popover({
+        html: true,
+        trigger: "manual"
+      });
+      $("#date-popover").hide();
+      $("#date-popover").click(function(e) {
+        $(this).hide();
+      });
+
+      $("#my-calendar").zabuto_calendar({
+        action: function() {
+          return myDateFunction(this.id, false);
+        },
+        action_nav: function() {
+          return myNavFunction(this.id);
+        },
+        ajax: {
+          url: "show_data.php?action=1",
+          modal: true
+        },
+        legend: [{
+            type: "text",
+            label: "Special event",
+            badge: "00"
+          },
+          {
+            type: "block",
+            label: "Regular event",
+          }
+        ]
+      });
+    });
+
+    function myNavFunction(id) {
+      $("#date-popover").hide();
+      var nav = $("#" + id).data("navigation");
+      var to = $("#" + id).data("to");
+      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+    }
+  
+	
+	
+	
+	</script>
 	<!--script for this page-->
 	<script type="text/javascript">
 		/* Formating function for row details */
