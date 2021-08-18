@@ -51,7 +51,7 @@
 			</div>
 
 			<!--logo start-->
-			<a href="/" class="logo"><b>Kit.<span>관리자</span></b></a>
+			<a href="/admin/index" class="logo"><b>Kit.<span>관리자</span></b></a>
 			<!--logo end-->
 
 			<div class="top-menu">

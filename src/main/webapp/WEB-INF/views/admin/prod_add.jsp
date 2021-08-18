@@ -45,13 +45,13 @@
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
 		<!--header start-->
-		<header class="header black-bg">
+	<header class="header black-bg">
 			<div class="sidebar-toggle-box">
 				<div class="fa fa-bars tooltips" data-placement="right"></div>
 			</div>
 
 			<!--logo start-->
-			<a href="/" class="logo"><b>Kit.<span>관리자</span></b></a>
+			<a href="/admin/index" class="logo"><b>Kit.<span>관리자</span></b></a>
 			<!--logo end-->
 
 			<div class="top-menu">
@@ -79,7 +79,7 @@
 							class="fa fa-desktop"></i> <span>회원 관리</span>
 					</a>
 						<ul class="sub">
-							<li><a href="/admin/usertable">회원 관리</a></li>
+							<li><a href="/admin/userlist">회원 관리</a></li>
 							<li><a href="/admin/mail">이메일/sms발송</a></li>
 						</ul></li>
 					<li class="sub-menu"><a href="javascript:;"> <i
