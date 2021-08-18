@@ -10,7 +10,6 @@ import edu.bit.kit.service.MailService;
 import edu.bit.kit.vo.MailVO;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
-@RequestMapping("/admin/*")
 @Controller
 public class MailController {
     
