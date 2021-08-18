@@ -192,8 +192,22 @@
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">회원주소</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" name="userAddress"
-											value="${user_view.userAddress}">
+										<input type="text" class="form-control" name="userAddress1"
+											value="${user_view.userAddress1}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">회원주소</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="userAddress2"
+											value="${user_view.userAddress2}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">회원주소</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="userAddress3"
+											value="${user_view.userAddress3}">
 									</div>
 								</div>
 

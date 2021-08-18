@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
         .csrf().disable()
 		.authorizeRequests()
+		.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 		.antMatchers("/**").permitAll()
 				/* .antMatchers().hasAnyAuthority() */
 		.anyRequest().authenticated()
@@ -70,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.deleteCookies("JSESSIONID")
-		.logoutSuccessUrl("/")
+		.logoutSuccessUrl("/menu")
 		.and()
 		.exceptionHandling()
 		.accessDeniedPage("/access-denied");

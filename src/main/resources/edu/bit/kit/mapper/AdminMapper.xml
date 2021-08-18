@@ -18,8 +18,8 @@
 		<result column="co_joindate" property="userJoinDate" />
 		<result column="co_logintime" property="userLoginTime" />
 		<result column="ADDRESS_1" property="userAddress1" />
-	  	<result column="ADDRESS_2" property="userAddress2" />
-	  	<result column="ADDRESS_3" property="userAddress3" />
+		<result column="ADDRESS_2" property="userAddress2" />
+		<result column="ADDRESS_3" property="userAddress3" />
 		<result column="co_account" property="userAccount" />
 	</resultMap>
 
@@ -96,7 +96,8 @@
 
 	<select id="getUser" resultMap="userList">
 		SELECT
-		user_id,co_number,co_name,co_phone,co_email,co_gender,co_joindate,address_1, address_2, address_3,co_account
+		user_id,co_number,co_name,co_phone,co_email,co_gender,co_joindate,address_1,
+		address_2, address_3,co_account
 		FROM HK_USER
 		WHERE user_id = #{userId}
 	</select>
@@ -351,13 +352,15 @@
 		SELECT
 		*
 		FROM HK_REPLY
-		WHERE BOARD_ID = #{boardId}
+		WHERE
+		BOARD_ID = #{boardId}
 	</select>
 
 
 	<insert id="replyInsert">
 		INSERT INTO
-		HK_REPLY (REPLY_ID, USER_ID, BOARD_ID, CO_CONTENT, CO_DATE)
+		HK_REPLY (REPLY_ID, USER_ID, BOARD_ID,
+		CO_CONTENT, CO_DATE)
 		VALUES(REPLY_ID_SEQ.NEXTVAL,'HONG',#{boardId},#{replyContent},sysdate)
 	</insert>
 
@@ -365,14 +368,13 @@
 		UPDATE HK_REPLY
 		SET
 		CO_CONTENT = #{replyContent}
-		WHERE REPLY_ID = #{replyId}
+		WHERE
+		REPLY_ID = #{replyId}
 	</update>
 
 	<delete id="replyDelete">
 		DELETE FROM HK_REPLY WHERE REPLY_ID = #{replyId}
 	</delete>
-
-
 
 </mapper>
 
