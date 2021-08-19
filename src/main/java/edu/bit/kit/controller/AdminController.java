@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import edu.bit.kit.service.AdminService;
 import edu.bit.kit.vo.BoardVO;
@@ -35,8 +33,6 @@ public class AdminController {
     // admin 페이지 호출 메서드
 
 	/* @PreAuthorize("hasRole('ROLE_ADMIN')") */
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
 
     @GetMapping("/admin/index")
     public String adminMain() {
@@ -299,7 +295,7 @@ public class AdminController {
         for (int i = 0; i < size; i++) {
             adminService.boardRemove(ajaxMsg[i]);
         }
-
+        
         return "redirect:questionList";
     }
 
