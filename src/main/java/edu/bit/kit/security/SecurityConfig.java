@@ -61,27 +61,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/**").permitAll()
 				/* .antMatchers().hasAnyAuthority() */
 		.anyRequest().authenticated()
-
-
 		.and()
-
 		.formLogin()
-
 		.loginPage("/signin")
         .loginProcessingUrl("/login")
-
 		.defaultSuccessUrl("/index")
 		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.deleteCookies("JSESSIONID")
-
 		.logoutSuccessUrl("/index")
 		.and()
 		.exceptionHandling()
-
 		.accessDeniedPage("/access-denied");
-		
 		// 로그인 유지 기능 추가
 		 http.rememberMe().key("securitykey")
          .userDetailsService(securityService)
