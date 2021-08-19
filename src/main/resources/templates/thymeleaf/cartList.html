@@ -180,7 +180,7 @@ p {
 	<div class="container">
 
 		<th:block th:if="${#lists.size(cartList) == 0}">
-			<div>장바구니가 비었습니다ㅜㅜ</div>
+			<div style="text-align: center; font-weight: bold; font-size: 25px;">장바구니가 비었습니다!</div>
 		</th:block>
 
 		<th:block th:unless="${#lists.size(cartList) == 0}">
