@@ -71,6 +71,7 @@ public class UserController{
 	@GetMapping("/menu")
 	public String menu(Criteria cri, Model model) {
 		model.addAttribute("list", productService.getList(cri));
+		
 		int total = productService.getTotal(cri);
 		
 		model.addAttribute("pageMaker", new PageVO(cri,total));

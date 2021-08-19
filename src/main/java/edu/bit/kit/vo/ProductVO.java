@@ -38,6 +38,6 @@ public class ProductVO {
     private String prodCookingTime;
     private String prodPrepareTime;
     private String prodComment;
-    private List<ResourceFileVO> fileList;
-    
+	private List<ResourceFileVO> fileList;
+	private ResourceFileVO fileListOne;
 }

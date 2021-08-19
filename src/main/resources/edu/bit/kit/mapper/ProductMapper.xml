@@ -5,9 +5,39 @@
 <mapper namespace="edu.bit.kit.mapper.ProductMapper">
 
 <!-- 메뉴 상품 불러오기 -->
+
+<resultMap type="edu.bit.kit.vo.ProductVO" id="productListSrc">
+		<result column="PRODUCT_NUMBER" property="PRODUCT_NUMBER" />
+		<result column="PRODUCT_NAME" property="CO_NAME" />
+		<result column="CO_RECIEVINGDATE" property="CO_RECIEVINGDATE" />
+		<result column="CO_STOCK" property="CO_STOCK" />
+		<result column="CO_CATEGORY" property="CO_CATEGORY" />
+		<result column="CO_PRICE" property="CO_PRICE" />
+		<result column="CO_SERVINGS" property="CO_SERVINGS" />
+		<result column="CO_COOKINGTIME" property="CO_COOKINGTIME" />
+		<result column="CO_PREPARE_TIME" property="CO_PREPARE_TIME" />
+		<result column="CO_COMMENT" property="CO_COMMENT" />
+		
+	<collection resultMap="fileListOne" property="fileListOne">
+		</collection> 
+	
+	</resultMap>
+
+	<resultMap type="edu.bit.kit.vo.ResourceFileVO" id="fileListOne">
+		<result column="FILE_NUMBER" property="srcFileNumber" />
+		<result column="PRODUCT_NUMBER" property="prodNumber" />
+		<result column="BOARD_ID" property="brdId" />
+		<result column="CO_NAME" property="srcFileName" />
+		<result column="CO_PATH" property="srcFilePath" />
+		<result column="CO_EXTENSION" property="srcFileExtension" />
+		<result column="CO_SIZE" property="fileSize" />	
+	</resultMap>
+
+
 	<select id="getList" resultType="edu.bit.kit.vo.ProductVO">
 <![CDATA[
-select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRICE, CO_SERVINGS,CO_COOKINGTIME, CO_PREPARE_TIME, CO_COMMENT from HK_PROD order by PRODUCT_NUMBER desc
+select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, 
+CO_CATEGORY, CO_PRICE, CO_SERVINGS,CO_COOKINGTIME, CO_PREPARE_TIME, CO_COMMENT from HK_PROD order by PRODUCT_NUMBER desc
 ]]>
 	</select>
 
@@ -17,16 +47,14 @@ select PRODUCT_NUMBER, CO_NAME, CO_RECIEVINGDATE, CO_STOCK, CO_CATEGORY, CO_PRIC
    ]]>
 	</select>
 
-	<select id="getListWithPaging"
-		resultType="edu.bit.kit.vo.ProductVO">
+	<select id="getListWithPaging" resultMap="productListSrc">
    <![CDATA[
    		  SELECT * FROM (
               SELECT ROWNUM AS RNUM, A.* FROM (
-                       SELECT
-                             *
-                         FROM
-                             HK_PROD 
-                         order by PRODUCT_NUMBER desc   
+select p.PRODUCT_NUMBER , p.CO_NAME AS PRODUCT_NAME, p.CO_RECIEVINGDATE, p.CO_STOCK, p.CO_CATEGORY, p.CO_PRICE, 
+p.CO_SERVINGS,p.CO_COOKINGTIME, p.CO_PREPARE_TIME, p.CO_COMMENT, s.CO_NAME AS CO_NAME 
+from HK_PROD p, SRC_FILE s where p.PRODUCT_NUMBER = s.PRODUCT_NUMBER order by PRODUCT_NUMBER desc
+ 
              ) A WHERE ROWNUM <= #{pageNum} * #{amount}
          ) WHERE RNUM > (#{pageNum}-1) * #{amount}		
    ]]>

@@ -62,7 +62,7 @@
 				type : "POST",
 				data : data,
 				success : function(result) {
-					alert("카트 담기 성공");
+					alert("장바구니에 상품이 담겼습니다!");
 
 				},
 				error : function() {
@@ -177,39 +177,39 @@ p {
 	<section class="container">
 		<div class="bg-white py-3"></div>
 
-		<div class="card-group">
+		<div class="card-group" >
 			<tr th:each="ProductVO : ${list}">
 			
 				<div class="col-sm-3">
-					<div class="card mx-3">
+					<div class="card mx-3" style="border: none">
 						<!-- <tr th:each="ProductVO : ${list}"> -->
 					
-						<a th:href="@{/menudetails?(PRODUCT_NUMBER=${ProductVO.PRODUCT_NUMBER})}"> <img src="img/2.jpg" class="card-img-top"
-							alt="..."> <!-- <div class="card-body"> -->
+						<a th:href="@{/menudetails?(PRODUCT_NUMBER=${ProductVO.PRODUCT_NUMBER})}"> 
+						<img th:src="@{/images/} + ${ProductVO.fileListOne.srcFileName}" class="card-img-top" alt="..."> 
+						<!-- <div class="card-body"> -->
 							<p class="card-text">
 								<small><td th:text="${ProductVO.CO_SERVINGS}"></td> |
 									<td th:text="${ProductVO.CO_COOKINGTIME}"></td></small>
 							</p>
-							<p class="card-tit">
+							<p class="card-tit" style="font-weight: bold">
 								
 								<td th:text="${ProductVO.CO_NAME}"></td>
 							</p>
-							<p>
-							
+							<p style="font-weight: bold; color: red;">							
 								<td th:text="${#numbers.formatInteger(ProductVO.CO_PRICE, 3, 'POINT')+'원'}"></td>
 							</p>
 
-							<p class="card-text">
+							<!-- <p class="card-text">
 								<small>!!!별점 평균 및 리뷰총개수 표현 부분!!! </small>
-							</p></a>
+							</p> --></a>
 
 						<div class="card-footer">
 							<div class="icon">
-								<a class="icon-group" href="#"><i
-									class="far fa-heart fa-2x px-0 ml-0 mr-2" aria-hidden="true"></i></a> 
+								<a class="icon-group" href="#">
+								<i class="far fa-heart fa-2x px-0 ml-0 mr-2" style="color: black" aria-hidden="true"></i></a> 
 									<a class="addToCart" href="/cartList">
 									<input type="hidden" th:value="${ProductVO.PRODUCT_NUMBER}" id="pdnum"/>
-									<i class="fas fa-shopping-cart fa-2x mx-1" aria-hidden="true"></i></a>
+									<i class="fas fa-shopping-cart fa-2x mx-1" style="color: black" aria-hidden="true"></i></a>
 									<!--  col-md-3 -->
 									<!-- <i class="far fa-heart"></i>  -->
 									
@@ -245,12 +245,12 @@ p {
   </ul>
 </nav> -->
 	<nav>
-		<ul class="pagination">
+		<ul class="pagination justify-content-center">
 			<li th:if="${pageMaker.prev}"><a
 				th:with="menu=|/menu${pageMaker.makeQuery(pageMaker.startPage - 1)}|"
 				th:href="@{${menu}}" th:text=${&laquo;}>&laquo;</a></li>
 
-			<li
+			<li style="font-size: 20px; letter-spacing: 20px;"
 				th:each="idx, iterStat : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
 				<a th:with="menu=|/menu${pageMaker.makeQuery(idx)}|"
 				th:href="@{${menu}}" th:text=${idx}> </a>
