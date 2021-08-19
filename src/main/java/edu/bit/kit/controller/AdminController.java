@@ -34,7 +34,6 @@ public class AdminController {
 
 	/* @PreAuthorize("hasRole('ROLE_ADMIN')") */
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/index")
     public String adminMain() {
 
@@ -296,7 +295,7 @@ public class AdminController {
         for (int i = 0; i < size; i++) {
             adminService.boardRemove(ajaxMsg[i]);
         }
-
+        
         return "redirect:questionList";
     }
 
