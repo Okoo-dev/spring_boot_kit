@@ -156,7 +156,7 @@
 									<table>
 										<c:forEach var="vo" items="${notice.fileList}">
 											<tr>
-												<td><label class="col-sm-2 col-sm-2 control-label"><img src="/images/${vo.srcFileName}"/></label></td>
+												<td><label class="col-sm-2 col-sm-2 control-label"><img src="/images/${vo.srcFileName}" width="300px" height="300px"/></label></td>
 												<td><label class="col-sm-2 col-sm-2 control-label">|</label></td>
 												<td><label class="col-sm-2 col-sm-2 control-label">${vo.fileSize}kb</label></td>
 											</tr>
