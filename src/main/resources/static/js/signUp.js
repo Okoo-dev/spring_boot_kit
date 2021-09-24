@@ -63,11 +63,13 @@
 		    }
 		    
 		    if(frm.passwordConfirm.value == ''){
+		    	frm.passwordConfirm.focus();
 				alert('비밀번호 확인을 입력하세요');
 				return false;
 			}
 		    
 		    if(frm.userPassword.value != frm.passwordConfirm.value){
+		   		 frm.userPassword.focus();
 				alert('비밀번호와 비밀번호 확인이 다릅니다');	
 				 return false;
 		    }
@@ -102,11 +104,18 @@
 		    	 return false;
 		    }
 		   
+		    if( $('input:radio[name=userGender]').is(':checked') == false) {
+			    	alert("성별을 입력해 주십시오.");
+			    	 return false;
+			 }
+		   
+		   
 		    if( frm.userAddress1.value == "" ) {
 		    	frm.userAddress1.focus();
 		    	alert("우편번호를 입력해 주십시오.");
 		    	 return false;
 		    }
+		    
 		    if( frm.userAddress2.value == "" ) {
 		    	frm.userAddress2.focus();
 		    	alert("도로명주소를 입력해 주십시오.");
@@ -120,10 +129,7 @@
 		    }
 		    
 
-	     	 if( $('input:radio[name=userGender]').is(':checked') == false) {
-			    	alert("성별을 입력해 주십시오.");
-			    	 return false;
-			 }
+	     	
 		    
  				// 공백제거 끝
 	     	 
@@ -146,16 +152,20 @@
 		    var checkNumber = pw.search(/[0-9]/g);
 		    var checkEnglish = pw.search(/[a-z]/ig);
 		 
-		    if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)){            
+		    if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(pw)){       
+		    	frm.userPassword.focus();     
 		        alert('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.');
 		        return false;
 		    }else if(checkNumber <0 || checkEnglish <0){
+		    	frm.userPassword.focus();
 		        alert("숫자와 영문자를 혼용하여야 합니다.");
 		        return false;
 		    }else if(/(\w)\1\1\1/.test(pw)){
+		    	frm.userPassword.focus();
 		        alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
 		        return false;
 		    }else if(pw.search(id) > -1){
+		   		frm.userPassword.focus();
 		        alert("비밀번호에 아이디가 포함되어 있습니다.");
 		        return false;
 		    }else {
